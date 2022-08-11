@@ -5,7 +5,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { HelmetProvider } from 'react-helmet-async';
 import { AppSettingsProvider } from './contexts/AppSettingsContext';
 import { store } from './state/store';
-import { ThemeProvider } from './theme';
+import { ThemeProvider } from './themes';
 import { LocalJsonStorage } from './lib/storage';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
