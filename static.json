@@ -1,0 +1,18 @@
+{
+  "root": "build/",
+  "routes": {
+    "/**": "index.html"
+  },
+  "headers": {
+    "/*.html": {
+      "Cache-Control": "no-store, no-cache",
+      "X-Static": "true"
+    },
+    "/assets/**": {
+      "Cache-Control": "public, max-age=512000"
+    },
+    "/static/**": {
+      "Cache-Control": "public, max-age=512000"
+    }
+  }
+}
