@@ -6,7 +6,7 @@ const Wrapper = styled('div')(({ theme }) => ({
   padding: theme.spacing(3, 4),
 }));
 
-const EmptyView: React.FC<never> = () => {
+const EmptyView: React.FC = () => {
   const location = useLocation();
 
   return (

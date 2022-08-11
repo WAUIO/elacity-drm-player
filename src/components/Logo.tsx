@@ -14,12 +14,12 @@ const BaseLogo = styled('svg')(({ theme }: WithTheme<any, Theme>) => {
   return css;
 });
 
-export const Logo: FC<any> = ({ sx, ...props }: any) => (
+export const Logo: FC<any> = ({ sx, size, ...props }: any) => (
   <BaseLogo
     version="1.1"
     preserveAspectRatio="xMidYMin slice"
     viewBox="0 0 100 100"
-    sx={{ width: 200, ...(sx || {}) }}
+    sx={{ width: size || 200, ...(sx || {}) }}
     {...props}
   >
     <g fill="#764ABC">

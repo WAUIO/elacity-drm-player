@@ -1,41 +1,33 @@
 import React from 'react';
-import { Logo } from './components';
-import { Counter } from './features/counter/Counter';
+import { useRoutes } from 'react-router-dom';
+import * as Sentry from '@sentry/react';
+import { styled } from '@mui/material/styles';
+import routes from './routes';
+import ErrorPage from './views/Error';
 import './App.css';
 
-const App: React.FC = () => (
-  <div className="App">
-    <header className="App-header">
-      <Logo />
-      <Counter />
-      <p>
-        Edit
-        {' '}
-        <code>src/App.tsx</code>
-        {' '}
-        and save to reload.
-      </p>
-      <span>
-        <span>Learn </span>
-        <a className="App-link" href="https://reactjs.org/" target="_blank" rel="noopener noreferrer">
-          React
-        </a>
-        <span>, </span>
-        <a className="App-link" href="https://redux.js.org/" target="_blank" rel="noopener noreferrer">
-          Redux
-        </a>
-        <span>, </span>
-        <a className="App-link" href="https://redux-toolkit.js.org/" target="_blank" rel="noopener noreferrer">
-          Redux Toolkit
-        </a>
-        ,
-        <span> and </span>
-        <a className="App-link" href="https://react-redux.js.org/" target="_blank" rel="noopener noreferrer">
-          React Redux
-        </a>
-      </span>
-    </header>
-  </div>
+const BodyWrapper = styled('div')(() => ({
+  '@global': {
+    body: {
+      backgroundColor: '#FF0000',
+    },
+  },
+}));
+
+const App = () => {
+  const content = useRoutes(routes);
+
+  return <BodyWrapper>{content}</BodyWrapper>;
+};
+
+const ErrFallback: React.FC = (props) => (
+  <>
+    <ErrorPage message="An unknown error occured, please reload" />
+    {JSON.stringify(props)}
+  </>
 );
 
-export default App;
+export default Sentry.withErrorBoundary(App, {
+  fallback: <ErrFallback />,
+  onError: (e: Error) => console.error(e),
+});

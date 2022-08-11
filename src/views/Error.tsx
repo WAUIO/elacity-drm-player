@@ -20,8 +20,14 @@ const ErrorView: React.FC<ErrorProps> = ({ code, message }: ErrorProps) => (
     }}
   >
     <Typography variant="h4">
-      Error
-      {code}
+      Application Error
+      {code && (
+        <>
+          &nbsp;|
+          {' '}
+          <span style={{ fontSize: '130%' }}>{code}</span>
+        </>
+      )}
     </Typography>
     {message && <p style={{ display: 'block' }}>{message}</p>}
   </Box>
