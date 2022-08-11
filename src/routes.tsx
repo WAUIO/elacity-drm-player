@@ -15,10 +15,12 @@ const Loadable =
         </Suspense>
       );
 
-// Home
-const Home = Loadable(lazy(() => import('./views/Empty')));
-const Mint = Loadable(lazy(() => import('./views/Empty')));
-const PlayerView = Loadable(lazy(() => import('./views/Empty')));
+// Views
+const View = {
+  Home: Loadable(lazy(() => import('./views/Empty'))),
+  Mint: Loadable(lazy(() => import('./views/Empty'))),
+  Player: Loadable(lazy(() => import('./views/Empty'))),
+};
 
 export default [
   // default layout (with padding)
@@ -32,15 +34,15 @@ export default [
       },
       {
         path: 'explore',
-        element: <Home />,
+        element: <View.Home />,
       },
       {
         path: 'new',
-        element: <Mint />,
+        element: <View.Mint />,
       },
       {
         path: 'view/:id',
-        element: <PlayerView />,
+        element: <View.Player />,
       },
     ],
   },

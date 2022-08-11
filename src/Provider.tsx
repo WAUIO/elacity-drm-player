@@ -16,7 +16,7 @@ const AppProvider: FC<PropsWithChildren<AppProviderProps>> = ({
 }: PropsWithChildren<AppProviderProps>) => (
   <HelmetProvider>
     <ReduxProvider store={store}>
-      <AppSettingsProvider store={new LocalJsonStorage('__cra_settings')}>
+      <AppSettingsProvider store={new LocalJsonStorage('__wbp_settings')}>
         <BrowserRouter basename="/">
           <ThemeProvider>
             {children}
