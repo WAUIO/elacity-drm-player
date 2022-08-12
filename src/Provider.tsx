@@ -3,10 +3,9 @@ import type { FC, PropsWithChildren } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider as ReduxProvider } from 'react-redux';
 import { HelmetProvider } from 'react-helmet-async';
-import { AppSettingsProvider } from './contexts/AppSettingsContext';
+import { ThemeProvider, AppSettingsProvider } from '@elacity-js/uikit';
+import { JsonLocalStorage } from '@elacity-js/lib';
 import { store } from './state/store';
-import { ThemeProvider } from './themes';
-import { LocalJsonStorage } from './lib/storage';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface AppProviderProps {}
@@ -16,7 +15,7 @@ const AppProvider: FC<PropsWithChildren<AppProviderProps>> = ({
 }: PropsWithChildren<AppProviderProps>) => (
   <HelmetProvider>
     <ReduxProvider store={store}>
-      <AppSettingsProvider store={new LocalJsonStorage('__wbp_settings')}>
+      <AppSettingsProvider storage={new JsonLocalStorage('__wbp_settings')}>
         <BrowserRouter basename="/">
           <ThemeProvider>
             {children}

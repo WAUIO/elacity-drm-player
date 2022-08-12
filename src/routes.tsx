@@ -17,7 +17,7 @@ const Loadable =
 
 // Views
 const View = {
-  Home: Loadable(lazy(() => import('./views/Empty'))),
+  Home: Loadable(lazy(() => import('./views/Explore'))),
   Mint: Loadable(lazy(() => import('./views/Empty'))),
   Player: Loadable(lazy(() => import('./views/Empty'))),
 };
