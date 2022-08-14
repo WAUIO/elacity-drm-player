@@ -18,8 +18,8 @@ const Loadable =
 // Views
 const View = {
   Home: Loadable(lazy(() => import('./views/Explore'))),
-  Mint: Loadable(lazy(() => import('./views/Empty'))),
-  Player: Loadable(lazy(() => import('./views/Empty'))),
+  Mint: Loadable(lazy(() => import('./views/CreateForm'))),
+  Player: Loadable(lazy(() => import('./views/View'))),
 };
 
 export default [
@@ -38,6 +38,10 @@ export default [
       },
       {
         path: 'new',
+        element: <Navigate to={baseURL('/create')} replace />,
+      },
+      {
+        path: 'create',
         element: <View.Mint />,
       },
       {

@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@elacity-js/lib": "^0.1.16",
-    "@elacity-js/uikit": "^1.6.0-alpha.6",
+    "@elacity-js/uikit": "^1.6.0-alpha.7",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@iconify/icons-eva": "^1.1.0",
@@ -31,6 +31,7 @@
     "@types/react-router-dom": "^5.3.3",
     "axios": "^0.21.4",
     "classnames": "^2.3.1",
+    "dashjs": "^4.4.1",
     "date-fns": "^2.24.0",
     "formik": "^2.2.9",
     "history": "^5.0.1",
