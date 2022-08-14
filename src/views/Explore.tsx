@@ -1,4 +1,5 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 import { Box } from '@mui/material';
 
 const Explore: React.FC = () => {
@@ -6,6 +7,9 @@ const Explore: React.FC = () => {
 
   return (
     <Box>
+      <Helmet>
+        <title>Explore | Elacity Media</title>
+      </Helmet>
       {JSON.stringify(medias)}
     </Box>
   );

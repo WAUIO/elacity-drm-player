@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@elacity-js/lib": "^0.1.13",
-    "@elacity-js/uikit": "^1.6.0-alpha.2",
+    "@elacity-js/lib": "^0.1.16",
+    "@elacity-js/uikit": "^1.6.0-alpha.6",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@iconify/icons-eva": "^1.1.0",

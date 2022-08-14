@@ -2,7 +2,7 @@
 import React, { Suspense, lazy } from 'react';
 import { Navigate } from 'react-router-dom';
 import { baseURL } from '@elacity-js/lib';
-import Spinner from './components/Logo';
+import { Spinner } from '@elacity-js/uikit';
 import Layout from './layouts';
 import ErrorPage from './views/Error';
 
@@ -10,7 +10,7 @@ const Loadable =
   <T, >(Component: React.ComponentType<T>) =>
     (props: T) =>
       (
-        <Suspense fallback={<Spinner />}>
+        <Suspense fallback={<Spinner.Splash />}>
           <Component {...props} />
         </Suspense>
       );

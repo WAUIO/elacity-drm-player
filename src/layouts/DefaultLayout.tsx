@@ -1,14 +1,17 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
-import { DefaultWrapper } from '@elacity-js/uikit';
+import { DefaultLayout, DefaultNavbar } from '@elacity-js/uikit';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars-experimental
-interface DefaultLayoutProps {}
+interface MainLayoutProps {}
 
-const DefaultLayout: React.FC<DefaultLayoutProps> = () => (
-  <DefaultWrapper>
-    <Outlet />
-  </DefaultWrapper>
+// Outlet is set in @elacity-js/uikit/DefaultLayout
+// @todo: define navbar, sidebar if needed
+const MainLayout: React.FC<MainLayoutProps> = () => (
+  <DefaultLayout
+    navbar={(
+      <DefaultNavbar />
+    )}
+  />
 );
 
-export default DefaultLayout;
+export default MainLayout;

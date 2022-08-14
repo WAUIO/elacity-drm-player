@@ -1112,17 +1112,17 @@
   resolved "https://registry.yarnpkg.com/@csstools/normalize.css/-/normalize.css-10.1.0.tgz#f0950bba18819512d42f7197e56c518aa491cf18"
   integrity sha512-ij4wRiunFfaJxjB0BdrYHIH8FxBJpOwNPhhAcunlmPdXudL1WQV1qoP9un6JsEBAgQH+7UXyyjh0g7jTxXK6tg==
 
-"@elacity-js/lib@^0.1.13":
-  version "0.1.13"
-  resolved "https://registry.yarnpkg.com/@elacity-js/lib/-/lib-0.1.13.tgz#4e698ad512bb3ea968d357adebb9d63246b5777f"
-  integrity sha512-23kD9lYUHPL2Bi62VqgxM09+k5Xb91JBNGMyq2NyxQDcuMyevijaYOoXE3yM2glxfqITipxkYz2bIP9+zEAZbA==
+"@elacity-js/lib@^0.1.16":
+  version "0.1.16"
+  resolved "https://registry.yarnpkg.com/@elacity-js/lib/-/lib-0.1.16.tgz#84f12471a12013f3a3f57707bb03d18ae2799994"
+  integrity sha512-HwpBeCJbdj24ucchVY2mT3ceSQR2QJT8/hKRfoTfJz/tc5DrYmEbGGOATUgANcrKyhbAGE9XbgMJa+HmuwZydA==
   dependencies:
     "@ethersproject/bignumber" "^5.6.2"
 
-"@elacity-js/uikit@^1.6.0-alpha.2":
-  version "1.6.0-alpha.2"
-  resolved "https://registry.yarnpkg.com/@elacity-js/uikit/-/uikit-1.6.0-alpha.2.tgz#6b647cc6f21d4ecffc9d390285a7e82060974ff5"
-  integrity sha512-BTyhrI9lLTNZU2ZX+JfwWuAD5Ne/qQNlGKlXfURU78aEqslZvvPAQ0ZukeoLXcQpsaX8NGfWN6iE6Z/lK3MxSQ==
+"@elacity-js/uikit@^1.6.0-alpha.6":
+  version "1.6.0-alpha.6"
+  resolved "https://registry.yarnpkg.com/@elacity-js/uikit/-/uikit-1.6.0-alpha.6.tgz#cda910b8bfd8c3ca8a2207baff78ab1b3ef6340e"
+  integrity sha512-f5UK+B/YqhidstgA7M5fHzi/sdgLi+rHdectmjBiYicnCJB2vj0eK7CunMFtljzJWBT9KbtjQrS13fYzaJg+hA==
   dependencies:
     react-intersection-observer "^9.4.0"
 
