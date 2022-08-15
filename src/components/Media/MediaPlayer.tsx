@@ -37,6 +37,7 @@ const DashPlayer = ({ source, autoplay }: DashPlayerProps) => {
   useKeepRatio({ ratio: 16 / 9, el: ref.current });
 
   React.useEffect(() => {
+    // see also https://github.com/sanjuc/clear-key/blob/master/script/main.js
     const player = dashjs.MediaPlayer().create();
     // player.setProtectionData(protData);
     player.initialize(videoRef.current, source, autoplay);
