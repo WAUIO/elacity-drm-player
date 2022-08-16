@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@elacity-js/lib": "^0.1.16",
-    "@elacity-js/uikit": "^1.6.0-alpha.7",
+    "@elacity-js/uikit": "^1.6.0-alpha.8",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@iconify/icons-eva": "^1.1.0",
@@ -42,6 +42,7 @@
     "numeral": "^2.0.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-dropzone": "^14.2.2",
     "react-helmet-async": "^1.3.0",
     "react-i18next": "^11.12.0",
     "react-redux": "^8.0.2",

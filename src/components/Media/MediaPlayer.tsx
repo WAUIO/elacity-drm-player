@@ -16,6 +16,7 @@ const protData = {
 };
 
 const PlayerContainer = styled(Box)(({ theme }) => ({
+  display: 'contents',
   margin: theme.spacing(2, 'auto', 1),
   width: '100%',
   maxWidth: 620,

@@ -11,7 +11,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
+code, .code, .code * {
   font-family: source-code-pro, 'PT Mono', monospace;
 }
 

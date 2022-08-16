@@ -19,7 +19,11 @@ export default function MediaCard() {
     <Card sx={{ maxWidth: 345 }}>
       <CardHeader
         avatar={(
-          <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+          <Avatar
+            sx={{ bgcolor: red[500] }}
+            src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg"
+            aria-label="recipe"
+          >
             R
           </Avatar>
         )}
@@ -28,7 +32,7 @@ export default function MediaCard() {
             <MoreVertIcon />
           </IconButton>
         )}
-        title="Duis aute irure dolor in reprehenderit"
+        title="Duis reprehenderit"
         subheader="June 14, 2022"
       />
       <CardActionArea component={RouterLink} to="/view/1234567">
@@ -39,13 +43,16 @@ export default function MediaCard() {
           alt="Paella dish"
         />
         <CardContent>
+          <Typography variant="subtitle1">
+            Consectetur adipiscing elit, sed do eiusmod tempor
+          </Typography>
           <Typography variant="body2" color="text.secondary">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua.
+            incididunt ut labore et dolore magna aliqua...
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions disableSpacing>
+      <CardActions disableSpacing sx={{ display: 'none' }}>
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
         </IconButton>

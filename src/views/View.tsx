@@ -17,7 +17,7 @@ const Explore: React.FC = () => {
       </Helmet>
 
       <Container maxWidth="lg">
-        <Player source="http://localhost:8003/stream.mpd" />
+        <Player source="http://www.bok.net/dash/tears_of_steel/cleartext/stream.mpd" />
         <List>
           {
             medias.map((_, index) => (
