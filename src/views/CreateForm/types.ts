@@ -8,7 +8,7 @@ export interface RoyaltySet {
 
 export interface PayableValue {
   payToken: string;
-  amount: number;
+  amount?: number;
 }
 
 export interface CreateFormData {
@@ -30,6 +30,7 @@ export interface CreateFormData {
 
   // ---- metadata
   title?: string;
+  description?: string;
 
   // automatically set when user is connected
   readonly author: string;

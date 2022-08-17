@@ -12,10 +12,10 @@ export default () => {
     <Box>
       <TextField
         label="Sale Price"
-        value={values.salePrice || ''}
+        value={values.salePrice?.amount || ''}
         sx={{ my: 1, width: '20ch' }}
         onChange={(e) => {
-          setFieldValue('salePrice', e.target.value);
+          setFieldValue('salePrice.amount', e.target.value);
         }}
         InputProps={{
           sx: { textAlign: 'right' },

@@ -1,4 +1,7 @@
 {
+  "globals": {
+    "fetch": false
+  },
   "env": {
     "browser": true,
     "jest": true,

@@ -4,6 +4,7 @@ import { FileRejection } from 'react-dropzone';
 import { Uploader } from '@elacity-js/uikit';
 import { Theme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { CreateFormData } from './types';
 
@@ -70,6 +71,29 @@ export default () => {
             </Typography>
           )
         }
+      </Box>
+      <Box sx={{ mt: 3 }}>
+        <TextField
+          label="Title *"
+          value={values.title || ''}
+          sx={{ my: 1, width: '40ch' }}
+          onChange={(e) => {
+            setFieldValue('title', e.target.value);
+          }}
+        />
+      </Box>
+      <Box>
+        <TextField
+          multiline
+          rows={4}
+          label="Caption"
+          placeholder="Write media description here..."
+          value={values.description || ''}
+          sx={{ my: 1, width: '40ch' }}
+          onChange={(e) => {
+            setFieldValue('description', e.target.value);
+          }}
+        />
       </Box>
     </Box>
   );

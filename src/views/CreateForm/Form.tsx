@@ -1,6 +1,9 @@
 /* eslint-disable max-len */
 import React from 'react';
 import { Formik, Form } from 'formik';
+import { RouterLink } from '@elacity-js/uikit';
+import { Theme, styled } from '@mui/material/styles';
+import CircularProgress from '@mui/material/CircularProgress';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
@@ -11,14 +14,16 @@ import MuiStepConnector, { stepConnectorClasses } from '@mui/material/StepConnec
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import { styled } from '@mui/material/styles';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import CancelIcon from '@mui/icons-material/Cancel';
 import { DistributionMethod, Label } from 'src/lib/scm';
+import { ClassicUploader } from 'src/lib/uploader';
 import { useCreateFormStep, FormStep } from './CreateStep';
 import FormStepTemplate from './FormStepTemplate';
 import FormStepRoyalty from './FormStepRoyalty';
 import FormStepSaleTerm from './FormStepSaleTerm';
 import FormStepUpload from './FormStepUpload';
+import useHandler, { HandlerStatus } from './handler';
 import { CreateFormData } from './types';
 
 const Wrapper = styled('div')(({ theme }) => ({
@@ -59,13 +64,13 @@ const steps: FormStep[] = [
     Component: FormStepTemplate,
   },
   {
-    label: 'Setup parties for Royalty Distribution',
+    label: 'Parties & Royalty Distribution',
     description:
       'Please definie address and royalty (%) for each party. Make sure total match 100%',
     Component: FormStepRoyalty,
   },
   {
-    label: 'Setup Sales Terms',
+    label: 'Sales Terms',
     description: 'Set price and other terms for the sale',
     Component: FormStepSaleTerm,
   },
@@ -78,6 +83,9 @@ const steps: FormStep[] = [
 
 const CreateForm: React.FC = () => {
   const { activeStep, handleBack, handleNext } = useCreateFormStep(0);
+  const { handlePayload, status, outcome } = useHandler({
+    uploader: new ClassicUploader(process.env.REACT_APP_BACKEND_URL),
+  });
 
   const initialValues: CreateFormData = {
     templateRaw: '',
@@ -85,6 +93,9 @@ const CreateForm: React.FC = () => {
     label: Label.SELF,
     royalties: [],
     author: '',
+    salePrice: {
+      payToken: '0x0000000000000000000000000000000000000000',
+    },
   };
 
   return (
@@ -94,6 +105,7 @@ const CreateForm: React.FC = () => {
           initialValues={initialValues}
           onSubmit={async (values: CreateFormData) => {
             console.log({ values });
+            await handlePayload(values);
             handleNext();
           }}
         >
@@ -121,6 +133,9 @@ const CreateForm: React.FC = () => {
                             onClick={index === steps.length - 1 ? submitForm : handleNext}
                             sx={{ mt: 1, mr: 1 }}
                             disabled={isSubmitting}
+                            startIcon={
+                              isSubmitting ? (<CircularProgress size="1rem" />) : null
+                            }
                           >
                             {index === steps.length - 1 ? 'Complete & Deploy' : 'Continue'}
                           </Button>
@@ -148,8 +163,24 @@ const CreateForm: React.FC = () => {
                     justifyContent: 'flex-start',
                   }}
                 >
-                  <CheckCircleIcon color="success" sx={{ fontSize: '3rem', mr: 1.5 }} />
-                  <Typography>Your media has been successfully uploaded and deployed</Typography>
+                  {
+                    status === HandlerStatus.SUCCEED ? (
+                      <>
+                        <CheckCircleIcon color="success" sx={{ fontSize: '3rem', mr: 1.5 }} />
+                        <Typography component="div" sx={{ '& a': { color: (t: Theme) => t.palette.primary.main, textDecoration: 'none' } }}>
+                          Your media has been successfully uploaded and deployed
+                          <br />
+                          <RouterLink to={`/view/ipfs:${outcome}`}>{outcome}</RouterLink>
+                        </Typography>
+                      </>
+                    ) : (
+                      <>
+                        <CancelIcon color="error" sx={{ fontSize: '3rem', mr: 1.5 }} />
+                        <Typography>An error occured during your upload</Typography>
+                        <Button onClick={handleBack} variant="outlined">Back</Button>
+                      </>
+                    )
+                  }
                 </Paper>
               )}
             </Form>
