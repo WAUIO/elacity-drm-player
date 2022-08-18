@@ -1,6 +1,8 @@
 /* eslint-disable max-len */
 import React from 'react';
-import { Formik, Form } from 'formik';
+import {
+  Formik, Form, FormikErrors, FormikHelpers,
+} from 'formik';
 import { RouterLink } from '@elacity-js/uikit';
 import { Theme, styled } from '@mui/material/styles';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -82,12 +84,75 @@ const steps: FormStep[] = [
   },
 ];
 
+const formValidator = (step: number) => async (values: CreateFormData) => {
+  const errors: FormikErrors<CreateFormData> = {};
+
+  if (step >= 0) {
+    // general infrmation
+    const {
+      title,
+      mediaFile,
+      thumbnail,
+    } = values;
+    if (!title) {
+      errors.title = 'Title is required';
+    }
+    if (!mediaFile) {
+      errors.mediaFile = 'Please upload your media file to pursue';
+    }
+    if (!thumbnail) {
+      errors.thumbnail = 'Thumbnail is required';
+    }
+  }
+
+  if (step >= 1) {
+    // template selection
+    // nothing for now
+  }
+
+  if (step >= 2) {
+    // royalties
+    // nothing for now
+    let royaltiesHasErr = false;
+    values.royalties.forEach((rset) => {
+      if (rset.address === '') {
+        royaltiesHasErr = true;
+      }
+    });
+    if (royaltiesHasErr) {
+      errors.royalties = 'Please fill in all beneficiaries address';
+    }
+  }
+
+  if (step >= 3) {
+    if (!values.salePrice || values.salePrice?.amount.toString().length === 0) {
+      errors.salePrice.amount = 'Price is required';
+    }
+  }
+
+  return errors;
+};
+
 const CreateForm: React.FC = () => {
   const { wrapInConnector } = useConnector();
-  const { activeStep, handleBack, handleNext } = useCreateFormStep(0);
+  const { activeStep, handleBack, handleNext: _handleNext } = useCreateFormStep(0);
   const { handlePayload, status, outcome } = useHandler({
     uploader: new ClassicUploader(process.env.REACT_APP_BACKEND_URL),
   });
+
+  const handleNext = React.useCallback(
+    (fn: FormikHelpers<CreateFormData>['validateForm']) => async () => {
+      try {
+        const errors = await fn();
+        if (Object.entries(errors).length === 0) {
+          _handleNext();
+        }
+      } catch (e) {
+        console.warn('validation did not pass');
+      }
+    },
+    []
+  );
 
   const initialValues: CreateFormData = {
     templateRaw: '',
@@ -105,13 +170,16 @@ const CreateForm: React.FC = () => {
       <Container maxWidth="md">
         <Formik
           initialValues={initialValues}
+          validate={formValidator(activeStep)}
+          validateOnChange
+          validateOnBlur
           onSubmit={async (values: CreateFormData) => {
             console.log({ values });
             await handlePayload(values);
-            handleNext();
+            _handleNext();
           }}
         >
-          {({ submitForm, handleSubmit, isSubmitting }) => (
+          {({ submitForm, handleSubmit, isSubmitting, validateForm }) => (
             <Form onSubmit={handleSubmit}>
               <Stepper activeStep={activeStep} orientation="vertical" connector={<StepConnector />}>
                 {steps.map(({ Component, ...step }, index) => (
@@ -132,7 +200,7 @@ const CreateForm: React.FC = () => {
                         <div>
                           <Button
                             variant="contained"
-                            onClick={index === steps.length - 1 ? wrapInConnector(submitForm) : handleNext}
+                            onClick={index === steps.length - 1 ? wrapInConnector(submitForm) : handleNext(validateForm)}
                             sx={{ mt: 1, mr: 1 }}
                             disabled={isSubmitting}
                             startIcon={

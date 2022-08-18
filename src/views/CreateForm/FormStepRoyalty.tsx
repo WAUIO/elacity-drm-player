@@ -9,7 +9,7 @@ import { CreateFormData } from './types';
 
 export default () => {
   const mounted = useMounted();
-  const { values, setFieldValue, setErrors } = useFormikContext<CreateFormData>();
+  const { values, setFieldValue, errors, setErrors } = useFormikContext<CreateFormData>();
 
   React.useEffect(() => {
     if ((values?.templateRaw || '').length === 0) {
@@ -52,10 +52,11 @@ export default () => {
               onChange={(e) => {
                 setFieldValue(`royalties[${index}].address`, e.target.value);
               }}
+              error={Boolean(errors.royalties)}
             />
             <TextField
               label="Royalty"
-              sx={{ m: 1, width: '10ch', textAlign: 'right' }}
+              sx={{ m: 1, width: '10ch', textAlign: 'right', display: 'none' }}
               value={royalty}
               InputProps={{
                 sx: { textAlign: 'right' },

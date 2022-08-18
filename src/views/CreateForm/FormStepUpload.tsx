@@ -80,6 +80,8 @@ export default () => {
           onChange={(e) => {
             setFieldValue('title', e.target.value);
           }}
+          error={Boolean(errors.title)}
+          helperText={errors.title}
         />
       </Box>
       <Box>

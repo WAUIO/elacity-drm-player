@@ -21,6 +21,7 @@ const PlayerContainer = styled(Box)(({ theme }) => ({
   width: '100%',
   maxWidth: 620,
   minHeight: 320,
+  maxHeight: 600,
   '& video': {
     margin: theme.spacing(0, 'auto'),
     width: '100%',

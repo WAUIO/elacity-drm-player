@@ -6,7 +6,7 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { CreateFormData } from './types';
 
 export default () => {
-  const { values, setFieldValue } = useFormikContext<CreateFormData>();
+  const { values, setFieldValue, errors } = useFormikContext<CreateFormData>();
 
   return (
     <Box>
@@ -24,6 +24,8 @@ export default () => {
           },
           endAdornment: <InputAdornment position="start">ELA</InputAdornment>,
         }}
+        error={Boolean(errors.salePrice?.amount)}
+        helperText={errors.salePrice?.amount}
       />
     </Box>
   );
