@@ -14,8 +14,27 @@ export interface MediaContractObject {
   }
 }
 
+export interface IDeonticSpecification {
+  uri: string;
+  receiver: string;
+}
+
+export interface IObjectSpecification {
+  uri: string;
+  receiver: string;
+}
+
+export interface ISmartContractSpecification {
+  identifier: string;
+  parties: Record<string, string>;
+  deontics: Record<string, IDeonticSpecification>;
+  objects: Record<string, IObjectSpecification>;
+  incomePercentage?: Record<string, Record<string, number>>;
+  contentURI?: string;
+  hash?: string;
+}
+
 export interface ContractGenerator<T> {
-
   generateContractualObjects(input: T): Promise<any>;
-
+  generateContractSpecification?(input: T): Promise<ISmartContractSpecification>;
 }

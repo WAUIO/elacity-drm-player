@@ -3,10 +3,11 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable max-len */
 import {
-  RDFType, ContractGenerator, DistributionMethod, Label,
+  RDFType, ContractGenerator, DistributionMethod, Label, ISmartContractSpecification,
 } from '../common';
+import sccGenerate from './scc.generator';
 import download_biglabel from './templates/use-case-download-big-label';
-import download_nolabel from './templates/use-case-download-no-label';
+import download_nolabel from './templates/video-download-no-label';
 import download_smalllabel from './templates/use-case-download-small-label';
 import stream_biglabel from './templates/use-case-stream-big-label';
 import stream_nolabel from './templates/use-case-stream-no-label';
@@ -37,6 +38,25 @@ class MCOApi implements ContractGenerator<RDFType> {
     });
 
     return r.json();
+  }
+
+  /**
+   * Generate a Smart Contract specification from a given RDF input.
+   *
+   * @todo: Implement this method, for now we will just return a dummy specification.
+   *
+   * @param input
+   * @returns
+   */
+  async generateContractSpecification(input: string): Promise<ISmartContractSpecification> {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const contractualObjects: {contracts?: any[]} = await this.generateContractualObjects(input);
+
+    if (!contractualObjects || contractualObjects?.contracts?.length === 0) {
+      return Promise.reject(new Error('No contractual object generated'));
+    }
+
+    return sccGenerate(contractualObjects.contracts[0]) as ISmartContractSpecification;
   }
 
   async loadTemplate(distribution: DistributionMethod, label: Label): Promise<RDFType> {

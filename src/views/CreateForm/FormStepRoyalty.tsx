@@ -12,33 +12,33 @@ export default () => {
   const { values, setFieldValue, setErrors } = useFormikContext<CreateFormData>();
 
   React.useEffect(() => {
-    if (mounted?.current) {
-      if ((values?.templateRaw || '').length === 0) {
-        mcoApi.loadTemplate(values.distributionMethod, values.label).then(
-          (templateRaw: string) => setFieldValue('templateRaw', templateRaw)
-        );
-      } else {
-        mcoApi.generateContractualObjects(values.templateRaw)
-          .then((response) => {
-            console.log('Media Contractual Objects', response);
-            if ((response?.contracts || []).length > 0) {
-              setFieldValue('royalties', Object.entries(response?.contracts[0].parties || []).map(
-                // @ts-ignore
-                ([_, { metadata }], i) => ({
-                  identifier: metadata?.['rdfs:label'],
-                  royalty: 0,
-                  address: '',
-                  ...values.royalties[i] || {},
-                })
-              ));
-            }
-          })
-          .catch((e: Error) => {
-            setErrors({ royalties: `Unable to parse RDF content correctly: ${e.message}` });
-          });
-      }
+    if ((values?.templateRaw || '').length === 0) {
+      mcoApi.loadTemplate(values.distributionMethod, values.label).then(
+        (templateRaw: string) => setFieldValue('templateRaw', templateRaw)
+      );
+    } else {
+      mcoApi.generateContractualObjects(values.templateRaw)
+        .then((response) => {
+          console.log('Media Contractual Objects', response);
+          if ((response?.contracts || []).length > 0) {
+            setFieldValue('royalties', Object.entries(response?.contracts[0].parties || []).map(
+              // @ts-ignore
+              ([identifier, { metadata }], i) => ({
+                identifier,
+                // identifier: metadata?.['rdfs:label'],
+                royalty: 0,
+                address: '',
+                ...values.royalties[i] || {},
+              })
+            ));
+          }
+        })
+        .catch((e: Error) => {
+          console.error(e);
+          setErrors({ royalties: `Unable to parse RDF content correctly: ${e.message}` });
+        });
     }
-  }, [values.templateRaw]);
+  }, [values.templateRaw, mounted?.current]);
 
   return (
     <Box sx={{ my: 1 }}>

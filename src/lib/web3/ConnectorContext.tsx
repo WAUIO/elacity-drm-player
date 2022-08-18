@@ -358,6 +358,7 @@ interface ConnectorProviderProps extends PartialRedirectProps {}
 export const ConnectorProvider = ({ children, redirectTo }: React.PropsWithChildren<ConnectorProviderProps>) => {
   const [open, setOpen] = React.useState(false);
   const { account, active, deactivate } = useWeb3React();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars-experimental
   const { tried, ready } = useEagerConnect();
   useInactiveListener(!tried);
 
@@ -394,7 +395,7 @@ export const ConnectorProvider = ({ children, redirectTo }: React.PropsWithChild
         // of the process and to persist data got during the process
         connect: async () => handleOpen(),
         disconnect: async () => deactivate(),
-        isAuthenticated: active && account?.length > 0 && ready,
+        isAuthenticated: active && account?.length > 0,
         // @todo: load profile from somewhere (localstorage for eg after storing all data during connection)
         profile: {
           alias: 'A',

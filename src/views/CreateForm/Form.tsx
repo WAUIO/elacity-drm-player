@@ -18,6 +18,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { DistributionMethod, Label } from 'src/lib/scm';
 import { ClassicUploader } from 'src/lib/uploader';
+import { useConnector } from 'src/lib/web3/ConnectorContext';
 import { useCreateFormStep, FormStep } from './CreateStep';
 import FormStepTemplate from './FormStepTemplate';
 import FormStepRoyalty from './FormStepRoyalty';
@@ -82,6 +83,7 @@ const steps: FormStep[] = [
 ];
 
 const CreateForm: React.FC = () => {
+  const { wrapInConnector } = useConnector();
   const { activeStep, handleBack, handleNext } = useCreateFormStep(0);
   const { handlePayload, status, outcome } = useHandler({
     uploader: new ClassicUploader(process.env.REACT_APP_BACKEND_URL),
@@ -130,7 +132,7 @@ const CreateForm: React.FC = () => {
                         <div>
                           <Button
                             variant="contained"
-                            onClick={index === steps.length - 1 ? submitForm : handleNext}
+                            onClick={index === steps.length - 1 ? wrapInConnector(submitForm) : handleNext}
                             sx={{ mt: 1, mr: 1 }}
                             disabled={isSubmitting}
                             startIcon={

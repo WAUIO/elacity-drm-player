@@ -19,6 +19,7 @@
     "@ethersproject/contracts": "^5.6.2",
     "@ethersproject/hash": "^5.6.1",
     "@ethersproject/providers": "^5.6.8",
+    "@ethersproject/strings": "^5.6.1",
     "@ethersproject/units": "^5.6.1",
     "@ethersproject/wallet": "^5.6.2",
     "@iconify/icons-eva": "^1.1.0",

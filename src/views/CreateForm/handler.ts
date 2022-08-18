@@ -1,5 +1,10 @@
 import { useState } from 'react';
+import { useWeb3React } from '@web3-react/core';
+import useErrorHandler from 'src/hooks/useErrorHandler';
 import { IUploader, IFormTransformer } from '../../lib/uploader';
+import { SmartContractMediaDeployer } from '../../lib/scm/deployer';
+import { mcoApi } from '../../lib/scm/mco';
+import { useAddresses } from '../../lib/web3';
 import { CreateFormData } from './types';
 
 interface HandlerParams {
@@ -7,9 +12,10 @@ interface HandlerParams {
 }
 
 export enum HandlerStatus {
-  INITED = 'inited',
-  UP_THUMBNAIL = 'uploading_thumbnail',
-  UP_MEDIA = 'uploading_media',
+  INITED = 'Initialization',
+  DEPLOY = 'Contract Deployment',
+  UP_THUMBNAIL = 'Thumbnail Upload',
+  UP_MEDIA = 'Media Upload',
   SUCCEED = 'succeed',
   FAILED = 'failed',
 }
@@ -49,13 +55,61 @@ const mediaTransformer: IFormTransformer<Omit<CreateFormData, 'thumbnail'> & {th
   },
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const jsonTramsformer: IFormTransformer<any> = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  transform: async (payload: any) => {
+    const formData = new FormData();
+    const bytes = new TextEncoder().encode(
+      typeof payload === 'string'
+        ? payload
+        : JSON.stringify(payload)
+    );
+    formData.append('data', new Blob([bytes], { type: 'application/json' }));
+    return formData;
+  },
+};
+
 export default ({ uploader }: HandlerParams) => {
+  const { library, account } = useWeb3React();
+  const { throwError } = useErrorHandler();
+  const { ISSUER_TOKEN } = useAddresses();
   const [status, setStatus] = useState<HandlerStatus>(null);
   const [outcome, setOutcome] = useState<string>(null);
 
   const handlePayload = async ({ thumbnail, title, ...payload }: CreateFormData) => {
+    setStatus(HandlerStatus.INITED);
     try {
-      setStatus(HandlerStatus.INITED);
+      // 0. deploy contract
+      const spec = await mcoApi.generateContractSpecification(payload.templateRaw);
+      setStatus(HandlerStatus.DEPLOY);
+      const deployer = new SmartContractMediaDeployer({
+        account,
+        issuer: ISSUER_TOKEN,
+        provider: library?.getSigner(),
+        tokenURIHasher: async (metadata: string) => {
+          const response0 = await uploader.upload<{path: string}[]>(await jsonTramsformer.transform(metadata), {
+            headers: {
+              'X-Target-Flow': 'ipfs',
+            },
+          });
+
+          return response0[0].path;
+        },
+      });
+
+      // NOTE. Replace .parties with values set from royalties form
+      await deployer.deploy({
+        ...spec,
+        parties: {
+          ...spec.parties,
+          ...(
+            Object.fromEntries(
+              (payload.royalties).map(({ identifier, address }) => [identifier, address])
+            )
+          ),
+        },
+      });
 
       // 1. upload thumbnail -> replace .thumnail with returned CID of the file
       const thumnailFormData = await thumbnailTransformer.transform({ thumbnail, title });
@@ -86,6 +140,7 @@ export default ({ uploader }: HandlerParams) => {
 
       return response2;
     } catch (e) {
+      throwError(e);
       setStatus(HandlerStatus.FAILED);
       return Promise.reject(e);
     }

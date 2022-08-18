@@ -126,3 +126,13 @@ export function useInactiveListener(suppress = false) {
     return () => {};
   }, [active, error, suppress, activate]);
 }
+
+export const useAddresses = () => {
+  const { chainId } = useWeb3React();
+
+  return {
+    ISSUER_TOKEN: chainId === 20
+      ? process.env.REACT_APP_ISSUER_TOKEN_MAINNET
+      : process.env.REACT_APP_ISSUER_TOKEN_TESTNET,
+  };
+};
