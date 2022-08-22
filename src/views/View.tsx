@@ -1,5 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
+import { useWeb3React } from '@web3-react/core';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import {
@@ -7,10 +8,12 @@ import {
 } from '@mui/material';
 import Player from 'src/components/Media/MediaPlayer';
 import MediaItemList from 'src/components/Media/MediaItemList';
+import useMediaLoader from 'src/hooks/useMediaLoader';
 
 const Explore: React.FC = () => {
   const { id } = useParams();
-  const medias = (new Array(5)).fill(0);
+  const { account } = useWeb3React();
+  const result = useMediaLoader('getOwnerAssets', [account]);
 
   const mediaURL = React.useMemo<string>(() => {
     if (id?.startsWith('ipfs:')) {
@@ -30,9 +33,14 @@ const Explore: React.FC = () => {
         <Player source={mediaURL} />
         <List>
           {
-            medias.map((_, index) => (
+            (result?.items || []).map((item, index) => (
               <ListItem key={index}>
-                <MediaItemList id={(index + 1).toString()} />
+                <MediaItemList
+                  id={`ipfs:${item.mediaURL}`}
+                  title={item?.name}
+                  description={item?.description || ''}
+                  image={item?.image || ''}
+                />
               </ListItem>
             ))
           }

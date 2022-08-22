@@ -210,7 +210,7 @@ const CreateForm: React.FC = () => {
                             {index === steps.length - 1 ? 'Complete & Deploy' : 'Continue'}
                           </Button>
                           <Button
-                            disabled={index === 0}
+                            disabled={index === 0 || isSubmitting}
                             onClick={handleBack}
                             sx={{ mt: 1, mr: 1 }}
                           >

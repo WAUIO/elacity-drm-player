@@ -10,25 +10,28 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
 interface MediaItemProps {
   id: string;
+  image: string;
+  title: string;
+  description: string;
 }
 
-export default function MediaItemList({ id }: MediaItemProps) {
+export default function MediaItemList({ id, image, title, description }: MediaItemProps) {
   return (
     <Card sx={{ display: 'flex' }}>
       <CardMedia
         component="img"
         sx={{ width: 151 }}
-        image="https://mui.com/static/images/cards/live-from-space.jpg"
+        image={image}
         alt="Live from space album cover"
       />
       <Box sx={{ display: 'flex', flexDirection: 'column' }}>
         <CardContent sx={{ flex: '1 0 auto' }}>
-          <Typography component="div" variant="h5">
-            Excepteur sint occaecat cupidatat non proident
+          <Typography component="div" variant="h5" fontWeight={500}>
+            {title}
           </Typography>
           <Typography variant="body2" color="text.secondary" component="div">
-            Lorem ipsum is placeholder text commonly used in the graphic, print,
-            and publishing industries for previewing layouts and visual mockups.
+            {description?.substring(0, 130) || ' '}
+            {description?.length > 130 ? '...' : ''}
           </Typography>
         </CardContent>
       </Box>

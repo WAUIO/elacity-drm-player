@@ -45,11 +45,12 @@ export default function MediaCard({
           image={image}
         />
         <CardContent>
-          <Typography variant="subtitle1">
+          <Typography variant="subtitle1" fontWeight={500}>
             {name}
           </Typography>
-          <Typography variant="body2" color="text.secondary">
-            {description}
+          <Typography variant="body2" color="text.secondary" sx={{ minHeight: 60 }}>
+            {description?.substring(0, 130) || ' '}
+            {description?.length > 130 ? '...' : ''}
           </Typography>
         </CardContent>
       </CardActionArea>

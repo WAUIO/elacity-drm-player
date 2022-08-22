@@ -6,7 +6,7 @@ import MediaCard from 'src/components/Media/MediaCard';
 import useMediaLoader from 'src/hooks/useMediaLoader';
 
 const Explore: React.FC = () => {
-  const result = useMediaLoader();
+  const result = useMediaLoader('getAssets', [0, Infinity]);
 
   console.log({ result });
 

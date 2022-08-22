@@ -18,8 +18,22 @@ class MediaToken extends Erc721ContractType<MediaTokenAsset> {
   }
 }
 
-export default () => {
-  const { chainId, account, library } = useWeb3React();
+const mediaFormatter = async (item: MediaTokenAsset) => {
+  const rs = await fetch(item.tokenURI);
+  const metadata = await rs.json();
+
+  return {
+    ...item,
+    name: metadata.name,
+    description: metadata.description,
+    image: `https://ipfs.ela.city/ipfs/${metadata.image}`,
+    // eslint-disable-next-line camelcase
+    mediaURL: metadata.attributes.find(({ trait_type }) => trait_type === 'Media')?.value,
+  };
+};
+
+export default (method: string, args: BigNumberish[]) => {
+  const { chainId, library } = useWeb3React();
   const { MEDIA_TOKEN } = useAddresses();
   const [result, setResult] = useState<CollectionOf<MediaTokenAsset>>({
     total: 0,
@@ -48,28 +62,12 @@ export default () => {
   }, [chainId, library]);
 
   useEffect(() => {
-    contract?.getOwnerAssets(account).promise().then(
+    contract?.[method](...args).promise().then(
       async (re: CollectionOf<MediaTokenAsset>) => {
         setResult({
           ...re,
           items: await Promise.all(
-            re.items.map(
-              async (item: MediaTokenAsset) => {
-                const rs = await fetch(item.tokenURI);
-                const metadata = await rs.json();
-
-                console.log({ item, metadata });
-
-                return {
-                  ...item,
-                  name: metadata.name,
-                  description: metadata.description,
-                  image: `https://ipfs.io/ipfs/${metadata.image}`,
-                  // eslint-disable-next-line camelcase
-                  mediaURL: metadata.attributes.find(({ trait_type }) => trait_type === 'Media')?.value,
-                };
-              }
-            )
+            re.items.map(mediaFormatter)
           ),
         });
       }
