@@ -13,8 +13,11 @@ import { red } from '@mui/material/colors';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { MediaTokenAsset } from 'src/types';
 
-export default function MediaCard() {
+export default function MediaCard({
+  name, description, image, mediaURL,
+}: MediaTokenAsset) {
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardHeader
@@ -35,20 +38,18 @@ export default function MediaCard() {
         title="Duis reprehenderit"
         subheader="June 14, 2022"
       />
-      <CardActionArea component={RouterLink} to="/view/1234567">
+      <CardActionArea component={RouterLink} to={`/view/ipfs:${mediaURL}`}>
         <CardMedia
           component="img"
           height="194"
-          image="https://mui.com/static/images/cards/paella.jpg"
-          alt="Paella dish"
+          image={image}
         />
         <CardContent>
           <Typography variant="subtitle1">
-            Consectetur adipiscing elit, sed do eiusmod tempor
+            {name}
           </Typography>
           <Typography variant="body2" color="text.secondary">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua...
+            {description}
           </Typography>
         </CardContent>
       </CardActionArea>

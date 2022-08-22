@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { useWeb3React } from '@web3-react/core';
 import useErrorHandler from 'src/hooks/useErrorHandler';
 import { IUploader, IFormTransformer } from '../../lib/uploader';
-import { SmartContractMediaDeployer } from '../../lib/scm/deployer';
+import {
+  SmartContractMediaDeployer, IDeployer, MediaMinter,
+} from '../../lib/scm/deployer';
 import { mcoApi } from '../../lib/scm/mco';
 import { useAddresses } from '../../lib/web3';
 import { CreateFormData } from './types';
@@ -71,9 +73,9 @@ const jsonTramsformer: IFormTransformer<any> = {
 };
 
 export default ({ uploader }: HandlerParams) => {
-  const { library, account } = useWeb3React();
+  const { library, account, chainId } = useWeb3React();
   const { throwError } = useErrorHandler();
-  const { ISSUER_TOKEN } = useAddresses();
+  const { ISSUER_TOKEN, MEDIA_TOKEN } = useAddresses();
   const [status, setStatus] = useState<HandlerStatus>(null);
   const [outcome, setOutcome] = useState<string>(null);
 
@@ -83,7 +85,7 @@ export default ({ uploader }: HandlerParams) => {
       // 0. deploy contract
       const spec = await mcoApi.generateContractSpecification(payload.templateRaw);
       setStatus(HandlerStatus.DEPLOY);
-      const deployer = new SmartContractMediaDeployer({
+      const deployer: IDeployer = new SmartContractMediaDeployer({
         account,
         issuer: ISSUER_TOKEN,
         provider: library?.getSigner(),
@@ -99,7 +101,7 @@ export default ({ uploader }: HandlerParams) => {
       });
 
       // NOTE. Replace .parties with values set from royalties form
-      await deployer.deploy({
+      const contract = await deployer.deploy({
         ...spec,
         parties: {
           ...spec.parties,
@@ -133,7 +135,33 @@ export default ({ uploader }: HandlerParams) => {
         },
       });
 
-      console.log({ response1, response2 });
+      // Mint the media as an NFT on MediaToken contract
+      const response3 = await uploader.upload<{path: string}[]>(await jsonTramsformer.transform(JSON.stringify({
+        name: title,
+        description: payload.description,
+        image: response1[0].path,
+        attributes: [
+          { trait_type: 'Thumbnail', value: response1[0].path },
+          { trait_type: 'Media', value: response2[0].path },
+          { trait_type: 'MediaContract', value: MEDIA_TOKEN },
+          { trait_type: 'TransactionHash', value: contract.transactionHash },
+          { trait_type: 'ChainId', value: chainId },
+          { trait_type: 'Author', value: account },
+          { trait_type: 'Distribution', value: payload.distributionMethod },
+          { trait_type: 'LabelType', value: payload.label },
+          { trait_type: 'Specification', value: JSON.parse(spec.contentURI) },
+        ],
+      })), {
+        headers: {
+          'X-Target-Flow': 'ipfs',
+        },
+      });
+      const receipt = await (new MediaMinter({
+        provider: library?.getSigner(),
+        address: MEDIA_TOKEN,
+      })).mint(account, response3[0].path);
+
+      console.log({ response1, response2, response3, receipt });
 
       setStatus(HandlerStatus.SUCCEED);
       setOutcome(response2[0].path);

@@ -134,5 +134,8 @@ export const useAddresses = () => {
     ISSUER_TOKEN: chainId === 20
       ? process.env.REACT_APP_ISSUER_TOKEN_MAINNET
       : process.env.REACT_APP_ISSUER_TOKEN_TESTNET,
+    MEDIA_TOKEN: chainId === 20
+      ? process.env.REACT_APP_MEDIA_TOKEN_MAINNET
+      : process.env.REACT_APP_MEDIA_TOKEN_TESTNET,
   };
 };

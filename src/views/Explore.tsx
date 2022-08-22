@@ -3,9 +3,12 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Box, Grid } from '@mui/material';
 import MediaCard from 'src/components/Media/MediaCard';
+import useMediaLoader from 'src/hooks/useMediaLoader';
 
 const Explore: React.FC = () => {
-  const medias = (new Array(12)).fill(0);
+  const result = useMediaLoader();
+
+  console.log({ result });
 
   return (
     <Box>
@@ -16,9 +19,9 @@ const Explore: React.FC = () => {
       <Box>
         <Grid container spacing={1}>
           {
-            medias.map((v, index) => (
-              <Grid key={index + v} item xs={6} sm={4} md={3} xl={2}>
-                <MediaCard />
+            result.items.map((item, index) => (
+              <Grid key={index + 1} item xs={6} sm={4} md={3} xl={2}>
+                <MediaCard {...item} />
               </Grid>
             ))
           }
