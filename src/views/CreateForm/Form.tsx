@@ -69,7 +69,7 @@ const steps: FormStep[] = [
   {
     label: 'Parties & Royalty Distribution',
     description:
-      'Please definie address and royalty (%) for each party. Make sure total match 100%',
+      'Please define addresses for each party',
     Component: FormStepRoyalty,
   },
   {
