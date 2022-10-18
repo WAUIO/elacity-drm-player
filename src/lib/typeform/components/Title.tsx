@@ -4,9 +4,10 @@ import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
 
 interface TitleProps {
   indicator?: number;
+  required?: boolean;
 }
 
-export const Title = ({ indicator, children }: PropsWithChildren<TitleProps>) => (
+export const Title = ({ indicator, required, children }: PropsWithChildren<TitleProps>) => (
   <Box display="flex">
     {indicator && (
       <Box display="flex" p={0.5}>
@@ -14,7 +15,11 @@ export const Title = ({ indicator, children }: PropsWithChildren<TitleProps>) =>
         <ArrowRightAltIcon color="primary" fontSize="small" sx={{ pt: 0.5 }} />
       </Box>
     )}
-    <Typography variant="h5">{children}</Typography>
+    <Typography variant="h5">
+      {children}
+      {' '}
+      {required ? '*' : null }
+    </Typography>
   </Box>
 );
 

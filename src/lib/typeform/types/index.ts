@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { ButtonProps, InputBaseProps } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
+import { SvgIconComponent } from '@mui/icons-material';
 
 export interface Animation {
     type: 'slide' | 'fade' | 'grow';
@@ -45,9 +46,19 @@ export interface TextBlock {
     button: ButtonForm;
 }
 
+export interface SelectOptions {
+    KeyPressId: string;
+    value: string;
+    icon: SvgIconComponent;
+}
+
+export interface SelectForm extends InputForm {
+    options: SelectOptions[];
+}
+
 export interface SelectCardBlock {
     type: 'select-card';
-    input: InputForm;
+    input: SelectForm;
     button: ButtonForm;
 }
 

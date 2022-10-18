@@ -30,7 +30,7 @@ export const FormUIProvider: FC<PropsWithChildren<FormUIContextProps>> = ({ chil
   const [currentStep, setCurrentStep] = useState<FormStep>(steps[0]);
 
   // Override step transaction direction on click on the bottom controller up or down
-  const setDirection = (blocks: Block[], animationDirection?: string) => blocks.map((b) => ({ ...b, animation: { ...b.animation, props: { direction: animationDirection || 'up' } as TransitionProps } }));
+  const setDirection = (blocks: Block[], animationDirection?: string) => blocks.map((b) => ({ ...b, animation: b.animation ? { ...b.animation, props: { direction: animationDirection || 'up' } as TransitionProps } : null }));
 
   // Set what should be the current step with direction if specified
   const _setCurrentStep = (stepId: number, animationDirection?: string) => {
