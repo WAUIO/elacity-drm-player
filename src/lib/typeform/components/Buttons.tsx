@@ -77,8 +77,6 @@ export const BtnNext = ({ text, stepId, withIndicator, props }: BtnNextProps) =>
           variant="caption"
           sx={{
             p: 1,
-            display: 'flex',
-            justifyContent: 'center',
             '& > *': {
               fontWeight: 'bolder',
             },

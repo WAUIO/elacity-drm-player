@@ -1,6 +1,7 @@
-import { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { ButtonProps, InputBaseProps } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
+import { InlineUploaderProps } from '@elacity-js/uikit';
 
 export interface Animation {
     type: 'slide' | 'fade' | 'grow';
@@ -31,6 +32,7 @@ export interface InputForm extends InputBaseProps {
     indicator?: number;
     title: string;
     helptext?: string;
+    caption?: string | React.ReactNode;
 }
 
 export interface StaticBlock {
@@ -51,4 +53,10 @@ export interface SelectCardBlock {
     button: ButtonForm;
 }
 
-export type FormBlock = StaticBlock | TextBlock | SelectCardBlock;
+export interface UploaderBlock {
+    type: 'uploader';
+    input: InputForm & InlineUploaderProps;
+    button?: ButtonForm;
+}
+
+export type FormBlock = StaticBlock | TextBlock | SelectCardBlock | UploaderBlock;

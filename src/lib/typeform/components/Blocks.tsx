@@ -7,10 +7,11 @@ import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import useFormUI from '../hooks/useFormUI';
 import {
-  Block, SelectCardBlock, StaticBlock,
+  Block, SelectCardBlock, StaticBlock, UploaderBlock,
 } from '../types';
 import Static from './fields/Static';
 import CardSelect from './fields/CardSelect';
+import Uploader from './fields/Uploader';
 import Transition from './Transition';
 import useViewport from '../hooks/useViewport';
 
@@ -55,6 +56,13 @@ const Blocks = () => {
       break;
     case 'text':
       section = 'test';
+      break;
+    case 'uploader':
+      section = (
+        <Uploader
+          {...content as UploaderBlock}
+        />
+      );
       break;
     default:
       break;
