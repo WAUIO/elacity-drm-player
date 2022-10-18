@@ -11,8 +11,12 @@ import useFormUI from '../hooks/useFormUI';
 
 const BottomBox = styled(Box)(({ theme }) => ({
   position: 'fixed',
-  bottom: theme.spacing(2),
+  bottom: theme.spacing(10),
   right: theme.spacing(2),
+  [theme.breakpoints.down('sm')]: {
+    bottom: theme.spacing(1),
+    right: theme.spacing(1),
+  },
 }));
 
 /**
@@ -68,8 +72,8 @@ export const BtnNext = ({ text, stepId, withIndicator, props }: BtnNextProps) =>
   };
 
   return (
-    <Box display="flex" mt={3}>
-      <Button variant="contained" size="large" {...props} onClick={onNext}>
+    <Box display="flex" mt={3} alignItems="center">
+      <Button variant="contained" size="large" onClick={onNext} {...props}>
         {text}
       </Button>
       {withIndicator && (

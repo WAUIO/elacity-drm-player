@@ -16,15 +16,13 @@ import Transition from './Transition';
 import useViewport from '../hooks/useViewport';
 
 const GridItem = styled(Grid)(() => ({
-  width: '100%',
-  minHeight: '100%',
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
 }));
 
 const GridContainer = styled(Grid)(() => ({
-  height: '100%',
+  height: 'calc(100vh - 136px)',
 }));
 
 const Blocks = () => {
@@ -73,7 +71,7 @@ const Blocks = () => {
 
   // Used only one grid in mobile view
   return (
-    <GridContainer container {...swipeHandlers}>
+    <GridContainer container {...swipeHandlers} spacing={1}>
       {isMobile && (
         <GridItem item xs={12}>
           {(currentStep?.blocks || []).map((block: Block) => (

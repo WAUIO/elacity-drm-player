@@ -42,18 +42,14 @@ export default [
         element: <Navigate to={baseURL('/create')} replace />,
       },
       {
-        path: 'create',
-        element: <View.Mint />,
-      },
-      {
         path: 'view/:id',
         element: <View.Player />,
       },
+      {
+        path: 'create',
+        element: <View.TypeformView />,
+      },
     ],
-  },
-  {
-    path: 'form',
-    element: <View.TypeformView />,
   },
   // other layouts
   {
