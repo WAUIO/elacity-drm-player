@@ -2,7 +2,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import {
-  styled, Theme, lighten,
+  styled, Theme, alpha,
 } from '@mui/material/styles';
 import { Box } from '@mui/material';
 import Typeform from 'src/lib/typeform';
@@ -263,13 +263,12 @@ const TypeformView = () => (
               content: {
                 type: 'uploader',
                 input: {
-                  indicator: 1,
                   title: 'Alright! Let\'s get your asset uploaded to the SmartWeb!',
                   caption: '[User select/drag n drop file]',
                   onDropped: () => {},
                   sx: {
                     border: (t: Theme) => `1px dashed ${t.palette.primary.main}`,
-                    bgcolor: (t: Theme) => lighten(t.palette.primary.light, 0.9),
+                    bgcolor: (t: Theme) => alpha(t.palette.primary.light, 0.1),
                   },
                 },
                 button: {
@@ -298,7 +297,6 @@ const TypeformView = () => (
               content: {
                 type: 'uploader',
                 input: {
-                  indicator: 1,
                   title: 'Please add a thumbnail image.',
                   caption: '[User adds thumbnail image]',
                   onDropped: () => {},
@@ -309,7 +307,7 @@ const TypeformView = () => (
                   },
                   sx: {
                     border: (t: Theme) => `1px dashed ${t.palette.primary.main}`,
-                    bgcolor: (t: Theme) => lighten(t.palette.primary.light, 0.9),
+                    bgcolor: (t: Theme) => alpha(t.palette.primary.light, 0.1),
                   },
                 },
                 button: {
