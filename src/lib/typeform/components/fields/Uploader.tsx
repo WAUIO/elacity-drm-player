@@ -5,6 +5,7 @@ import { Uploader, InlineUploaderProps } from '@elacity-js/uikit';
 import { UploaderBlock } from '../../types';
 import { BtnNext } from '../Buttons';
 import Title from '../Title';
+import Caption from '../Caption';
 
 export interface UploaderCardProps extends InlineUploaderProps {
   helpText?: string | React.ReactNode;
@@ -16,9 +17,9 @@ const UploaderCard = ({ input: { indicator, title, helptext, caption, maxSize, .
     <Title indicator={indicator}>{title}</Title>
     {
       caption && (
-        <Typography variant="body2">
+        <Caption variant="body2">
           {caption}
-        </Typography>
+        </Caption>
       )
     }
     <Uploader.Inline
