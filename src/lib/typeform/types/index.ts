@@ -9,19 +9,6 @@ export interface Animation {
     props?: TransitionProps
 }
 
-export interface Block {
-    key: string;
-    content: FormBlock;
-    animation?: Animation;
-}
-
-export interface FormStep {
-    id: number;
-    blocks: Block[];
-    isFirstStep?: boolean;
-    isLastStep?: boolean;
-}
-
 export interface ButtonForm {
     text: string;
     stepId?: number;
@@ -29,20 +16,21 @@ export interface ButtonForm {
     withIndicator?: boolean;
 }
 
-export interface InputForm extends InputBaseProps {
+export interface QuestionInputProps {
     indicator?: number;
     title: string;
-    helptext?: string;
+    helpText?: string;
     caption?: string | React.ReactNode;
 }
 
-export interface StaticBlock {
+export type InputForm = QuestionInputProps & InputBaseProps & {button?: ButtonForm};
+
+export interface StaticBlock extends Omit<InputForm, 'input'> {
     type: 'static';
     input: ReactNode;
-    button?: ButtonForm;
 }
 
-export interface TextBlock {
+export interface TextInputBlock extends InputForm {
     type: 'text';
     input: InputForm;
     button: ButtonForm;
@@ -64,10 +52,30 @@ export interface SelectCardBlock {
     button: ButtonForm;
 }
 
+export interface SelectChoiceBlock {
+    type: 'select-choice';
+    input: SelectForm & {multiple?: boolean};
+    button: ButtonForm;
+}
+
 export interface UploaderBlock {
     type: 'uploader';
-    input: InputForm & InlineUploaderProps;
+    input: QuestionInputProps & InlineUploaderProps;
     button?: ButtonForm;
 }
 
-export type FormBlock = StaticBlock | TextBlock | SelectCardBlock | UploaderBlock;
+export interface Block {
+    key: string;
+    content: FormBlock;
+    animation?: Animation;
+}
+
+export interface FormStep {
+    id: number;
+    blocks: Block[];
+    isFirstStep?: boolean;
+    isLastStep?: boolean;
+    animation?: Animation;
+}
+
+export type FormBlock = StaticBlock | TextInputBlock | SelectCardBlock | UploaderBlock | SelectChoiceBlock;

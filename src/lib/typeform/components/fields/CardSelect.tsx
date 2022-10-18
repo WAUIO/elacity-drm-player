@@ -7,21 +7,20 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import CheckIcon from '@mui/icons-material/Check';
 import { styled } from '@mui/material/styles';
-import { lighten, darken } from '@mui/material';
+import { darken, alpha } from '@mui/material';
 import Chip from '@mui/material/Chip';
 import { SelectCardBlock, SelectOptions } from '../../types';
-import { BtnNext } from '../Buttons';
-import Title from '../Title';
 import useSelectFn from '../../hooks/useSelectFn';
 
 const CardStyled = styled(Card)(({ theme }) => ({
   width: 174,
   minHeight: 200,
-  marginRight: theme.spacing(2),
-  background: lighten(theme.palette.primary.main, 0.8),
+  marginRight: theme.spacing(1),
+  marginBottom: theme.spacing(1),
+  background: alpha(theme.palette.primary.main, 0.1),
   cursor: 'pointer',
   '&:hover': {
-    background: lighten(theme.palette.primary.main, 0.5),
+    background: alpha(theme.palette.primary.main, 0.2),
   },
   '&.active': {
     borderColor: darken(theme.palette.primary.main, 0.2),
@@ -82,9 +81,11 @@ export const CustomCard = ({ icon: Icon, KeyPressId, value, isSelected, onSelect
     onClick={() => onSelect(KeyPressId)}
   >
     {isSelected ? <CardChecked><CheckedIconStyled fontSize="small" /></CardChecked> : <HideBox /> }
-    <CardContentStyled>
-      <Icon sx={{ fontSize: 125 }} />
-    </CardContentStyled>
+    {Icon && (
+      <CardContentStyled>
+        <Icon sx={{ fontSize: 125 }} />
+      </CardContentStyled>
+    )}
     <CardActions>
       <Box display="flex">
         <ChipStyled
@@ -99,7 +100,7 @@ export const CustomCard = ({ icon: Icon, KeyPressId, value, isSelected, onSelect
 
 interface CardSelectProps extends SelectCardBlock {}
 
-const CardSelect = ({ input, button }: CardSelectProps) => {
+const CardSelect = ({ input }: CardSelectProps) => {
   const { selected, onSelect, ref, onKeyPress } = useSelectFn();
 
   useEffect(() => {
@@ -114,8 +115,7 @@ const CardSelect = ({ input, button }: CardSelectProps) => {
         style={{ opacity: 0 }} ref={ref}
         onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => onKeyPress(e.key)}
       />
-      <Title indicator={input.indicator} required={input.required}>{input.title}</Title>
-      <Box display="flex" mt={1} flexWrap="nowrap">
+      <Box display="flex" mt={1} flexWrap="wrap">
         {input.options
           .map((opt) => (
             <CustomCard
@@ -126,7 +126,6 @@ const CardSelect = ({ input, button }: CardSelectProps) => {
             />
           ))}
       </Box>
-      {button && <BtnNext {...button} />}
     </Box>
   );
 };

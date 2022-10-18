@@ -1,5 +1,5 @@
+/* eslint-disable no-case-declarations */
 /* eslint-disable max-len */
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
 import Grid from '@mui/material/Grid';
 import { useSwipeable } from 'react-swipeable';
@@ -7,12 +7,21 @@ import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import useFormUI from '../hooks/useFormUI';
 import {
-  Block, SelectCardBlock, StaticBlock, UploaderBlock,
+  QuestionInputProps,
+  Block,
+  SelectCardBlock,
+  StaticBlock,
+  UploaderBlock,
+  TextInputBlock,
+  SelectChoiceBlock,
 } from '../types';
 import Static from './fields/Static';
 import CardSelect from './fields/CardSelect';
+import SelectChoice from './fields/SelectChoice';
 import Uploader from './fields/Uploader';
+import TextInput from './fields/TextInput';
 import Transition from './Transition';
+import Question from './Question';
 import useViewport from '../hooks/useViewport';
 
 const GridItem = styled(Grid)(() => ({
@@ -43,23 +52,56 @@ const Blocks = () => {
   const resolveBlockContent = ({ content }: Block) => {
     const { type } = content;
     let section = null;
+
     switch (type) {
     case 'static':
+      const staticBlock = content as StaticBlock;
       section = (
-        <Static {...content as StaticBlock} />
+        <Static {...staticBlock as StaticBlock} />
       );
       break;
     case 'select-card':
-      section = <CardSelect {...content as SelectCardBlock} />;
+      const scBlock = content as SelectCardBlock;
+      section = (
+        <Question
+          {...(scBlock.input as QuestionInputProps)}
+          button={scBlock.button}
+        >
+          <CardSelect {...scBlock as SelectCardBlock} />
+        </Question>
+      );
+      break;
+    case 'select-choice':
+      const selectBlock = content as SelectChoiceBlock;
+      section = (
+        <Question
+          {...(selectBlock.input as QuestionInputProps)}
+          button={selectBlock.button}
+        >
+          <SelectChoice {...selectBlock as SelectChoiceBlock} />
+        </Question>
+      );
       break;
     case 'text':
-      section = 'test';
+      const textBlock = content as TextInputBlock;
+      section = (
+        <Question
+          {...(textBlock.input as QuestionInputProps)}
+          button={textBlock.button}
+        >
+          <TextInput {...textBlock as TextInputBlock} />
+        </Question>
+      );
       break;
     case 'uploader':
+      const uploaderBlock = content as UploaderBlock;
       section = (
-        <Uploader
-          {...content as UploaderBlock}
-        />
+        <Question
+          {...(uploaderBlock.input as QuestionInputProps)}
+          button={uploaderBlock.button}
+        >
+          <Uploader {...uploaderBlock as UploaderBlock} />
+        </Question>
       );
       break;
     default:
@@ -71,29 +113,27 @@ const Blocks = () => {
 
   // Used only one grid in mobile view
   return (
-    <GridContainer container {...swipeHandlers} spacing={1}>
-      {isMobile && (
-        <GridItem item xs={12}>
-          {(currentStep?.blocks || []).map((block: Block) => (
-            <Transition animation={block.animation}>
+    <Transition animation={currentStep?.animation || { type: 'slide' }}>
+      <GridContainer container {...swipeHandlers} spacing={1}>
+        {isMobile && (
+          <GridItem item xs={12}>
+            {(currentStep?.blocks || []).map((block: Block) => (
               <Box display="flex" justifyContent="space-around" p={2}>
                 {resolveBlockContent(block)}
               </Box>
-            </Transition>
-          ))}
-        </GridItem>
-      )}
+            ))}
+          </GridItem>
+        )}
 
-      {!isMobile && (currentStep?.blocks || []).map((block: Block) => (
-        <GridItem key={block.key} item xs={12} sm={12} md={6}>
-          <Transition animation={block.animation}>
+        {!isMobile && (currentStep?.blocks || []).map((block: Block) => (
+          <GridItem key={block.key} item xs={12} sm={12} md={6}>
             <Box display="flex" justifyContent="space-around">
               {resolveBlockContent(block)}
             </Box>
-          </Transition>
-        </GridItem>
-      ))}
-    </GridContainer>
+          </GridItem>
+        ))}
+      </GridContainer>
+    </Transition>
   );
 };
 

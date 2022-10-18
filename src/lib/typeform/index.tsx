@@ -2,15 +2,11 @@ import React from 'react';
 import { ThemeProvider } from './theme';
 import Form from './components/Form';
 import { FormUIProvider } from './contexts/FormUIContext';
-import { FormStep } from './types';
+import questionSteps from './questions';
 
-interface TypeformProps {
-    steps: FormStep[];
-}
-
-const Typeform = ({ steps }: TypeformProps) => (
+const Typeform = () => (
   <ThemeProvider>
-    <FormUIProvider steps={steps}>
+    <FormUIProvider steps={questionSteps}>
       <Form />
     </FormUIProvider>
   </ThemeProvider>

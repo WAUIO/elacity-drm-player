@@ -6,7 +6,7 @@ import { BtnNext } from '../Buttons';
 interface StaticProps extends StaticBlock {}
 
 const Static = ({ input, button }: StaticProps) => (
-  <Box>
+  <Box sx={{ maxWidth: '80%', height: 'auto', '& > img': { width: '100%' } }}>
     {input}
     {button && <BtnNext {...button} />}
   </Box>

@@ -65,7 +65,8 @@ export const BtnController = () => {
 
 interface BtnNextProps extends ButtonForm {}
 
-export const BtnNext = ({ text, stepId, withIndicator, props }: BtnNextProps) => {
+export const BtnNext = ({ text, stepId, withIndicator, props: _props }: BtnNextProps) => {
+  const { sx, ...props } = _props || {};
   const { setCurrentStep } = useFormUI();
 
   // Override the onClick action
@@ -81,7 +82,7 @@ export const BtnNext = ({ text, stepId, withIndicator, props }: BtnNextProps) =>
 
   return (
     <Box display="flex" mt={3} alignItems="center">
-      <Button variant="contained" size="large" onClick={onNext} {...props}>
+      <Button sx={{ boxShadow: 0, ...(sx || {}) }} variant="contained" size="large" onClick={onNext} {...props}>
         {text}
       </Button>
       {withIndicator && (
