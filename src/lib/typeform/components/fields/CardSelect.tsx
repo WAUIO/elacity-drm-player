@@ -15,7 +15,7 @@ import Title from '../Title';
 import useSelectFn from '../../hooks/useSelectFn';
 
 const CardStyled = styled(Card)(({ theme }) => ({
-  minWidth: 150,
+  width: 174,
   minHeight: 200,
   marginRight: theme.spacing(2),
   background: lighten(theme.palette.primary.main, 0.8),
@@ -87,7 +87,10 @@ export const CustomCard = ({ icon: Icon, KeyPressId, value, isSelected, onSelect
     </CardContentStyled>
     <CardActions>
       <Box display="flex">
-        <ChipStyled variant="outlined" color="info" label={KeyPressId} className={classnames({ active: isSelected })} />
+        <ChipStyled
+          variant="outlined"
+          color="primary" label={KeyPressId} className={classnames({ active: isSelected })}
+        />
         <Typography sx={{ maxWidth: 125 }}>{value}</Typography>
       </Box>
     </CardActions>

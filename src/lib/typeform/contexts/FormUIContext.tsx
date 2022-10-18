@@ -2,7 +2,7 @@
 /* eslint-disable max-len */
 import { TransitionProps } from '@mui/material/transitions';
 import React, {
-  FC, PropsWithChildren, createContext, useState,
+  FC, PropsWithChildren, createContext, useState, KeyboardEvent,
 } from 'react';
 import { Block, FormStep } from '../types/index';
 
@@ -46,5 +46,54 @@ export const FormUIProvider: FC<PropsWithChildren<FormUIContextProps>> = ({ chil
     }
   };
 
-  return (<FormUIContext.Provider value={{ currentStep, setCurrentStep: _setCurrentStep }}>{children}</FormUIContext.Provider>);
+  // On clicked on arrow down button
+  const onNext = () => {
+    if (currentStep?.id) {
+      // next step will show from the bottom -> top
+      _setCurrentStep(currentStep?.id + 1, 'up');
+    }
+  };
+
+  React.useEffect(() => {
+    const handleEnterKeyUp = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        const validateOnEnter = (currentStep.blocks || []).map(
+          (b: Block) => b.content?.button?.withIndicator
+        ).filter(
+          (h: boolean) => !!h
+        ).length > 0;
+
+        if (validateOnEnter) {
+          onNext();
+        }
+      }
+    };
+
+    // @ts-ignore
+    window.addEventListener('keyup', handleEnterKeyUp);
+
+    return () => {
+      // @ts-ignore
+      window.removeEventListener('keyup', handleEnterKeyUp);
+    };
+  }, [currentStep]);
+
+  const validateOnEnter = React.useMemo(() => (currentStep.blocks || []).map(
+    (b: Block) => b.content?.button?.withIndicator
+  ).filter(
+    (h: boolean) => !!h
+  ).length > 0, [currentStep]);
+
+  console.log(currentStep, { validateOnEnter });
+
+  return (
+    <FormUIContext.Provider
+      value={{
+        currentStep,
+        setCurrentStep: _setCurrentStep,
+      }}
+    >
+      {children}
+    </FormUIContext.Provider>
+  );
 };

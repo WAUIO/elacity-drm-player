@@ -1,12 +1,22 @@
-import React, { FC, PropsWithChildren } from 'react';
-import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
-import defaultTheme from '@mui/material/styles/defaultTheme';
+import React, { PropsWithChildren } from 'react';
+import { ThemeProvider as ElacityThemeProvider } from '@elacity-js/uikit';
+import componentsOverrides from './overrides';
 
-interface ThemeProviderProps {}
-export const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = ({
-  children,
-}: PropsWithChildren<ThemeProviderProps>) => (
-  <MuiThemeProvider theme={defaultTheme}>
+const commonCustomization = {
+  components: componentsOverrides,
+  typography: {},
+  shape: {
+    borderRadius: 4,
+  },
+};
+
+export const ThemeProvider = ({ children }: PropsWithChildren) => (
+  <ElacityThemeProvider
+    customization={{
+      light: { ...commonCustomization },
+      dark: { ...commonCustomization },
+    }}
+  >
     {children}
-  </MuiThemeProvider>
+  </ElacityThemeProvider>
 );
