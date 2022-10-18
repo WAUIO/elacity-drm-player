@@ -20,6 +20,7 @@ const View = {
   Home: Loadable(lazy(() => import('./views/Explore'))),
   Mint: Loadable(lazy(() => import('./views/CreateForm'))),
   Player: Loadable(lazy(() => import('./views/View'))),
+  TypeformView: Loadable(lazy(() => import('./views/TypeformView'))),
 };
 
 export default [
@@ -50,7 +51,10 @@ export default [
       },
     ],
   },
-
+  {
+    path: 'form',
+    element: <View.TypeformView />,
+  },
   // other layouts
   {
     path: '*',
