@@ -43,11 +43,19 @@ export const BtnController = () => {
 
   return (
     <BottomBox>
-      <ButtonGroup>
-        <Button variant="contained" aria-label="arrow-up" disabled={currentStep?.isFirstStep} onClick={onPrevious}>
+      <ButtonGroup sx={{ '& .MuiButtonBase-root': { boxShadow: 0, mx: 0.25 } }}>
+        <Button
+          variant="contained"
+          disabled={currentStep?.isFirstStep}
+          onClick={onPrevious}
+        >
           <KeyboardArrowUpIcon fontSize="small" />
         </Button>
-        <Button variant="contained" aria-label="arrow-down" disabled={currentStep?.isLastStep} onClick={onNext}>
+        <Button
+          variant="contained"
+          disabled={currentStep?.isLastStep}
+          onClick={onNext}
+        >
           <KeyboardArrowDownIcon fontSize="small" />
         </Button>
       </ButtonGroup>

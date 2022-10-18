@@ -78,14 +78,6 @@ export const FormUIProvider: FC<PropsWithChildren<FormUIContextProps>> = ({ chil
     };
   }, [currentStep]);
 
-  const validateOnEnter = React.useMemo(() => (currentStep.blocks || []).map(
-    (b: Block) => b.content?.button?.withIndicator
-  ).filter(
-    (h: boolean) => !!h
-  ).length > 0, [currentStep]);
-
-  console.log(currentStep, { validateOnEnter });
-
   return (
     <FormUIContext.Provider
       value={{
