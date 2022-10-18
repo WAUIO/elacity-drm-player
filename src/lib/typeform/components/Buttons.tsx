@@ -69,12 +69,24 @@ export const BtnNext = ({ text, stepId, withIndicator, props }: BtnNextProps) =>
 
   return (
     <Box display="flex" mt={3}>
-      <Button variant="contained" {...props} onClick={onNext}>
+      <Button variant="contained" size="large" {...props} onClick={onNext}>
         {text}
       </Button>
       {withIndicator && (
-        <Typography variant="caption" sx={{ p: 1 }}>
-          press Enter ↵
+        <Typography
+          variant="caption"
+          sx={{
+            p: 1,
+            display: 'flex',
+            justifyContent: 'center',
+            '& > *': {
+              fontWeight: 'bolder',
+            },
+          }}
+        >
+          press
+          {' '}
+          <span>Enter ↵</span>
         </Typography>
       )}
     </Box>
