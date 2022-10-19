@@ -26,7 +26,7 @@ import { images } from 'src/lib/typeform/constants';
 import { FormStep } from './types';
 
 const Img = styled('img')(({ theme }) => ({
-  width: '500px !important',
+  width: '80%',
   height: 'auto',
   [theme.breakpoints.down('md')]: {
     width: 180,
@@ -39,6 +39,9 @@ export default [
     isFirstStep: true,
     blocks: [{
       key: '$.b.1',
+      animation: {
+        type: 'grow',
+      },
       content: {
         type: 'static',
         input: <Img alt="ela" src={images[1]} />,
@@ -47,7 +50,7 @@ export default [
     {
       key: '$.b.2',
       animation: {
-        type: 'slide',
+        type: 'fade',
       },
       content: {
         type: 'static',
@@ -70,15 +73,18 @@ export default [
     blocks: [
       {
         key: '$.b.3',
+        animation: {
+          type: 'grow',
+        },
         content: {
           type: 'static',
-          input: <Img alt="ela" src={images[1]} />,
+          input: <Img alt="ela" src={images[2]} />,
         },
       },
       {
         key: '$.b.4',
         animation: {
-          type: 'slide',
+          type: 'fade',
         },
         content: {
           type: 'select-card',
@@ -118,7 +124,7 @@ export default [
       {
         key: '$.b.5',
         animation: {
-          type: 'slide',
+          type: 'fade',
         },
         content: {
           type: 'select-card',
@@ -163,6 +169,9 @@ export default [
       },
       {
         key: '$.b.6',
+        animation: {
+          type: 'grow',
+        },
         content: {
           type: 'static',
           input: <Img alt="ela" src={images[3]} />,
@@ -175,6 +184,9 @@ export default [
     blocks: [
       {
         key: '$.b.7',
+        animation: {
+          type: 'grow',
+        },
         content: {
           type: 'static',
           input: <Img alt="ela" src={images[4]} />,
@@ -183,7 +195,7 @@ export default [
       {
         key: '$.b.8',
         animation: {
-          type: 'slide',
+          type: 'fade',
         },
         content: {
           type: 'select-card',
@@ -232,15 +244,18 @@ export default [
     blocks: [
       {
         key: '$.b.5.1',
+        animation: {
+          type: 'grow',
+        },
         content: {
           type: 'static',
-          input: <Img alt="ela" src={images[4]} />,
+          input: <Img alt="ela" src={images[5]} />,
         },
       },
       {
         key: '$.b.5.2',
         animation: {
-          type: 'slide',
+          type: 'fade',
         },
         content: {
           type: 'text',
@@ -271,15 +286,18 @@ export default [
     blocks: [
       {
         key: '$.b.6.1',
+        animation: {
+          type: 'grow',
+        },
         content: {
           type: 'static',
-          input: <Img alt="ela" src={images[5]} />,
+          input: <Img alt="ela" src={images[6]} />,
         },
       },
       {
         key: '$.b.6.2',
         animation: {
-          type: 'slide',
+          type: 'fade',
         },
         content: {
           type: 'select-choice',
@@ -322,15 +340,18 @@ export default [
     blocks: [
       {
         key: '$.b.7.1',
+        animation: {
+          type: 'grow',
+        },
         content: {
           type: 'static',
-          input: <Img alt="ela" src={images[6]} />,
+          input: <Img alt="ela" src={images[7]} />,
         },
       },
       {
         key: '$.b.7.2',
         animation: {
-          type: 'slide',
+          type: 'fade',
         },
         content: {
           type: 'uploader',
@@ -355,15 +376,18 @@ export default [
     blocks: [
       {
         key: '$.b.8.1',
+        animation: {
+          type: 'grow',
+        },
         content: {
           type: 'static',
-          input: <Img alt="ela" src={images[7]} />,
+          input: <Img alt="ela" src={images[8]} />,
         },
       },
       {
         key: '$.b.8.2',
         animation: {
-          type: 'slide',
+          type: 'fade',
         },
         content: {
           type: 'uploader',
@@ -394,7 +418,7 @@ export default [
       {
         key: '$.b.9.1',
         animation: {
-          type: 'slide',
+          type: 'fade',
         },
         content: {
           type: 'text',
@@ -402,7 +426,7 @@ export default [
             indicator: 6,
             required: true,
             fullWidth: true,
-            caption: <Img style={{ width: 400 }} alt="ela" src={images[7]} />,
+            caption: <Img style={{ width: '30%' }} alt="ela" src={images[9]} />,
             type: 'text',
             title: 'What is the title of your asset? *',
             inputProps: {
@@ -427,7 +451,7 @@ export default [
       {
         key: '$.b.10.1',
         animation: {
-          type: 'slide',
+          type: 'fade',
         },
         content: {
           type: 'text',
@@ -436,7 +460,7 @@ export default [
             required: true,
             fullWidth: true,
             multiline: true,
-            helpText: 'Shift ⇧ + Enter ↵ to make a line break',
+            helpText: '<span>Shift ⇧</span> + <span>Enter ↵</span> to make a line break',
             type: 'text',
             title: 'What is the description of your asset? *',
             inputProps: {
@@ -456,9 +480,12 @@ export default [
       },
       {
         key: '$.b.10.2',
+        animation: {
+          type: 'grow',
+        },
         content: {
           type: 'static',
-          input: <Img alt="ela" src={images[8]} />,
+          input: <Img alt="ela" style={{ width: '50%' }} src={images[10]} />,
         },
       },
     ],
@@ -469,7 +496,7 @@ export default [
       {
         key: '$.b.10.1',
         animation: {
-          type: 'slide',
+          type: 'fade',
         },
         content: {
           type: 'text',
@@ -496,20 +523,24 @@ export default [
       },
       {
         key: '$.b.10.2',
+        animation: {
+          type: 'grow',
+        },
         content: {
           type: 'static',
-          input: <Img alt="ela" src={images[9]} />,
+          input: <Img alt="ela" src={images[11]} />,
         },
       },
     ],
   },
   {
     id: 12,
+    isLastStep: true,
     blocks: [
       {
         key: '$.b.9.1',
         animation: {
-          type: 'slide',
+          type: 'fade',
         },
         content: {
           type: 'text',
@@ -518,7 +549,7 @@ export default [
               display: 'none',
             },
             fullWidth: true,
-            caption: <Img style={{ width: 400, height: 'auto' }} alt="ela" src={images[7]} />,
+            caption: <Img style={{ width: '30%' }} alt="ela" src={images[1]} />,
             title: 'Great, please overview and click Mint to release your DRM-protected assets into Web3!',
           },
           button: {

@@ -18,7 +18,8 @@ const Transition = ({ children, animation }: AnimationProps) => {
       <Slide
         direction="up"
         timeout={1000 * 1}
-        in {...animation?.props as SlideProps}
+        in
+        {...animation?.props as SlideProps}
       >
         {children}
       </Slide>
@@ -28,7 +29,7 @@ const Transition = ({ children, animation }: AnimationProps) => {
     transition = (
       <Fade
         timeout={1000 * 1}
-        in mountOnEnter unmountOnExit {...animation?.props as FadeProps}
+        in {...animation?.props as FadeProps}
       >
         {children}
       </Fade>

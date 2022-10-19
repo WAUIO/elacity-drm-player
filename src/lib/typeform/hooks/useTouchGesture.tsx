@@ -43,12 +43,12 @@ const useTouchGesture = () => {
   };
 
   useEffect(() => {
-    document.body.addEventListener('touchstart', handleTouchStart, false);
-    document.body.addEventListener('touchend', handleTouchEnd, false);
+    window.addEventListener('touchstart', handleTouchStart, false);
+    window.addEventListener('touchend', handleTouchEnd, false);
 
     return () => {
-      document.body.removeEventListener('touchstart', handleTouchStart);
-      document.body.removeEventListener('touchend', handleTouchEnd);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchend', handleTouchEnd);
     };
   }, []);
 };

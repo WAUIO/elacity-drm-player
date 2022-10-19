@@ -1,13 +1,14 @@
-export const img1 = 'https://images.typeform.com/images/3LBJyvkgxrfy/image/default-firstframe.png';
-export const img2 = 'https://images.typeform.com/images/3LBJyvkgxrfy/image/default-firstframe.png';
-export const img3 = 'https://images.typeform.com/images/i5mGEXvyHNU5/image/default-firstframe.png';
-export const img4 = 'https://images.typeform.com/images/ZcTvqWies8wb/image/default-firstframe.png';
-export const img5 = 'https://images.typeform.com/images/JzXd6vrk8daa/image/default-firstframe.png';
-export const img6 = 'https://images.typeform.com/images/TW4vav6dAgFQ/image/default-firstframe.png';
-export const img7 = 'https://images.typeform.com/images/KNDHddZRC5yD/image/default-firstframe.png';
-export const img8 = 'https://images.typeform.com/images/rzrHC77Te2Be/image/default-firstframe.png';
-export const img9 = 'https://images.typeform.com/images/cYcUBba9jvgY/image/default-firstframe.png';
-export const img10 = 'https://images.typeform.com/images/ZT9akpydLFMY/image/default-firstframe.png';
+export const img1 = '/static/img/1.png';
+export const img2 = '/static/img/2.png';
+export const img3 = '/static/img/3.png';
+export const img4 = '/static/img/4.png';
+export const img5 = '/static/img/5.png';
+export const img6 = '/static/img/6.png';
+export const img7 = '/static/img/7.png';
+export const img8 = '/static/img/8.png';
+export const img9 = '/static/img/9.png';
+export const img10 = '/static/img/10.png';
+export const img11 = '/static/img/11.png';
 
 export const images = [
   null,
@@ -21,4 +22,5 @@ export const images = [
   img8,
   img9,
   img10,
+  img11,
 ];

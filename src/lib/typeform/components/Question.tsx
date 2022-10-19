@@ -36,9 +36,19 @@ const Question = ({
     {children}
     {
       helpText && (
-        <Typography variant="caption" sx={{ color: (t: Theme) => t.palette.primary.dark }}>
-          {helpText}
-        </Typography>
+        <Typography
+          variant="caption"
+          component="div"
+          sx={{
+            color: (t: Theme) => t.palette.primary.dark,
+            '& span': {
+              fontWeight: 'bolder',
+            },
+          }}
+          dangerouslySetInnerHTML={{
+            __html: helpText,
+          }}
+        />
       )
     }
     {

@@ -115,27 +115,27 @@ const Blocks = () => {
 
   // Used only one grid in mobile view
   return (
-    <Transition animation={currentStep?.animation || { type: 'slide' }}>
-      <GridContainer container {...swipeHandlers} spacing={1}>
-        {isMobile && (
-          <GridItem item xs={12}>
-            {(currentStep?.blocks || []).map((block: Block) => (
-              <Box display="flex" justifyContent="space-around" p={2}>
-                {resolveBlockContent(block)}
-              </Box>
-            ))}
-          </GridItem>
-        )}
+    <GridContainer container {...swipeHandlers} spacing={1}>
+      {isMobile && (
+        <GridItem item xs={12}>
+          {(currentStep?.blocks || []).map((block: Block) => (
+            <Box display="flex" justifyContent="space-around" p={2}>
+              {resolveBlockContent(block)}
+            </Box>
+          ))}
+        </GridItem>
+      )}
 
-        {!isMobile && (currentStep?.blocks || []).map((block: Block) => (
-          <GridItem key={block.key} item xs={12} sm={12} md={12 / bl}>
+      {!isMobile && (currentStep?.blocks || []).map((block: Block) => (
+        <GridItem key={block.key} item xs={12} sm={12} md={12 / bl}>
+          <Transition animation={block?.animation}>
             <Box display="flex" justifyContent="space-around">
               {resolveBlockContent(block)}
             </Box>
-          </GridItem>
-        ))}
-      </GridContainer>
-    </Transition>
+          </Transition>
+        </GridItem>
+      ))}
+    </GridContainer>
   );
 };
 
