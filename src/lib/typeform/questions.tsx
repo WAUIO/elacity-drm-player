@@ -1,7 +1,10 @@
 import React from 'react';
+import { FormikProps } from 'formik';
+import { FileRejection } from 'react-dropzone';
 import {
   styled, Theme, alpha,
 } from '@mui/material/styles';
+import CircularProgress from '@mui/material/CircularProgress';
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
 import CheckIcon from '@mui/icons-material/Check';
 
@@ -23,7 +26,7 @@ import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 
 import Title from 'src/lib/typeform/components/Title';
 import { images } from 'src/lib/typeform/constants';
-import { FormStep } from './types';
+import { FormStep, MintForm } from './types';
 
 const Img = styled('img')(({ theme }) => ({
   width: '80%',
@@ -33,7 +36,8 @@ const Img = styled('img')(({ theme }) => ({
   },
 }));
 
-export default [
+// eslint-disable-next-line @typescript-eslint/no-unused-vars-experimental
+export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: FormikProps<MintForm>) => [
   {
     id: 1,
     isFirstStep: true,
@@ -107,7 +111,11 @@ export default [
                 icon: PodcastsIcon,
                 KeyPressId: 'C',
                 value: 'Content Distributor',
-              }],
+              },
+            ],
+            value: values.operator,
+            onChange: (e: React.ChangeEvent<HTMLInputElement>) => setFieldValue('operator', e.target.value),
+            error: errors.operator,
           },
           button: {
             text: 'OK',
@@ -157,7 +165,11 @@ export default [
                 icon: ArticleOutlinedIcon,
                 KeyPressId: 'E',
                 value: 'Document',
-              }],
+              },
+            ],
+            value: values.contentType,
+            onChange: (e: React.ChangeEvent<HTMLInputElement>) => setFieldValue('contentType', e.target.value),
+            error: errors.contentType,
           },
           button: {
             text: 'OK',
@@ -228,7 +240,11 @@ export default [
                 icon: AccessTimeOutlinedIcon,
                 KeyPressId: 'E',
                 value: 'Rental',
-              }],
+              },
+            ],
+            value: values.accessMethod,
+            onChange: (e: React.ChangeEvent<HTMLInputElement>) => setFieldValue('accessMethod', e.target.value),
+            error: errors.accessMethod,
           },
           button: {
             text: 'OK',
@@ -270,6 +286,11 @@ export default [
                 fontSize: 28,
               },
             },
+            value: values.pricePerSale,
+            onChange: (
+              e: React.ChangeEvent<HTMLInputElement>
+            ) => setFieldValue('pricePerSale', e.target.value),
+            error: errors.pricePerSale,
           },
           button: {
             text: 'OK',
@@ -324,7 +345,11 @@ export default [
               {
                 KeyPressId: 'D',
                 value: 'Investor',
-              }],
+              },
+            ],
+            value: values.parties,
+            onChange: (e: React.ChangeEvent<HTMLInputElement>) => setFieldValue('parties', e.target.value),
+            error: errors.parties,
           },
           button: {
             text: 'OK',
@@ -358,11 +383,16 @@ export default [
           input: {
             title: 'Alright! Let\'s get your asset uploaded to the SmartWeb!',
             caption: '[User select/drag n drop file]',
-            onDropped: () => {},
             sx: {
               border: (t: Theme) => `1px dashed ${t.palette.primary.main}`,
               bgcolor: (t: Theme) => alpha(t.palette.primary.light, 0.1),
             },
+            initialValue: values.assetFile || null,
+            onDropped: (value: File) => setFieldValue('assetFile', value),
+            onRejected: (rejection: FileRejection[]) => {
+              setErrors({ assetFile: rejection.map((r) => r.errors[0].message).join(', ') });
+            },
+            error: errors.assetFile,
           },
           button: {
             text: 'Continue',
@@ -394,7 +424,6 @@ export default [
           input: {
             title: 'Please add a thumbnail image.',
             caption: '[User adds thumbnail image]',
-            onDropped: () => {},
             maxSize: 10 * 1024 * 1024,
             supportedFileDescription: 'Choose file or drag image here, up to 10Mb',
             accept: {
@@ -404,6 +433,12 @@ export default [
               border: (t: Theme) => `1px dashed ${t.palette.primary.main}`,
               bgcolor: (t: Theme) => alpha(t.palette.primary.light, 0.1),
             },
+            initialValue: values.assetThumbnail || null,
+            onDropped: (value: File) => setFieldValue('assetThumbnail', value),
+            onRejected: (rejection: FileRejection[]) => {
+              setErrors({ assetThumbnail: rejection.map((r) => r.errors[0].message).join(', ') });
+            },
+            error: errors.assetThumbnail,
           },
           button: {
             text: 'Continue',
@@ -434,6 +469,9 @@ export default [
                 fontSize: 28,
               },
             },
+            value: values.title,
+            onChange: (e: React.ChangeEvent<HTMLInputElement>) => setFieldValue('title', e.target.value),
+            error: errors.title,
           },
           button: {
             text: 'OK',
@@ -468,6 +506,9 @@ export default [
                 fontSize: 28,
               },
             },
+            value: values.description,
+            onChange: (e: React.ChangeEvent<HTMLInputElement>) => setFieldValue('description', e.target.value),
+            error: errors.description,
           },
           button: {
             text: 'OK',
@@ -511,6 +552,11 @@ export default [
                 fontSize: 28,
               },
             },
+            value: values.copiesNumber,
+            onChange: (
+              e: React.ChangeEvent<HTMLInputElement>
+            ) => setFieldValue('copiesNumber', parseInt(e.target.value, 10)),
+            error: errors.copiesNumber,
           },
           button: {
             text: 'OK',
@@ -556,7 +602,12 @@ export default [
             text: 'Submit',
             withIndicator: 'press <span>Ctrl + Enter ↵ </span>',
             props: {
+              type: 'submit',
               endIcon: <CheckIcon />,
+              ...(isSubmitting && {
+                disabled: true,
+                startIcon: <CircularProgress sx={{ fontSize: '1rem' }} />,
+              }),
             },
           },
         },

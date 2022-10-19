@@ -1,18 +1,13 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 import { Theme } from '@mui/material/styles';
-import { ButtonForm } from '../types';
+import { ButtonForm, QuestionInputProps } from '../types';
 import Caption from './Caption';
 import Title from './Title';
 import { BtnNext } from './Buttons';
 
-interface QuestionProps {
-  title: string;
-  caption?: string | React.ReactNode;
-  helpText?: string;
-  indicator?: number;
+interface QuestionProps extends QuestionInputProps {
   button?: ButtonForm;
-  error?: string;
 }
 
 const Question = ({
@@ -22,10 +17,13 @@ const Question = ({
   button,
   helpText,
   indicator,
+  required,
   error,
 }: React.PropsWithChildren<QuestionProps>) => (
   <Box>
-    <Title indicator={indicator}>{title}</Title>
+    <Title indicator={indicator} required={required}>
+      {title}
+    </Title>
     {
       caption && (
         <Caption variant="body2">

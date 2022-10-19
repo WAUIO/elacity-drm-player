@@ -1,27 +1,29 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable max-len */
+import { useFormikContext } from 'formik';
 import { TransitionProps } from '@mui/material/transitions';
 import React, {
   FC, PropsWithChildren, createContext, useState, KeyboardEvent,
 } from 'react';
-import { Block, FormStep } from '../types/index';
+import {
+  Block, FormStep, MintForm,
+} from '../types/index';
 
 interface FormUIContextValue {
   currentStep: FormStep;
-  // setCurrentStep: (stepId: number, animationDirection?: string) => void;
-  onNext: () => void;
+  onNext: () => Promise<void>;
   onPrevious: () => void;
 }
 
 export const FormUIContext = createContext<FormUIContextValue>({
   currentStep: null,
-  // setCurrentStep: () => {},
-  onNext: () => {},
+  onNext: () => Promise.reject(new Error('not implemented')),
   onPrevious: () => {},
 });
 
 interface FormUIContextProps {
   steps: FormStep[],
+  onFinal?: () => Promise<void>;
 }
 
 /**
@@ -30,8 +32,13 @@ interface FormUIContextProps {
  * - current step
  * - animation direction
  */
-export const FormUIProvider: FC<PropsWithChildren<FormUIContextProps>> = ({ children, steps }) => {
+export const FormUIProvider: FC<PropsWithChildren<FormUIContextProps>> = ({ children, steps, onFinal }) => {
+  const form = useFormikContext<MintForm>();
   const [currentStep, setCurrentStep] = useState<FormStep>(steps[0]);
+
+  React.useEffect(() => {
+    form.setFieldValue('stepNum', currentStep?.id);
+  }, [currentStep?.id]);
 
   // Override step transaction direction on click on the bottom controller up or down
   const setDirection = (blocks: Block[], animationDirection?: string) => blocks.map((b) => ({ ...b, animation: b.animation ? { ...b.animation, props: { direction: animationDirection || 'up' } as TransitionProps } : null }));
@@ -43,19 +50,31 @@ export const FormUIProvider: FC<PropsWithChildren<FormUIContextProps>> = ({ chil
     if (index !== -1) {
       const step = steps[index];
       if (step) {
-        const { blocks } = step;
         // update current step
-        setCurrentStep({ ...step, blocks: setDirection(blocks, animationDirection) });
+        setCurrentStep({ ...step, blocks: setDirection(step.blocks, animationDirection) });
       }
     }
   };
 
-  const onNext = () => {
+  const onNext = async () => {
+    if (currentStep?.isLastStep) {
+      onFinal?.();
+      return;
+    }
+
+    const errors = await form.validateForm(form.values);
+    if (Object.entries(errors).length > 0) {
+      form.setErrors(errors);
+      console.log('Validator Error', errors);
+      return;
+    }
+
     if (currentStep?.id) {
       // next step will show from the bottom -> top
       _setCurrentStep(currentStep?.id + 1, 'up');
     }
   };
+
   const onPrevious = () => {
     if (currentStep?.id) {
       // next step will show from the top -> bottom

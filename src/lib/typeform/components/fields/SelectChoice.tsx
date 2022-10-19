@@ -85,7 +85,7 @@ interface SelectProps extends SelectChoiceBlock {}
 const SelectChoice = ({ input }: SelectProps) => {
   const { ref, onSelect, isSelected } = useSelectFn(input);
   return (
-    <Box ref={ref}>
+    <Box ref={ref} mt={2}>
       {input.placeholder && <Typography color="primary.dark" variant="body2">{input.placeholder}</Typography>}
       <Box display="inline-flex" mt={1} flexWrap="nowrap" flexDirection="column">
         {input.options

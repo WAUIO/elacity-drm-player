@@ -6,29 +6,14 @@ import { SelectForm } from '../types';
 import useFormUI from './useFormUI';
 
 const useSelectFn = (input: SelectForm) => {
-  const [selected, setSelected] = useState<string | string[]>();
-  const ref = useRef<HTMLElement>();
+  const [selected, setSelected] = useState<string | string[]>(input.value as string | string[]);
+  const ref = useRef<HTMLInputElement>();
 
   const validOptions = input.options.map((opt) => opt.KeyPressId);
 
   const { onNext } = useFormUI();
 
   const isMultiple = input.multiple;
-
-  useEffect(() => {
-    // Fire on change input event
-    if (typeof input?.onChange === 'function') {
-      input.onChange({ target: { value: selected } } as React.ChangeEvent<HTMLInputElement>);
-    }
-    // Move to next step on single select choice
-    if (selected && !isMultiple) {
-      setTimeout(() => {
-        if (ref.current) {
-          onNext();
-        }
-      }, 700);
-    }
-  }, [selected]);
 
   // Handle multiple or single choice
   const handleChoice = (key: string) => {
@@ -39,12 +24,22 @@ const useSelectFn = (input: SelectForm) => {
       return;
     }
 
-    // single case
+    // 1. single case
     if (!isMultiple) {
       setSelected(keyPressed);
+
+      if (input?.onChange) {
+        input.onChange({ target: { value: keyPressed } } as React.ChangeEvent<HTMLInputElement>);
+      }
+
+      // Move to next step on single select choice
+      if (keyPressed) {
+        setTimeout(onNext, 1000);
+      }
       return;
     }
-    // multiple case
+
+    // 2. multiple case
     const values = Array.from(selected || []);
     if (values.includes(keyPressed)) {
       const i = values.findIndex((v: string) => v === keyPressed);
@@ -56,6 +51,11 @@ const useSelectFn = (input: SelectForm) => {
     }
 
     setSelected(values);
+
+    if (input?.onChange) {
+      // @ts-ignore
+      input.onChange({ target: { value: values } });
+    }
   };
 
   useEffect(() => {

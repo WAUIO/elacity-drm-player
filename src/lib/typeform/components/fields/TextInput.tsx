@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Input from '@mui/material/Input';
 import { TextInputBlock } from '../../types';
 
-export default ({ input }: TextInputBlock) => (
+export default ({ input: { helpText, ...input } }: TextInputBlock) => (
   <Box
     component="div"
     sx={{
