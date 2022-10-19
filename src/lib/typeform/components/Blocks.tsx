@@ -28,10 +28,12 @@ const GridItem = styled(Grid)(() => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
+  overflow: 'hidden',
 }));
 
 const GridContainer = styled(Grid)(() => ({
   height: 'calc(100vh - 136px)',
+  overflow: 'hidden',
 }));
 
 const Blocks = () => {
@@ -121,9 +123,11 @@ const Blocks = () => {
       {isMobile && (
         <GridItem item xs={12}>
           {blocks.map((block: Block) => (
-            <Box display="flex" justifyContent="space-around" p={2}>
-              {resolveBlockContent(block)}
-            </Box>
+            <Transition animation={block?.animation}>
+              <Box display="flex" justifyContent="space-around" p={2}>
+                {resolveBlockContent(block)}
+              </Box>
+            </Transition>
           ))}
         </GridItem>
       )}

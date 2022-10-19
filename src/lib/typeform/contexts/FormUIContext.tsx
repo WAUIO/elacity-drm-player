@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars-experimental */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable max-len */
 import { TransitionProps } from '@mui/material/transitions';
@@ -46,8 +45,7 @@ export const FormUIProvider: FC<PropsWithChildren<FormUIContextProps>> = ({ chil
       if (step) {
         const { blocks } = step;
         // update current step
-        // setCurrentStep({ ...step, blocks: setDirection(blocks, animationDirection) });
-        setCurrentStep({ ...step });
+        setCurrentStep({ ...step, blocks: setDirection(blocks, animationDirection) });
       }
     }
   };

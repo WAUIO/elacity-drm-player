@@ -40,7 +40,7 @@ export default [
     blocks: [{
       key: '$.b.1.1',
       animation: {
-        type: 'grow',
+        type: 'fade',
       },
       content: {
         type: 'static',
@@ -74,7 +74,7 @@ export default [
       {
         key: '$.b.2.1',
         animation: {
-          type: 'grow',
+          type: 'fade',
         },
         content: {
           type: 'static',
@@ -84,7 +84,7 @@ export default [
       {
         key: '$.b.2.2',
         animation: {
-          type: 'fade',
+          type: 'slide',
         },
         content: {
           type: 'select-card',
@@ -124,7 +124,7 @@ export default [
       {
         key: '$.b.3.2',
         animation: {
-          type: 'fade',
+          type: 'slide',
         },
         content: {
           type: 'select-card',
@@ -170,7 +170,7 @@ export default [
       {
         key: '$.b.3.1',
         animation: {
-          type: 'grow',
+          type: 'fade',
         },
         content: {
           type: 'static',
@@ -185,7 +185,7 @@ export default [
       {
         key: '$.b.4.1',
         animation: {
-          type: 'grow',
+          type: 'fade',
         },
         content: {
           type: 'static',
@@ -195,7 +195,7 @@ export default [
       {
         key: '$.b.4.2',
         animation: {
-          type: 'fade',
+          type: 'slide',
         },
         content: {
           type: 'select-card',
@@ -245,7 +245,7 @@ export default [
       {
         key: '$.b.5.1',
         animation: {
-          type: 'grow',
+          type: 'fade',
         },
         content: {
           type: 'static',
@@ -255,7 +255,7 @@ export default [
       {
         key: '$.b.5.2',
         animation: {
-          type: 'fade',
+          type: 'slide',
         },
         content: {
           type: 'text',
@@ -287,7 +287,7 @@ export default [
       {
         key: '$.b.6.1',
         animation: {
-          type: 'grow',
+          type: 'fade',
         },
         content: {
           type: 'static',
@@ -297,7 +297,7 @@ export default [
       {
         key: '$.b.6.2',
         animation: {
-          type: 'fade',
+          type: 'slide',
         },
         content: {
           type: 'select-choice',
@@ -341,7 +341,7 @@ export default [
       {
         key: '$.b.7.1',
         animation: {
-          type: 'grow',
+          type: 'fade',
         },
         content: {
           type: 'static',
@@ -351,7 +351,7 @@ export default [
       {
         key: '$.b.7.2',
         animation: {
-          type: 'fade',
+          type: 'slide',
         },
         content: {
           type: 'uploader',
@@ -377,7 +377,7 @@ export default [
       {
         key: '$.b.8.1',
         animation: {
-          type: 'grow',
+          type: 'fade',
         },
         content: {
           type: 'static',
@@ -387,7 +387,7 @@ export default [
       {
         key: '$.b.8.2',
         animation: {
-          type: 'fade',
+          type: 'slide',
         },
         content: {
           type: 'uploader',
@@ -418,7 +418,7 @@ export default [
       {
         key: '$.b.9.1',
         animation: {
-          type: 'fade',
+          type: 'slide',
         },
         content: {
           type: 'text',
@@ -451,7 +451,7 @@ export default [
       {
         key: '$.b.10.2',
         animation: {
-          type: 'fade',
+          type: 'slide',
         },
         content: {
           type: 'text',
@@ -481,7 +481,7 @@ export default [
       {
         key: '$.b.10.1',
         animation: {
-          type: 'grow',
+          type: 'fade',
         },
         content: {
           type: 'static',
@@ -496,7 +496,7 @@ export default [
       {
         key: '$.b.11.2',
         animation: {
-          type: 'fade',
+          type: 'slide',
         },
         content: {
           type: 'text',
@@ -524,7 +524,7 @@ export default [
       {
         key: '$.b.11.1',
         animation: {
-          type: 'grow',
+          type: 'fade',
         },
         content: {
           type: 'static',
@@ -540,7 +540,7 @@ export default [
       {
         key: '$.b.12.1',
         animation: {
-          type: 'fade',
+          type: 'slide',
         },
         content: {
           type: 'text',

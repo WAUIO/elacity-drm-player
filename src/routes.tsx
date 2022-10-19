@@ -45,6 +45,12 @@ export default [
         path: 'view/:id',
         element: <View.Player />,
       },
+    ],
+  },
+  {
+    path: baseURL(),
+    element: <Layout.Create />,
+    children: [
       {
         path: 'create',
         element: <View.TypeformView />,
