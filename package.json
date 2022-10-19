@@ -1,6 +1,6 @@
 {
   "name": "web-player",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "dependencies": {
     "@elacity-js/lib": "^0.1.18",

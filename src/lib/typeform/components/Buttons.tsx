@@ -38,7 +38,12 @@ export const BtnController = () => {
         <Button
           variant="contained"
           disabled={currentStep?.isLastStep}
-          onClick={onNext}
+          onClick={
+            () => {
+              // no need validation, go through
+              onNext?.({ forceValidation: false });
+            }
+          }
         >
           <KeyboardArrowDownIcon fontSize="small" />
         </Button>
@@ -59,7 +64,7 @@ export const BtnNext = ({ text, withIndicator, props: _props }: BtnNextProps) =>
     if (typeof props?.onClick === 'function') {
       props.onClick(e);
     }
-    onNext();
+    onNext?.({ forceValidation: true });
   };
 
   return (

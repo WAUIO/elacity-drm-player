@@ -16,6 +16,7 @@ export interface ButtonForm {
 }
 
 export interface QuestionInputProps {
+  fieldName: string;
   indicator?: number;
   title: string;
   helpText?: string;
@@ -83,10 +84,6 @@ export interface FormStep {
 export type FormBlock = StaticBlock | TextInputBlock | SelectCardBlock | UploaderBlock | SelectChoiceBlock;
 
 export interface MintForm {
-  // step handler
-  // @stepNum repesents the last successful step
-  stepNum: number;
-
   // mint form data
   operator?: string; // Independant creator | Content Creator Group | Content Distributor
   contentType?: string; // Image | Video | Music | 3D Model | Document

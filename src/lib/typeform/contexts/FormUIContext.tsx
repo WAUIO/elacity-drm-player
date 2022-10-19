@@ -9,20 +9,25 @@ import {
   Block, FormStep, MintForm,
 } from '../types/index';
 
+interface OnNextParams {
+  forceValidation?: boolean;
+}
+
 interface FormUIContextValue {
   currentStep: FormStep;
-  onNext: () => Promise<void>;
+  onNext: (p?: OnNextParams) => void;
   onPrevious: () => void;
 }
 
 export const FormUIContext = createContext<FormUIContextValue>({
   currentStep: null,
-  onNext: () => Promise.reject(new Error('not implemented')),
+  onNext: (p?: OnNextParams) => p,
   onPrevious: () => {},
 });
 
 interface FormUIContextProps {
   steps: FormStep[],
+  onStep?: (s: number) => void;
   onFinal?: () => Promise<void>;
 }
 
@@ -32,13 +37,9 @@ interface FormUIContextProps {
  * - current step
  * - animation direction
  */
-export const FormUIProvider: FC<PropsWithChildren<FormUIContextProps>> = ({ children, steps, onFinal }) => {
+export const FormUIProvider: FC<PropsWithChildren<FormUIContextProps>> = ({ children, steps, onFinal, onStep }) => {
   const form = useFormikContext<MintForm>();
   const [currentStep, setCurrentStep] = useState<FormStep>(steps[0]);
-
-  React.useEffect(() => {
-    form.setFieldValue('stepNum', currentStep?.id);
-  }, [currentStep?.id]);
 
   // Override step transaction direction on click on the bottom controller up or down
   const setDirection = (blocks: Block[], animationDirection?: string) => blocks.map((b) => ({ ...b, animation: b.animation ? { ...b.animation, props: { direction: animationDirection || 'up' } as TransitionProps } : null }));
@@ -47,6 +48,7 @@ export const FormUIProvider: FC<PropsWithChildren<FormUIContextProps>> = ({ chil
   const _setCurrentStep = (stepId: number, animationDirection?: string) => {
     // Find target index by id if exist
     const index = (steps || []).findIndex(({ id }) => id === stepId);
+    onStep?.(index);
     if (index !== -1) {
       const step = steps[index];
       if (step) {
@@ -56,24 +58,43 @@ export const FormUIProvider: FC<PropsWithChildren<FormUIContextProps>> = ({ chil
     }
   };
 
-  const onNext = async () => {
+  const onNext = React.useCallback((o?: OnNextParams) => {
     if (currentStep?.isLastStep) {
       onFinal?.();
       return;
     }
 
-    const errors = await form.validateForm(form.values);
-    if (Object.entries(errors).length > 0) {
-      form.setErrors(errors);
-      console.log('Validator Error', errors);
+    // @todo: the state below generate a double validation triggering
+    // as a workakound we just removed it (and used form.errors instead)
+    // but it seems whole the form is not dispacthing over children of the context
+    console.log('Exec onNext', o);
+    if (!o?.forceValidation && currentStep?.id) {
+      // go through wth any restriction about validation state
+      _setCurrentStep(currentStep?.id + 1, 'up');
       return;
     }
 
-    if (currentStep?.id) {
+    if (o?.forceValidation) {
+      form.validateForm(form.values).then(
+        (errors) => {
+          if (Object.entries(errors).length > 0) {
+            console.error('Validator Error', errors);
+          } else if (currentStep?.id) {
+            // next step will show from the bottom -> top
+            _setCurrentStep(currentStep?.id + 1, 'up');
+          }
+        }
+      );
+      return;
+    }
+
+    if (Object.entries(form.errors).length > 0) {
+      console.error('Validator Error', form.errors);
+    } else if (currentStep?.id) {
       // next step will show from the bottom -> top
       _setCurrentStep(currentStep?.id + 1, 'up');
     }
-  };
+  }, [currentStep?.id, form.values]);
 
   const onPrevious = () => {
     if (currentStep?.id) {
@@ -93,7 +114,7 @@ export const FormUIProvider: FC<PropsWithChildren<FormUIContextProps>> = ({ chil
         ).length > 0;
 
         if (validateOnEnter) {
-          onNext();
+          onNext({ forceValidation: true });
         }
       }
     };
