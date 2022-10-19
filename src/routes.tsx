@@ -20,6 +20,7 @@ const View = {
   Home: Loadable(lazy(() => import('./views/Explore'))),
   Mint: Loadable(lazy(() => import('./views/CreateForm'))),
   Player: Loadable(lazy(() => import('./views/View'))),
+  TypeformView: Loadable(lazy(() => import('./views/TypeformView'))),
 };
 
 export default [
@@ -41,16 +42,21 @@ export default [
         element: <Navigate to={baseURL('/create')} replace />,
       },
       {
-        path: 'create',
-        element: <View.Mint />,
-      },
-      {
         path: 'view/:id',
         element: <View.Player />,
       },
     ],
   },
-
+  {
+    path: baseURL(),
+    element: <Layout.Create />,
+    children: [
+      {
+        path: 'create',
+        element: <View.TypeformView />,
+      },
+    ],
+  },
   // other layouts
   {
     path: '*',
