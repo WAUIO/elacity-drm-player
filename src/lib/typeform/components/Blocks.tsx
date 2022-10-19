@@ -1,6 +1,9 @@
 /* eslint-disable no-case-declarations */
 /* eslint-disable max-len */
 import React from 'react';
+import { get } from 'lodash';
+import classNames from 'classnames';
+import { useFormikContext } from 'formik';
 import Grid from '@mui/material/Grid';
 import { useSwipeable } from 'react-swipeable';
 import Box from '@mui/material/Box';
@@ -36,7 +39,12 @@ const GridContainer = styled(Grid)(() => ({
   overflow: 'hidden',
 }));
 
-const Blocks = () => {
+interface BlocksProps {
+  stepIndex: number
+}
+
+const Blocks = ({ stepIndex }: BlocksProps) => {
+  const { values, errors } = useFormikContext();
   const { currentStep, onPrevious, onNext } = useFormUI();
   const { isMobile } = useViewport();
 
@@ -44,14 +52,14 @@ const Blocks = () => {
   // @TODO: not yet sure if it works as expected, need to check
   const swipeHandlers = useSwipeable({
     onSwipedDown: () => onPrevious(),
-    onSwipedUp: () => onNext(),
+    onSwipedUp: () => onNext?.({ forceValidation: false }),
     trackMouse: false,
     trackTouch: true,
     delta: 70,
   });
 
   // Resolve block content by type
-  const resolveBlockContent = ({ content }: Block) => {
+  const resolveBlockContent = React.useCallback(({ content }: Block) => {
     const { type } = content;
     let section = null;
 
@@ -67,6 +75,7 @@ const Blocks = () => {
       section = (
         <Question
           {...(scBlock.input as QuestionInputProps)}
+          error={errors[scBlock.input?.fieldName]}
           button={scBlock.button}
         >
           <CardSelect {...scBlock as SelectCardBlock} />
@@ -78,6 +87,7 @@ const Blocks = () => {
       section = (
         <Question
           {...(selectBlock.input as QuestionInputProps)}
+          error={errors[selectBlock.input?.fieldName]}
           button={selectBlock.button}
         >
           <SelectChoice {...selectBlock as SelectChoiceBlock} />
@@ -89,6 +99,7 @@ const Blocks = () => {
       section = (
         <Question
           {...(textBlock.input as QuestionInputProps)}
+          error={errors[textBlock.input?.fieldName]}
           button={textBlock.button}
         >
           <TextInput {...textBlock as TextInputBlock} />
@@ -100,6 +111,7 @@ const Blocks = () => {
       section = (
         <Question
           {...(uploaderBlock.input as QuestionInputProps)}
+          error={errors[uploaderBlock.input?.fieldName]}
           button={uploaderBlock.button}
         >
           <Uploader {...uploaderBlock as UploaderBlock} />
@@ -111,15 +123,24 @@ const Blocks = () => {
     }
 
     return section;
-  };
+  }, [stepIndex, values, errors]);
 
   const bl = (currentStep?.blocks || []).length || 1;
 
-  const blocks = !isMobile ? currentStep.blocks || [] : (currentStep.blocks || []).sort((a: Block, b: Block) => parseInt(a.key.split('.').pop(), 10) - parseInt(b.key.split('.').pop(), 10));
+  const blocks = !isMobile
+    ? currentStep.blocks || []
+    : (currentStep.blocks || [])
+      .sort(
+        (a: Block, b: Block) => parseInt(a.key.split('.').pop(), 10) - parseInt(b.key.split('.').pop(), 10)
+      );
+
+  const haveError = React.useMemo(() => (currentStep.blocks || []).filter(
+    (b: Block) => Boolean(errors[get(b, 'content.input.fieldName', 'none')])
+  ).length > 0, [stepIndex, errors]);
 
   // Used only one grid in mobile view
   return (
-    <GridContainer container {...swipeHandlers} spacing={1}>
+    <GridContainer className={classNames({ 'shake-horizontal': haveError })} container {...swipeHandlers} spacing={1}>
       {isMobile && (
         <GridItem item xs={12}>
           {blocks.map((block: Block) => (

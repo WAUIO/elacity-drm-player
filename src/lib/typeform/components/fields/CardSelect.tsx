@@ -94,14 +94,14 @@ export const CustomCard = ({ icon: Icon, KeyPressId, value, isSelected, onSelect
       </CardContentStyled>
     )}
     <CardActions>
-      <Box display="flex">
+      <Box display="flex" alignItems="center">
         <ChipStyled
           variant="outlined"
           color="primary"
           label={KeyPressId}
           className={classnames({ active: isSelected })}
         />
-        <Typography sx={{ maxWidth: 125 }}>{value}</Typography>
+        <Typography sx={{ maxWidth: 125, fontSize: 14 }}>{value}</Typography>
       </Box>
     </CardActions>
   </CardStyled>

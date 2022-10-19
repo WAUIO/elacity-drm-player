@@ -1,10 +1,15 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
-import { Theme } from '@mui/material/styles';
+import { Theme, styled } from '@mui/material/styles';
 import { ButtonForm, QuestionInputProps } from '../types';
 import Caption from './Caption';
 import Title from './Title';
 import { BtnNext } from './Buttons';
+
+const TypoError = styled(Typography)(({ theme }) => ({
+  ...theme.typography.body2,
+  color: theme.palette.error.main,
+}));
 
 interface QuestionProps extends QuestionInputProps {
   button?: ButtonForm;
@@ -51,9 +56,9 @@ const Question = ({
     }
     {
       error && (
-        <Typography variant="caption" sx={{ color: (t: Theme) => t.palette.error.main }}>
+        <TypoError>
           {error}
-        </Typography>
+        </TypoError>
       )
     }
     {button && <BtnNext {...button} />}

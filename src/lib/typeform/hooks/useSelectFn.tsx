@@ -28,9 +28,7 @@ const useSelectFn = (input: SelectForm) => {
     if (!isMultiple) {
       setSelected(keyPressed);
 
-      if (input?.onChange) {
-        input.onChange({ target: { value: keyPressed } } as React.ChangeEvent<HTMLInputElement>);
-      }
+      input.onChange?.({ target: { value: keyPressed } } as React.ChangeEvent<HTMLInputElement>);
 
       // Move to next step on single select choice
       if (keyPressed) {
@@ -52,10 +50,8 @@ const useSelectFn = (input: SelectForm) => {
 
     setSelected(values);
 
-    if (input?.onChange) {
-      // @ts-ignore
-      input.onChange({ target: { value: values } });
-    }
+    // @ts-ignore
+    input.onChange?.({ target: { value: values } });
   };
 
   useEffect(() => {
@@ -70,7 +66,7 @@ const useSelectFn = (input: SelectForm) => {
       // @ts-ignore
       window.removeEventListener('keyup', handleKeyUp);
     };
-  }, [selected]);
+  }, []);
 
   // Handle selection
   const onSelect = (selectKey: string) => {

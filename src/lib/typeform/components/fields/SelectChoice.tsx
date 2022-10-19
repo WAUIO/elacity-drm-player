@@ -30,6 +30,7 @@ const CardStyled = styled(Box)(({ theme }) => ({
   },
   '&.active': {
     borderColor: darken(theme.palette.primary.main, 0.2),
+    background: alpha(theme.palette.primary.main, 0.3),
     animation: `${blink} 0.2s linear`,
   },
 }));

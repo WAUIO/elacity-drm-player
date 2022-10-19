@@ -10,9 +10,13 @@ const Wrapper = styled(Box)(() => ({
   height: '100%',
 }));
 
-const Form = () => (
+interface FormProps {
+  stepIndex: number;
+}
+
+const Form = ({ stepIndex }: FormProps) => (
   <Wrapper>
-    <Blocks />
+    <Blocks stepIndex={stepIndex} />
 
     <BtnController />
   </Wrapper>

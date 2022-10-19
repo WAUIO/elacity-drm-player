@@ -5,6 +5,7 @@ import {
   styled, Theme, alpha,
 } from '@mui/material/styles';
 import CircularProgress from '@mui/material/CircularProgress';
+import InputAdornment from '@mui/material/InputAdornment';
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
 import CheckIcon from '@mui/icons-material/Check';
 
@@ -29,7 +30,7 @@ import { images } from 'src/lib/typeform/constants';
 import { FormStep, MintForm } from './types';
 
 const Img = styled('img')(({ theme }) => ({
-  width: '80%',
+  width: '100%',
   height: 'auto',
   [theme.breakpoints.down('md')]: {
     width: 180,
@@ -113,6 +114,7 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
                 value: 'Content Distributor',
               },
             ],
+            fieldName: 'operator',
             value: values.operator,
             onChange: (e: React.ChangeEvent<HTMLInputElement>) => setFieldValue('operator', e.target.value),
             error: errors.operator,
@@ -167,6 +169,7 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
                 value: 'Document',
               },
             ],
+            fieldName: 'contentType',
             value: values.contentType,
             onChange: (e: React.ChangeEvent<HTMLInputElement>) => setFieldValue('contentType', e.target.value),
             error: errors.contentType,
@@ -242,6 +245,7 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
                 value: 'Rental',
               },
             ],
+            fieldName: 'accessMethod',
             value: values.accessMethod,
             onChange: (e: React.ChangeEvent<HTMLInputElement>) => setFieldValue('accessMethod', e.target.value),
             error: errors.accessMethod,
@@ -281,11 +285,16 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
             fullWidth: true,
             type: 'number',
             title: 'How much do you want to get paid per sale?',
+            placeholder: 'Price per sale',
             inputProps: {
               style: {
                 fontSize: 28,
               },
             },
+            startAdornment: (
+              <InputAdornment position="start" sx={{ '& .MuiTypography-root': { fontSize: 26 } }}>ELA</InputAdornment>
+            ),
+            fieldName: 'pricePerSale',
             value: values.pricePerSale,
             onChange: (
               e: React.ChangeEvent<HTMLInputElement>
@@ -328,7 +337,6 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
             multiple: true,
             placeholder: 'Choose as many as you like',
             title: 'Who do you need to distribute royalties to?',
-            caption: '[User can add % too]',
             options: [
               {
                 KeyPressId: 'A',
@@ -347,6 +355,7 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
                 value: 'Investor',
               },
             ],
+            fieldName: 'parties',
             value: values.parties,
             onChange: (e: React.ChangeEvent<HTMLInputElement>) => setFieldValue('parties', e.target.value),
             error: errors.parties,
@@ -382,11 +391,11 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
           type: 'uploader',
           input: {
             title: 'Alright! Let\'s get your asset uploaded to the SmartWeb!',
-            caption: '[User select/drag n drop file]',
             sx: {
               border: (t: Theme) => `1px dashed ${t.palette.primary.main}`,
               bgcolor: (t: Theme) => alpha(t.palette.primary.light, 0.1),
             },
+            fieldName: 'assetFile',
             initialValue: values.assetFile || null,
             onDropped: (value: File) => setFieldValue('assetFile', value),
             onRejected: (rejection: FileRejection[]) => {
@@ -423,7 +432,6 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
           type: 'uploader',
           input: {
             title: 'Please add a thumbnail image.',
-            caption: '[User adds thumbnail image]',
             maxSize: 10 * 1024 * 1024,
             supportedFileDescription: 'Choose file or drag image here, up to 10Mb',
             accept: {
@@ -433,6 +441,7 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
               border: (t: Theme) => `1px dashed ${t.palette.primary.main}`,
               bgcolor: (t: Theme) => alpha(t.palette.primary.light, 0.1),
             },
+            fieldName: 'assetThumbnail',
             initialValue: values.assetThumbnail || null,
             onDropped: (value: File) => setFieldValue('assetThumbnail', value),
             onRejected: (rejection: FileRejection[]) => {
@@ -463,12 +472,14 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
             fullWidth: true,
             caption: <Img style={{ width: '30%' }} alt="ela" src={images[9]} />,
             type: 'text',
-            title: 'What is the title of your asset? *',
+            title: 'What is the title of your asset?',
+            placeholder: 'Type the title here',
             inputProps: {
               style: {
                 fontSize: 28,
               },
             },
+            fieldName: 'title',
             value: values.title,
             onChange: (e: React.ChangeEvent<HTMLInputElement>) => setFieldValue('title', e.target.value),
             error: errors.title,
@@ -500,12 +511,15 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
             multiline: true,
             helpText: '<span>Shift ⇧</span> + <span>Enter ↵</span> to make a line break',
             type: 'text',
-            title: 'What is the description of your asset? *',
+            title: 'What is the description of your asset?',
+            placeholder: 'Type in the description here',
             inputProps: {
               style: {
                 fontSize: 28,
+                marginTop: 20,
               },
             },
+            fieldName: 'description',
             value: values.description,
             onChange: (e: React.ChangeEvent<HTMLInputElement>) => setFieldValue('description', e.target.value),
             error: errors.description,
@@ -526,7 +540,7 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
         },
         content: {
           type: 'static',
-          input: <Img alt="ela" style={{ width: '50%' }} src={images[10]} />,
+          input: <Img alt="ela" style={{ width: '65%' }} src={images[10]} />,
         },
       },
     ],
@@ -546,12 +560,14 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
             indicator: 8,
             required: true,
             fullWidth: true,
-            title: 'Nice! How many copies do you need? *',
+            title: 'Nice! How many copies do you need?',
+            placeholder: 'Number of copies',
             inputProps: {
               style: {
                 fontSize: 28,
               },
             },
+            fieldName: 'copiesNumber',
             value: values.copiesNumber,
             onChange: (
               e: React.ChangeEvent<HTMLInputElement>
@@ -595,7 +611,7 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
               display: 'none',
             },
             fullWidth: true,
-            caption: <Img style={{ width: '30%' }} alt="ela" src={images[1]} />,
+            caption: <Img style={{ width: '50%' }} alt="ela" src={images[1]} />,
             title: 'Great, please overview and click Mint to release your DRM-protected assets into Web3!',
           },
           button: {
