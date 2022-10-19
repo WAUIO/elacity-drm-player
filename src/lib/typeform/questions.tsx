@@ -38,7 +38,7 @@ export default [
     id: 1,
     isFirstStep: true,
     blocks: [{
-      key: '$.b.1',
+      key: '$.b.1.1',
       animation: {
         type: 'grow',
       },
@@ -48,7 +48,7 @@ export default [
       },
     },
     {
-      key: '$.b.2',
+      key: '$.b.1.2',
       animation: {
         type: 'fade',
       },
@@ -72,7 +72,7 @@ export default [
     id: 2,
     blocks: [
       {
-        key: '$.b.3',
+        key: '$.b.2.1',
         animation: {
           type: 'grow',
         },
@@ -82,7 +82,7 @@ export default [
         },
       },
       {
-        key: '$.b.4',
+        key: '$.b.2.2',
         animation: {
           type: 'fade',
         },
@@ -122,7 +122,7 @@ export default [
     id: 3,
     blocks: [
       {
-        key: '$.b.5',
+        key: '$.b.3.2',
         animation: {
           type: 'fade',
         },
@@ -168,7 +168,7 @@ export default [
         },
       },
       {
-        key: '$.b.6',
+        key: '$.b.3.1',
         animation: {
           type: 'grow',
         },
@@ -183,7 +183,7 @@ export default [
     id: 4,
     blocks: [
       {
-        key: '$.b.7',
+        key: '$.b.4.1',
         animation: {
           type: 'grow',
         },
@@ -193,7 +193,7 @@ export default [
         },
       },
       {
-        key: '$.b.8',
+        key: '$.b.4.2',
         animation: {
           type: 'fade',
         },
@@ -449,7 +449,7 @@ export default [
     id: 10,
     blocks: [
       {
-        key: '$.b.10.1',
+        key: '$.b.10.2',
         animation: {
           type: 'fade',
         },
@@ -479,7 +479,7 @@ export default [
         },
       },
       {
-        key: '$.b.10.2',
+        key: '$.b.10.1',
         animation: {
           type: 'grow',
         },
@@ -494,7 +494,7 @@ export default [
     id: 11,
     blocks: [
       {
-        key: '$.b.10.1',
+        key: '$.b.11.2',
         animation: {
           type: 'fade',
         },
@@ -522,7 +522,7 @@ export default [
         },
       },
       {
-        key: '$.b.10.2',
+        key: '$.b.11.1',
         animation: {
           type: 'grow',
         },
@@ -538,7 +538,7 @@ export default [
     isLastStep: true,
     blocks: [
       {
-        key: '$.b.9.1',
+        key: '$.b.12.1',
         animation: {
           type: 'fade',
         },

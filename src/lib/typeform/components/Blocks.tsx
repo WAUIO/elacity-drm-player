@@ -113,12 +113,14 @@ const Blocks = () => {
 
   const bl = (currentStep?.blocks || []).length || 1;
 
+  const blocks = !isMobile ? currentStep.blocks || [] : (currentStep.blocks || []).sort((a: Block, b: Block) => parseInt(a.key.split('.').pop(), 10) - parseInt(b.key.split('.').pop(), 10));
+
   // Used only one grid in mobile view
   return (
     <GridContainer container {...swipeHandlers} spacing={1}>
       {isMobile && (
         <GridItem item xs={12}>
-          {(currentStep?.blocks || []).map((block: Block) => (
+          {blocks.map((block: Block) => (
             <Box display="flex" justifyContent="space-around" p={2}>
               {resolveBlockContent(block)}
             </Box>
@@ -126,7 +128,7 @@ const Blocks = () => {
         </GridItem>
       )}
 
-      {!isMobile && (currentStep?.blocks || []).map((block: Block) => (
+      {!isMobile && blocks.map((block: Block) => (
         <GridItem key={block.key} item xs={12} sm={12} md={12 / bl}>
           <Transition animation={block?.animation}>
             <Box display="flex" justifyContent="space-around">

@@ -110,14 +110,10 @@ export const CustomCard = ({ icon: Icon, KeyPressId, value, isSelected, onSelect
 interface CardSelectProps extends SelectCardBlock {}
 
 const CardSelect = ({ input }: CardSelectProps) => {
-  const { onSelect, ref, onKeyPress, isSelected } = useSelectFn(input);
+  const { ref, onSelect, isSelected } = useSelectFn(input);
 
   return (
-    <Box>
-      <input
-        style={{ opacity: 0 }} ref={ref}
-        onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => onKeyPress(e.key)}
-      />
+    <Box ref={ref}>
       {input.placeholder && <Typography color="primary.dark" variant="body2">{input.placeholder}</Typography>}
       <Box display="flex" mt={1} flexWrap="wrap">
         {input.options

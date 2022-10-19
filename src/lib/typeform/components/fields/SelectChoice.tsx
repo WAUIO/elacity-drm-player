@@ -83,9 +83,9 @@ export const Option = ({ KeyPressId, value, isSelected, onSelect }: OptionProps)
 interface SelectProps extends SelectChoiceBlock {}
 
 const SelectChoice = ({ input }: SelectProps) => {
-  const { onSelect, ref, onKeyPress, isSelected } = useSelectFn(input);
+  const { ref, onSelect, isSelected } = useSelectFn(input);
   return (
-    <Box>
+    <Box ref={ref}>
       {input.placeholder && <Typography color="primary.dark" variant="body2">{input.placeholder}</Typography>}
       <Box display="inline-flex" mt={1} flexWrap="nowrap" flexDirection="column">
         {input.options
@@ -98,11 +98,6 @@ const SelectChoice = ({ input }: SelectProps) => {
             />
           ))}
       </Box>
-      <input
-        ref={ref}
-        style={{ opacity: 0 }}
-        onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => onKeyPress(e.key)}
-      />
     </Box>
   );
 };

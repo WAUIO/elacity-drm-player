@@ -7,7 +7,7 @@ import useFormUI from './useFormUI';
 
 const useSelectFn = (input: SelectForm) => {
   const [selected, setSelected] = useState<string | string[]>();
-  const ref = useRef<HTMLInputElement>();
+  const ref = useRef<HTMLElement>();
 
   const validOptions = input.options.map((opt) => opt.KeyPressId);
 
@@ -15,33 +15,20 @@ const useSelectFn = (input: SelectForm) => {
 
   const isMultiple = input.multiple;
 
-  // Hidden input will listen keyUp event
-  const focusOnInput = () => {
-    if (ref && ref?.current) {
-      ref.current.autofocus = true;
-      ref.current.focus();
-    }
-  };
-
   useEffect(() => {
     // Fire on change input event
     if (typeof input?.onChange === 'function') {
       input.onChange({ target: { value: selected } } as React.ChangeEvent<HTMLInputElement>);
     }
     // Move to next step on single select choice
-    if (selected && !isMultiple) { onNext(); }
+    if (selected && !isMultiple) {
+      setTimeout(() => {
+        if (ref.current) {
+          onNext();
+        }
+      }, 700);
+    }
   }, [selected]);
-
-  useEffect(() => {
-    // Always make sure to focus input
-    document.addEventListener('click', focusOnInput);
-
-    focusOnInput();
-
-    return () => {
-      document.removeEventListener('click', focusOnInput);
-    };
-  }, []);
 
   // Handle multiple or single choice
   const handleChoice = (key: string) => {
@@ -71,17 +58,23 @@ const useSelectFn = (input: SelectForm) => {
     setSelected(values);
   };
 
-  // Handle any keyboard press
-  const onKeyPress = (key: string) => {
-    if (ref) {
-      ref.current.value = '';
-    }
-    handleChoice(key);
-  };
+  useEffect(() => {
+    // Handle any keyboard press
+    const handleKeyUp = (e: React.KeyboardEvent) => {
+      handleChoice(e.key);
+    };
+    // @ts-ignore
+    window.addEventListener('keyup', handleKeyUp);
+
+    return () => {
+      // @ts-ignore
+      window.removeEventListener('keyup', handleKeyUp);
+    };
+  }, [selected]);
 
   // Handle selection
   const onSelect = (selectKey: string) => {
-    onKeyPress(selectKey);
+    handleChoice(selectKey);
   };
 
   const isSelected = (KeyPressId: string) => {
@@ -91,7 +84,7 @@ const useSelectFn = (input: SelectForm) => {
     return KeyPressId === selected;
   };
 
-  return { selected, onSelect, ref, onKeyPress, isSelected };
+  return { selected, onSelect, ref, isSelected };
 };
 
 export default useSelectFn;
