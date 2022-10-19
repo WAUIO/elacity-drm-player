@@ -59,7 +59,6 @@ export default [
         ),
         button: {
           text: 'Hello! OK',
-          stepId: 1,
           withIndicator: true,
         },
       },
@@ -105,7 +104,6 @@ export default [
           },
           button: {
             text: 'OK',
-            stepId: 2,
             props: {
               endIcon: <CheckIcon />,
             },
@@ -156,7 +154,6 @@ export default [
           },
           button: {
             text: 'OK',
-            stepId: 3,
             props: {
               endIcon: <CheckIcon />,
             },
@@ -222,7 +219,6 @@ export default [
           },
           button: {
             text: 'OK',
-            stepId: 5,
             props: {
               endIcon: <CheckIcon />,
             },
@@ -260,7 +256,6 @@ export default [
           },
           button: {
             text: 'OK',
-            stepId: 6,
             withIndicator: true,
             props: {
               endIcon: <CheckIcon />,
@@ -312,7 +307,6 @@ export default [
           },
           button: {
             text: 'OK',
-            stepId: 7,
             props: {
               endIcon: <CheckIcon />,
             },
@@ -348,7 +342,6 @@ export default [
           },
           button: {
             text: 'Continue',
-            stepId: 8,
             withIndicator: true,
           },
         },
@@ -387,7 +380,6 @@ export default [
           },
           button: {
             text: 'Continue',
-            stepId: 6,
             withIndicator: true,
           },
         },

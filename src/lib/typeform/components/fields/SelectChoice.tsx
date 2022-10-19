@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import classnames from 'classnames';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -6,8 +6,14 @@ import CheckIcon from '@mui/icons-material/Check';
 import { styled } from '@mui/material/styles';
 import { darken, alpha } from '@mui/material';
 import Chip from '@mui/material/Chip';
+import { keyframes } from '@mui/system';
 import { SelectChoiceBlock, SelectOptions } from '../../types';
 import useSelectFn from '../../hooks/useSelectFn';
+
+const blink = keyframes`
+  from { opacity: 1.0; }
+  to { opacity: 0.0; }
+`;
 
 const CardStyled = styled(Box)(({ theme }) => ({
   // display: 'inline-flex',
@@ -24,6 +30,7 @@ const CardStyled = styled(Box)(({ theme }) => ({
   },
   '&.active': {
     borderColor: darken(theme.palette.primary.main, 0.2),
+    animation: `${blink} 0.2s linear`,
   },
 }));
 
@@ -76,14 +83,7 @@ export const Option = ({ KeyPressId, value, isSelected, onSelect }: OptionProps)
 interface SelectProps extends SelectChoiceBlock {}
 
 const SelectChoice = ({ input }: SelectProps) => {
-  const { selected, onSelect, ref, onKeyPress } = useSelectFn();
-
-  useEffect(() => {
-    if (typeof input?.onChange === 'function') {
-      input.onChange({ target: { value: selected } } as React.ChangeEvent<HTMLInputElement>);
-    }
-  }, [selected]);
-
+  const { onSelect, ref, onKeyPress, isSelected } = useSelectFn(input);
   return (
     <Box>
       <Box display="inline-flex" mt={1} flexWrap="nowrap" flexDirection="column">
@@ -92,14 +92,14 @@ const SelectChoice = ({ input }: SelectProps) => {
             <Option
               {...opt}
               key={opt.KeyPressId}
-              isSelected={opt.KeyPressId === selected}
+              isSelected={isSelected(opt.KeyPressId)}
               onSelect={onSelect}
             />
           ))}
       </Box>
       <input
-        type="hidden"
         ref={ref}
+        style={{ opacity: 0 }}
         onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => onKeyPress(e.key)}
       />
     </Box>

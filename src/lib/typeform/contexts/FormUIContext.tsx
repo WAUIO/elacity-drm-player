@@ -8,12 +8,16 @@ import { Block, FormStep } from '../types/index';
 
 interface FormUIContextValue {
   currentStep: FormStep;
-  setCurrentStep: (stepId: number, animationDirection?: string) => void;
+  // setCurrentStep: (stepId: number, animationDirection?: string) => void;
+  onNext: () => void;
+  onPrevious: () => void;
 }
 
 export const FormUIContext = createContext<FormUIContextValue>({
   currentStep: null,
-  setCurrentStep: () => {},
+  // setCurrentStep: () => {},
+  onNext: () => {},
+  onPrevious: () => {},
 });
 
 interface FormUIContextProps {
@@ -46,14 +50,20 @@ export const FormUIProvider: FC<PropsWithChildren<FormUIContextProps>> = ({ chil
     }
   };
 
-  // On clicked on arrow down button
   const onNext = () => {
     if (currentStep?.id) {
       // next step will show from the bottom -> top
       _setCurrentStep(currentStep?.id + 1, 'up');
     }
   };
+  const onPrevious = () => {
+    if (currentStep?.id) {
+      // next step will show from the top -> bottom
+      _setCurrentStep(currentStep?.id - 1, 'down');
+    }
+  };
 
+  // On clicked on arrow down button
   React.useEffect(() => {
     const handleEnterKeyUp = (e: KeyboardEvent) => {
       if (e.key === 'Enter') {
@@ -82,7 +92,9 @@ export const FormUIProvider: FC<PropsWithChildren<FormUIContextProps>> = ({ chil
     <FormUIContext.Provider
       value={{
         currentStep,
-        setCurrentStep: _setCurrentStep,
+        // setCurrentStep: _setCurrentStep,
+        onNext,
+        onPrevious,
       }}
     >
       {children}

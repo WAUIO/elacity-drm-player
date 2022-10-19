@@ -11,7 +11,6 @@ export interface Animation {
 
 export interface ButtonForm {
     text: string;
-    stepId?: number;
     props?: ButtonProps;
     withIndicator?: boolean;
 }
@@ -44,6 +43,7 @@ export interface SelectOptions {
 
 export interface SelectForm extends InputForm {
     options: SelectOptions[];
+    multiple?: boolean;
 }
 
 export interface SelectCardBlock {
@@ -54,7 +54,7 @@ export interface SelectCardBlock {
 
 export interface SelectChoiceBlock {
     type: 'select-choice';
-    input: SelectForm & {multiple?: boolean};
+    input: SelectForm;
     button: ButtonForm;
 }
 

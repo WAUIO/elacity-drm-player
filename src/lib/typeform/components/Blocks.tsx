@@ -35,14 +35,14 @@ const GridContainer = styled(Grid)(() => ({
 }));
 
 const Blocks = () => {
-  const { currentStep, setCurrentStep } = useFormUI();
+  const { currentStep, onPrevious, onNext } = useFormUI();
   const { isMobile } = useViewport();
 
   // Swipe action listener
   // @TODO: not yet sure if it works as expected, need to check
   const swipeHandlers = useSwipeable({
-    onSwipedDown: () => setCurrentStep(currentStep?.id + 1, 'up'),
-    onSwipedUp: () => setCurrentStep(currentStep?.id - 1, 'down'),
+    onSwipedDown: () => onPrevious(),
+    onSwipedUp: () => onNext(),
     trackMouse: false,
     trackTouch: true,
     delta: 70,

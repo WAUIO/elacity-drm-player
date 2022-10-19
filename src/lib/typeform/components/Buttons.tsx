@@ -23,23 +23,7 @@ const BottomBox = styled(Box)(({ theme }) => ({
  * Bottom button up | down controller
  */
 export const BtnController = () => {
-  const { currentStep, setCurrentStep } = useFormUI();
-
-  // On clicked on arrow down button
-  const onNext = () => {
-    if (currentStep?.id) {
-      // next step will show from the bottom -> top
-      setCurrentStep(currentStep?.id + 1, 'up');
-    }
-  };
-
-  // On clicked on arrow up button
-  const onPrevious = () => {
-    if (currentStep?.id) {
-      // previous step will show from the top -> bottom
-      setCurrentStep(currentStep?.id - 1, 'down');
-    }
-  };
+  const { currentStep, onNext, onPrevious } = useFormUI();
 
   return (
     <BottomBox>
@@ -65,24 +49,22 @@ export const BtnController = () => {
 
 interface BtnNextProps extends ButtonForm {}
 
-export const BtnNext = ({ text, stepId, withIndicator, props: _props }: BtnNextProps) => {
+export const BtnNext = ({ text, withIndicator, props: _props }: BtnNextProps) => {
   const { sx, ...props } = _props || {};
-  const { setCurrentStep } = useFormUI();
+  const { onNext } = useFormUI();
 
   // Override the onClick action
   // Fire the action then move to current step
-  const onNext = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (typeof props?.onClick === 'function') {
       props.onClick(e);
     }
-    if (stepId && typeof stepId === 'number') {
-      setCurrentStep(stepId + 1);
-    }
+    onNext();
   };
 
   return (
     <Box display="flex" mt={3} alignItems="center">
-      <Button sx={{ boxShadow: 0, ...(sx || {}) }} variant="contained" size="large" onClick={onNext} {...props}>
+      <Button sx={{ boxShadow: 0, ...(sx || {}) }} variant="contained" size="large" onClick={handleClick} {...props}>
         {text}
       </Button>
       {withIndicator && (

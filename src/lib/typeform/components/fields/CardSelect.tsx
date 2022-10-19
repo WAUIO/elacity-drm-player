@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import classnames from 'classnames';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -9,8 +9,14 @@ import CheckIcon from '@mui/icons-material/Check';
 import { styled } from '@mui/material/styles';
 import { darken, alpha } from '@mui/material';
 import Chip from '@mui/material/Chip';
+import { keyframes } from '@mui/system';
 import { SelectCardBlock, SelectOptions } from '../../types';
 import useSelectFn from '../../hooks/useSelectFn';
+
+const blink = keyframes`
+  from { opacity: 1.0; }
+  to { opacity: 0.0; }
+`;
 
 const CardStyled = styled(Card)(({ theme }) => ({
   width: 174,
@@ -24,6 +30,7 @@ const CardStyled = styled(Card)(({ theme }) => ({
   },
   '&.active': {
     borderColor: darken(theme.palette.primary.main, 0.2),
+    animation: `${blink} 0.2s linear`,
   },
 }));
 
@@ -90,7 +97,9 @@ export const CustomCard = ({ icon: Icon, KeyPressId, value, isSelected, onSelect
       <Box display="flex">
         <ChipStyled
           variant="outlined"
-          color="primary" label={KeyPressId} className={classnames({ active: isSelected })}
+          color="primary"
+          label={KeyPressId}
+          className={classnames({ active: isSelected })}
         />
         <Typography sx={{ maxWidth: 125 }}>{value}</Typography>
       </Box>
@@ -101,13 +110,7 @@ export const CustomCard = ({ icon: Icon, KeyPressId, value, isSelected, onSelect
 interface CardSelectProps extends SelectCardBlock {}
 
 const CardSelect = ({ input }: CardSelectProps) => {
-  const { selected, onSelect, ref, onKeyPress } = useSelectFn();
-
-  useEffect(() => {
-    if (typeof input?.onChange === 'function') {
-      input.onChange({ target: { value: selected } } as React.ChangeEvent<HTMLInputElement>);
-    }
-  }, [selected]);
+  const { onSelect, ref, onKeyPress, isSelected } = useSelectFn(input);
 
   return (
     <Box>
@@ -121,7 +124,7 @@ const CardSelect = ({ input }: CardSelectProps) => {
             <CustomCard
               {...opt}
               key={opt.KeyPressId}
-              isSelected={opt.KeyPressId === selected}
+              isSelected={isSelected(opt.KeyPressId)}
               onSelect={onSelect}
             />
           ))}
