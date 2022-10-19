@@ -118,6 +118,7 @@ const CardSelect = ({ input }: CardSelectProps) => {
         style={{ opacity: 0 }} ref={ref}
         onKeyUp={(e: React.KeyboardEvent<HTMLInputElement>) => onKeyPress(e.key)}
       />
+      {input.placeholder && <Typography color="primary.dark" variant="body2">{input.placeholder}</Typography>}
       <Box display="flex" mt={1} flexWrap="wrap">
         {input.options
           .map((opt) => (

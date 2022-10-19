@@ -70,17 +70,17 @@ export const BtnNext = ({ text, withIndicator, props: _props }: BtnNextProps) =>
       {withIndicator && (
         <Typography
           variant="caption"
+          component="div"
           sx={{
             p: 1,
             '& > *': {
               fontWeight: 'bolder',
             },
           }}
-        >
-          press
-          {' '}
-          <span>Enter ↵</span>
-        </Typography>
+          dangerouslySetInnerHTML={{
+            __html: typeof withIndicator === 'string' ? withIndicator : 'press <span>Enter ↵</span>',
+          }}
+        />
       )}
     </Box>
   );

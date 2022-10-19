@@ -12,6 +12,7 @@ interface QuestionProps {
   helpText?: string;
   indicator?: number;
   button?: ButtonForm;
+  error?: string;
 }
 
 const Question = ({
@@ -21,6 +22,7 @@ const Question = ({
   button,
   helpText,
   indicator,
+  error,
 }: React.PropsWithChildren<QuestionProps>) => (
   <Box>
     <Title indicator={indicator}>{title}</Title>
@@ -34,8 +36,15 @@ const Question = ({
     {children}
     {
       helpText && (
-        <Typography variant="caption" sx={{ color: (t: Theme) => t.palette.error.main }}>
+        <Typography variant="caption" sx={{ color: (t: Theme) => t.palette.primary.dark }}>
           {helpText}
+        </Typography>
+      )
+    }
+    {
+      error && (
+        <Typography variant="caption" sx={{ color: (t: Theme) => t.palette.error.main }}>
+          {error}
         </Typography>
       )
     }

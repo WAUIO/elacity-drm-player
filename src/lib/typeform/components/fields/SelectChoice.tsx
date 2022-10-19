@@ -86,6 +86,7 @@ const SelectChoice = ({ input }: SelectProps) => {
   const { onSelect, ref, onKeyPress, isSelected } = useSelectFn(input);
   return (
     <Box>
+      {input.placeholder && <Typography color="primary.dark" variant="body2">{input.placeholder}</Typography>}
       <Box display="inline-flex" mt={1} flexWrap="nowrap" flexDirection="column">
         {input.options
           .map((opt) => (

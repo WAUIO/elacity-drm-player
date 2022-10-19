@@ -111,6 +111,8 @@ const Blocks = () => {
     return section;
   };
 
+  const bl = (currentStep?.blocks || []).length || 1;
+
   // Used only one grid in mobile view
   return (
     <Transition animation={currentStep?.animation || { type: 'slide' }}>
@@ -126,7 +128,7 @@ const Blocks = () => {
         )}
 
         {!isMobile && (currentStep?.blocks || []).map((block: Block) => (
-          <GridItem key={block.key} item xs={12} sm={12} md={6}>
+          <GridItem key={block.key} item xs={12} sm={12} md={12 / bl}>
             <Box display="flex" justifyContent="space-around">
               {resolveBlockContent(block)}
             </Box>

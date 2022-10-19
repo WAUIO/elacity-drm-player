@@ -12,13 +12,14 @@ export interface Animation {
 export interface ButtonForm {
     text: string;
     props?: ButtonProps;
-    withIndicator?: boolean;
+    withIndicator?: boolean | string;
 }
 
 export interface QuestionInputProps {
     indicator?: number;
     title: string;
     helpText?: string;
+    error?: string;
     caption?: string | React.ReactNode;
 }
 

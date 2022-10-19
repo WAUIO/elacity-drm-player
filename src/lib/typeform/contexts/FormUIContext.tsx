@@ -68,7 +68,7 @@ export const FormUIProvider: FC<PropsWithChildren<FormUIContextProps>> = ({ chil
     const handleEnterKeyUp = (e: KeyboardEvent) => {
       if (e.key === 'Enter') {
         const validateOnEnter = (currentStep.blocks || []).map(
-          (b: Block) => b.content?.button?.withIndicator
+          (b: Block) => !!b.content?.button?.withIndicator
         ).filter(
           (h: boolean) => !!h
         ).length > 0;

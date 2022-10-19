@@ -26,9 +26,10 @@ import { images } from 'src/lib/typeform/constants';
 import { FormStep } from './types';
 
 const Img = styled('img')(({ theme }) => ({
+  width: '500px !important',
+  height: 'auto',
   [theme.breakpoints.down('md')]: {
     width: 180,
-    height: 'auto',
   },
 }));
 
@@ -176,7 +177,7 @@ export default [
         key: '$.b.7',
         content: {
           type: 'static',
-          input: <Img style={{ width: 500, height: 'auto' }} alt="ela" src={images[4]} />,
+          input: <Img alt="ela" src={images[4]} />,
         },
       },
       {
@@ -233,7 +234,7 @@ export default [
         key: '$.b.5.1',
         content: {
           type: 'static',
-          input: <Img style={{ width: 500, height: 'auto' }} alt="ela" src={images[4]} />,
+          input: <Img alt="ela" src={images[4]} />,
         },
       },
       {
@@ -247,6 +248,7 @@ export default [
             indicator: 4,
             required: true,
             fullWidth: true,
+            type: 'number',
             title: 'How much do you want to get paid per sale?',
             inputProps: {
               style: {
@@ -271,7 +273,7 @@ export default [
         key: '$.b.6.1',
         content: {
           type: 'static',
-          input: <Img style={{ width: 500, height: 'auto' }} alt="ela" src={images[5]} />,
+          input: <Img alt="ela" src={images[5]} />,
         },
       },
       {
@@ -285,6 +287,7 @@ export default [
             indicator: 5,
             required: true,
             multiple: true,
+            placeholder: 'Choose as many as you like',
             title: 'Who do you need to distribute royalties to?',
             caption: '[User can add % too]',
             options: [
@@ -381,6 +384,149 @@ export default [
           button: {
             text: 'Continue',
             withIndicator: true,
+          },
+        },
+      }],
+  },
+  {
+    id: 9,
+    blocks: [
+      {
+        key: '$.b.9.1',
+        animation: {
+          type: 'slide',
+        },
+        content: {
+          type: 'text',
+          input: {
+            indicator: 6,
+            required: true,
+            fullWidth: true,
+            caption: <Img style={{ width: 400 }} alt="ela" src={images[7]} />,
+            type: 'text',
+            title: 'What is the title of your asset? *',
+            inputProps: {
+              style: {
+                fontSize: 28,
+              },
+            },
+          },
+          button: {
+            text: 'OK',
+            withIndicator: true,
+            props: {
+              endIcon: <CheckIcon />,
+            },
+          },
+        },
+      }],
+  },
+  {
+    id: 10,
+    blocks: [
+      {
+        key: '$.b.10.1',
+        animation: {
+          type: 'slide',
+        },
+        content: {
+          type: 'text',
+          input: {
+            indicator: 7,
+            required: true,
+            fullWidth: true,
+            multiline: true,
+            helpText: 'Shift ⇧ + Enter ↵ to make a line break',
+            type: 'text',
+            title: 'What is the description of your asset? *',
+            inputProps: {
+              style: {
+                fontSize: 28,
+              },
+            },
+          },
+          button: {
+            text: 'OK',
+            withIndicator: true,
+            props: {
+              endIcon: <CheckIcon />,
+            },
+          },
+        },
+      },
+      {
+        key: '$.b.10.2',
+        content: {
+          type: 'static',
+          input: <Img alt="ela" src={images[8]} />,
+        },
+      },
+    ],
+  },
+  {
+    id: 11,
+    blocks: [
+      {
+        key: '$.b.10.1',
+        animation: {
+          type: 'slide',
+        },
+        content: {
+          type: 'text',
+          input: {
+            type: 'number',
+            indicator: 8,
+            required: true,
+            fullWidth: true,
+            title: 'Nice! How many copies do you need? *',
+            inputProps: {
+              style: {
+                fontSize: 28,
+              },
+            },
+          },
+          button: {
+            text: 'OK',
+            withIndicator: true,
+            props: {
+              endIcon: <CheckIcon />,
+            },
+          },
+        },
+      },
+      {
+        key: '$.b.10.2',
+        content: {
+          type: 'static',
+          input: <Img alt="ela" src={images[9]} />,
+        },
+      },
+    ],
+  },
+  {
+    id: 12,
+    blocks: [
+      {
+        key: '$.b.9.1',
+        animation: {
+          type: 'slide',
+        },
+        content: {
+          type: 'text',
+          input: {
+            sx: {
+              display: 'none',
+            },
+            fullWidth: true,
+            caption: <Img style={{ width: 400, height: 'auto' }} alt="ela" src={images[7]} />,
+            title: 'Great, please overview and click Mint to release your DRM-protected assets into Web3!',
+          },
+          button: {
+            text: 'Submit',
+            withIndicator: 'press <span>Ctrl + Enter ↵ </span>',
+            props: {
+              endIcon: <CheckIcon />,
+            },
           },
         },
       }],
