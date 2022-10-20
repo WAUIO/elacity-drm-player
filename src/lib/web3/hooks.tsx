@@ -131,6 +131,9 @@ export const useAddresses = () => {
   const { chainId } = useWeb3React();
 
   return {
+    TEMP721: chainId === 20
+      ? process.env.REACT_APP_TOKEN721_MAINNET
+      : process.env.REACT_APP_TOKEN721_TESTNET,
     ISSUER_TOKEN: chainId === 20
       ? process.env.REACT_APP_ISSUER_TOKEN_MAINNET
       : process.env.REACT_APP_ISSUER_TOKEN_TESTNET,

@@ -1112,10 +1112,10 @@
   resolved "https://registry.yarnpkg.com/@csstools/normalize.css/-/normalize.css-10.1.0.tgz#f0950bba18819512d42f7197e56c518aa491cf18"
   integrity sha512-ij4wRiunFfaJxjB0BdrYHIH8FxBJpOwNPhhAcunlmPdXudL1WQV1qoP9un6JsEBAgQH+7UXyyjh0g7jTxXK6tg==
 
-"@elacity-js/lib@^0.1.18":
-  version "0.1.18"
-  resolved "https://registry.yarnpkg.com/@elacity-js/lib/-/lib-0.1.18.tgz#d249d51ccbe5f8533ae8a6ecd5165a017fc67445"
-  integrity sha512-malc4A0U621VcUYe4ggS/gSH6WI0kdU0PEsTDOY5EH2njpwo3UvIEB2BpCWgMotQlF/02XSfyfp25KBD2JTbQg==
+"@elacity-js/lib@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@elacity-js/lib/-/lib-0.2.0.tgz#d66745a5bad2103be3ef26d13f33efa41f2e4ffe"
+  integrity sha512-pSLc7jPYLcfGeegxf0ni4tmh9OLNWosNvllb/zlk9LrddA8Fu44Pflm/CsO7mWluGnIQHy5ORI8wa9LL8dhC0w==
   dependencies:
     "@ethersproject/bignumber" "^5.6.2"
 
