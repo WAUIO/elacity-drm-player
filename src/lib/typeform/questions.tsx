@@ -25,6 +25,7 @@ import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 
 import Title from 'src/lib/typeform/components/Title';
+import RoyaltySetup from 'src/lib/typeform/components/static/RoyaltySetup';
 import { images } from 'src/lib/typeform/constants';
 import { FormStep, MintForm } from './types';
 import { Img, CenterBox } from './components/Img';
@@ -321,43 +322,69 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
         animation: {
           type: 'slide',
         },
+        // content: {
+        //   type: 'select-choice',
+        //   input: {
+        //     indicator: 5,
+        //     required: true,
+        //     multiple: true,
+        //     placeholder: 'Choose as many as you like',
+        //     title: 'Who do you need to distribute royalties to?',
+        //     options: [
+        //       {
+        //         KeyPressId: 'A',
+        //         value: 'Creator',
+        //       },
+        //       {
+        //         KeyPressId: 'B',
+        //         value: 'Publisher',
+        //       },
+        //       {
+        //         KeyPressId: 'C',
+        //         value: 'Distributor',
+        //       },
+        //       {
+        //         KeyPressId: 'D',
+        //         value: 'Investor',
+        //       },
+        //     ],
+        //     fieldName: 'parties',
+        //     value: values.parties,
+        //     onChange: (e: React.ChangeEvent<HTMLInputElement>) => setFieldValue('parties', e.target.value),
+        //     error: errors.parties,
+        //   },
+        //   button: {
+        //     text: 'OK',
+        //     props: {
+        //       endIcon: <CheckIcon />,
+        //     },
+        //   },
+        // },
         content: {
-          type: 'select-choice',
-          input: {
-            indicator: 5,
-            required: true,
-            multiple: true,
-            placeholder: 'Choose as many as you like',
-            title: 'Who do you need to distribute royalties to?',
-            options: [
-              {
-                KeyPressId: 'A',
-                value: 'Creator',
-              },
-              {
-                KeyPressId: 'B',
-                value: 'Publisher',
-              },
-              {
-                KeyPressId: 'C',
-                value: 'Distributor',
-              },
-              {
-                KeyPressId: 'D',
-                value: 'Investor',
-              },
-            ],
-            fieldName: 'parties',
-            value: values.parties,
-            onChange: (e: React.ChangeEvent<HTMLInputElement>) => setFieldValue('parties', e.target.value),
-            error: errors.parties,
-          },
-          button: {
-            text: 'OK',
-            props: {
-              endIcon: <CheckIcon />,
-            },
-          },
+          type: 'static',
+          input: (
+            <RoyaltySetup
+              fieldName="royalties"
+              options={[
+                {
+                  KeyPressId: 'A',
+                  value: 'Creator',
+                },
+                {
+                  KeyPressId: 'B',
+                  value: 'Publisher',
+                },
+                {
+                  KeyPressId: 'C',
+                  value: 'Distributor',
+                },
+                {
+                  KeyPressId: 'D',
+                  value: 'Investor',
+                },
+              ]}
+            />
+          ),
         },
       }],
   },

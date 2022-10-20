@@ -1,4 +1,5 @@
 import React from 'react';
+import { sumBy } from 'lodash';
 import { Formik, FormikErrors } from 'formik';
 import { ThemeProvider } from './theme';
 import Form from './components/Form';
@@ -38,12 +39,27 @@ const Typeform = () => {
       },
       () => {
         if (!values.pricePerSale && values.accessMethod !== 'A') {
-          errors.pricePerSale = 'The price is required unless you set it as free content';
+          errors.pricePerSale = 'The price is required unless you set the asset as a free content';
         }
       },
       () => {
-        if (!values.parties?.length && values.accessMethod !== 'A') {
-          errors.parties = 'Please choose at least one of the options above';
+        if (values.accessMethod !== 'A') {
+          let royaltiesHasErr = false;
+          values.royalties.forEach((rset) => {
+            if (rset.address === '') {
+              royaltiesHasErr = true;
+            }
+          });
+          if (royaltiesHasErr) {
+            errors.royalties = 'Please fill in all beneficiaries address';
+          } else {
+            const totalPercentage = sumBy(values.royalties, ((r) => Number(r.royalty)));
+            if (totalPercentage !== 100) {
+              console.log({ totalPercentage });
+              // eslint-disable-next-line max-len
+              errors.royalties = `Please make sure total of all percentage is equal to 100%, actual value is ${totalPercentage}%`;
+            }
+          }
         }
       },
       () => {
@@ -87,7 +103,10 @@ const Typeform = () => {
   return (
     <ThemeProvider>
       <Formik
-        initialValues={{}}
+        initialValues={{
+          parties: [],
+          royalties: [],
+        }}
         onSubmit={onSubmit}
         validate={formValidator}
       >

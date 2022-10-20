@@ -81,7 +81,7 @@ export const Option = ({ KeyPressId, value, isSelected, onSelect }: OptionProps)
   </CardStyled>
 );
 
-interface SelectProps extends SelectChoiceBlock {}
+interface SelectProps extends Omit<SelectChoiceBlock, 'button' | 'type'> {}
 
 const SelectChoice = ({ input }: SelectProps) => {
   const { ref, onSelect, isSelected } = useSelectFn(input);

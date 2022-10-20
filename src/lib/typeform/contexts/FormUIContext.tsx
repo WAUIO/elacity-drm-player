@@ -75,7 +75,7 @@ export const FormUIProvider: FC<PropsWithChildren<FormUIContextProps>> = ({ chil
     }
 
     if (o?.forceValidation) {
-      form.validateForm(form.values).then(
+      form.validateForm().then(
         (errors) => {
           if (Object.entries(errors).length > 0) {
             console.error('Validator Error', errors);

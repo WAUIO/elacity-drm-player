@@ -88,7 +88,7 @@ const Blocks = ({ stepIndex }: BlocksProps) => {
           error={errors[selectBlock.input?.fieldName]}
           button={selectBlock.button}
         >
-          <SelectChoice {...selectBlock as SelectChoiceBlock} />
+          <SelectChoice {...{ input: selectBlock.input } as SelectChoiceBlock} />
         </Question>
       );
       break;
