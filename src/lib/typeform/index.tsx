@@ -113,7 +113,7 @@ const Typeform = () => {
         {
           (form) => (
             <FormUIProvider
-              steps={questionSteps(form)}
+              steps={questionSteps}
               onStep={(stepIndex: number) => {
                 setStepIndex(stepIndex);
               }}

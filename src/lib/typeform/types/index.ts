@@ -73,12 +73,13 @@ export interface Block {
   animation?: Animation;
 }
 
-export interface FormStep {
+export interface FormStep<T = unknown> {
   id: number;
   blocks: Block[];
   isFirstStep?: boolean;
   isLastStep?: boolean;
   animation?: Animation;
+  stepForward?: (values: T) => FormStep<T>['id'];
 }
 
 export type FormBlock = StaticBlock | TextInputBlock | SelectCardBlock | UploaderBlock | SelectChoiceBlock;

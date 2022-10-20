@@ -1,7 +1,9 @@
 import React from 'react';
 import classNames from 'classnames';
 import { useFormikContext } from 'formik';
-import { Box, Button } from '@mui/material';
+import {
+  Box, Button, Typography,
+} from '@mui/material';
 import Slide from '@mui/material/Slide';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import {
@@ -52,7 +54,12 @@ const RoyaltySetup = ({ options, fieldName }: RoyaltySetupProps) => {
             <>
               Enter address and royalty ratio for
               {' '}
-              <span style={{ fontWeight: 500 }}>{royalties[parties[innerStep - 2]]?.identifier}</span>
+              <Typography
+                component="span"
+                sx={{ fontWeight: 500, color: 'primary.dark' }}
+              >
+                {royalties[parties[innerStep - 2]]?.identifier}
+              </Typography>
             </>
           )
         }
@@ -87,6 +94,11 @@ const RoyaltySetup = ({ options, fieldName }: RoyaltySetupProps) => {
                 onClick={handleNext}
               >
                 Setup
+                {
+                  parties.length > 0 && (
+                    ` (${parties.length})`
+                  )
+                }
               </Button>
             </>
           ) : (
