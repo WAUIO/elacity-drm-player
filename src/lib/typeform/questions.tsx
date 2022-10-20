@@ -563,7 +563,7 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
             value: values.copiesNumber,
             onChange: (
               e: React.ChangeEvent<HTMLInputElement>
-            ) => setFieldValue('copiesNumber', parseInt(e.target.value, 10)),
+            ) => setFieldValue('copiesNumber', e.target.value !== '' ? parseInt(e.target.value, 10) : null),
             error: errors.copiesNumber,
           },
           button: {
