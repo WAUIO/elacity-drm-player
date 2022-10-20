@@ -106,3 +106,13 @@ iframe {
 	-webkit-animation: shake-horizontal 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
 	        animation: shake-horizontal 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
 }
+
+.MainLayout {
+  padding-top: 40px !important;
+}
+
+@media only screen and (max-width: 600px) {
+  .css-mtaedb {
+    display: none;
+  }
+}

@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { Theme, useMediaQuery } from '@mui/material';
 import { ButtonForm } from '../types';
 import useFormUI from '../hooks/useFormUI';
 
@@ -57,6 +58,7 @@ interface BtnNextProps extends ButtonForm {}
 export const BtnNext = ({ text, withIndicator, props: _props }: BtnNextProps) => {
   const { sx, ...props } = _props || {};
   const { onNext } = useFormUI();
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
 
   // Override the onClick action
   // Fire the action then move to current step
@@ -72,7 +74,7 @@ export const BtnNext = ({ text, withIndicator, props: _props }: BtnNextProps) =>
       <Button sx={{ boxShadow: 0, ...(sx || {}) }} variant="contained" size="large" onClick={handleClick} {...props}>
         {text}
       </Button>
-      {withIndicator && (
+      {withIndicator && !isMobile && (
         <Typography
           variant="caption"
           component="div"

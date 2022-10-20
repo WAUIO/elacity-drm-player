@@ -18,6 +18,15 @@ const blink = keyframes`
   to { opacity: 0.0; }
 `;
 
+const BoxWrapper = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  mt: 1,
+  flexWrap: 'wrap',
+  [theme.breakpoints.down('md')]: {
+    justifyContent: 'space-evenly',
+  },
+}));
+
 const CardStyled = styled(Card)(({ theme }) => ({
   width: 174,
   minHeight: 200,
@@ -31,6 +40,9 @@ const CardStyled = styled(Card)(({ theme }) => ({
   '&.active': {
     borderColor: darken(theme.palette.primary.main, 0.2),
     animation: `${blink} 0.2s linear`,
+  },
+  [theme.breakpoints.down('md')]: {
+    // width: '100%',
   },
 }));
 
@@ -115,7 +127,7 @@ const CardSelect = ({ input }: CardSelectProps) => {
   return (
     <Box ref={ref}>
       {input.placeholder && <Typography color="primary.dark" variant="body2">{input.placeholder}</Typography>}
-      <Box display="flex" mt={1} flexWrap="wrap">
+      <BoxWrapper>
         {input.options
           .map((opt) => (
             <CustomCard
@@ -125,7 +137,7 @@ const CardSelect = ({ input }: CardSelectProps) => {
               onSelect={onSelect}
             />
           ))}
-      </Box>
+      </BoxWrapper>
     </Box>
   );
 };

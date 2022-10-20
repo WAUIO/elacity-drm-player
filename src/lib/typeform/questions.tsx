@@ -1,9 +1,8 @@
+/* eslint-disable max-len */
 import React from 'react';
 import { FormikProps } from 'formik';
 import { FileRejection } from 'react-dropzone';
-import {
-  styled, Theme, alpha,
-} from '@mui/material/styles';
+import { Theme, alpha } from '@mui/material/styles';
 import CircularProgress from '@mui/material/CircularProgress';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
@@ -28,14 +27,7 @@ import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 import Title from 'src/lib/typeform/components/Title';
 import { images } from 'src/lib/typeform/constants';
 import { FormStep, MintForm } from './types';
-
-const Img = styled('img')(({ theme }) => ({
-  width: '100%',
-  height: 'auto',
-  [theme.breakpoints.down('md')]: {
-    width: 180,
-  },
-}));
+import { Img, CenterBox } from './components/Img';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars-experimental
 export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: FormikProps<MintForm>) => [
@@ -49,7 +41,7 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
       },
       content: {
         type: 'static',
-        input: <Img alt="ela" src={images[1]} />,
+        input: <CenterBox><Img alt="ela" className="img1" src={images[1]} /></CenterBox>,
       },
     },
     {
@@ -83,7 +75,7 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
         },
         content: {
           type: 'static',
-          input: <Img alt="ela" src={images[2]} />,
+          input: <CenterBox><Img alt="ela" src={images[2]} /></CenterBox>,
         },
       },
       {
@@ -189,7 +181,7 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
         },
         content: {
           type: 'static',
-          input: <Img alt="ela" src={images[3]} />,
+          input: <CenterBox><Img alt="ela" src={images[3]} /></CenterBox>,
         },
       },
     ],
@@ -204,7 +196,7 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
         },
         content: {
           type: 'static',
-          input: <Img alt="ela" src={images[4]} />,
+          input: <CenterBox><Img alt="ela" className="img4" src={images[4]} /></CenterBox>,
         },
       },
       {
@@ -269,7 +261,7 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
         },
         content: {
           type: 'static',
-          input: <Img alt="ela" src={images[5]} />,
+          input: <CenterBox><Img alt="ela" className="img5" src={images[5]} /></CenterBox>,
         },
       },
       {
@@ -321,7 +313,7 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
         },
         content: {
           type: 'static',
-          input: <Img alt="ela" src={images[6]} />,
+          input: <CenterBox><Img alt="ela" src={images[6]} /></CenterBox>,
         },
       },
       {
@@ -379,7 +371,7 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
         },
         content: {
           type: 'static',
-          input: <Img alt="ela" src={images[7]} />,
+          input: <CenterBox><Img alt="ela" className="img7" src={images[7]} /></CenterBox>,
         },
       },
       {
@@ -420,7 +412,7 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
         },
         content: {
           type: 'static',
-          input: <Img alt="ela" src={images[8]} />,
+          input: <CenterBox><Img alt="ela" src={images[8]} /></CenterBox>,
         },
       },
       {
@@ -470,7 +462,7 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
             indicator: 6,
             required: true,
             fullWidth: true,
-            caption: <Img style={{ width: '30%' }} alt="ela" src={images[9]} />,
+            caption: <CenterBox><Img className="img9" alt="ela" src={images[9]} /></CenterBox>,
             type: 'text',
             title: 'What is the title of your asset?',
             placeholder: 'Type the title here',
@@ -540,7 +532,7 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
         },
         content: {
           type: 'static',
-          input: <Img alt="ela" style={{ width: '65%' }} src={images[10]} />,
+          input: <CenterBox><Img alt="ela" style={{ width: '65%' }} src={images[10]} /></CenterBox>,
         },
       },
     ],
@@ -590,7 +582,7 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
         },
         content: {
           type: 'static',
-          input: <Img alt="ela" src={images[11]} />,
+          input: <CenterBox><Img className="img11" alt="ela" src={images[11]} /></CenterBox>,
         },
       },
     ],
@@ -611,7 +603,7 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
               display: 'none',
             },
             fullWidth: true,
-            caption: <Img style={{ width: '50%' }} alt="ela" src={images[1]} />,
+            caption: <CenterBox><Img className="img12" alt="ela" src={images[1]} /></CenterBox>,
             title: 'Great, please overview and click Mint to release your DRM-protected assets into Web3!',
           },
           button: {

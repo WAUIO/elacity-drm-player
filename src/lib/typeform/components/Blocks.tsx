@@ -8,6 +8,7 @@ import Grid from '@mui/material/Grid';
 import { useSwipeable } from 'react-swipeable';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
+import { Theme, useMediaQuery } from '@mui/material';
 import useFormUI from '../hooks/useFormUI';
 import {
   QuestionInputProps,
@@ -25,18 +26,15 @@ import Uploader from './fields/Uploader';
 import TextInput from './fields/TextInput';
 import Transition from './Transition';
 import Question from './Question';
-import useViewport from '../hooks/useViewport';
 
 const GridItem = styled(Grid)(() => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
-  overflow: 'hidden',
 }));
 
 const GridContainer = styled(Grid)(() => ({
   height: 'calc(100vh - 136px)',
-  overflow: 'hidden',
 }));
 
 interface BlocksProps {
@@ -46,7 +44,7 @@ interface BlocksProps {
 const Blocks = ({ stepIndex }: BlocksProps) => {
   const { values, errors } = useFormikContext();
   const { currentStep, onPrevious, onNext } = useFormUI();
-  const { isMobile } = useViewport();
+  const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
 
   // Swipe action listener
   // @TODO: not yet sure if it works as expected, need to check
@@ -143,18 +141,20 @@ const Blocks = ({ stepIndex }: BlocksProps) => {
     <GridContainer className={classNames({ 'shake-horizontal': haveError })} container {...swipeHandlers} spacing={1}>
       {isMobile && (
         <GridItem item xs={12}>
-          {blocks.map((block: Block) => (
-            <Transition animation={block?.animation}>
-              <Box display="flex" justifyContent="space-around" p={2}>
-                {resolveBlockContent(block)}
-              </Box>
-            </Transition>
-          ))}
+          <Transition animation={{ type: 'slide' }}>
+            <Box>
+              {blocks.map((block: Block) => (
+                <Box display="flex" justifyContent="space-around" p={2}>
+                  {resolveBlockContent(block)}
+                </Box>
+              ))}
+            </Box>
+          </Transition>
         </GridItem>
       )}
 
       {!isMobile && blocks.map((block: Block) => (
-        <GridItem key={block.key} item xs={12} sm={12} md={12 / bl}>
+        <GridItem key={block.key} item xs={12} sm={12 / bl} md={12 / bl}>
           <Transition animation={block?.animation}>
             <Box display="flex" justifyContent="space-around">
               {resolveBlockContent(block)}
