@@ -5,7 +5,7 @@ import { get } from 'lodash';
 import classNames from 'classnames';
 import { useFormikContext } from 'formik';
 import Grid from '@mui/material/Grid';
-import { useSwipeable } from 'react-swipeable';
+// import { useSwipeable } from 'react-swipeable';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import { Theme, useMediaQuery } from '@mui/material';
@@ -43,18 +43,18 @@ interface BlocksProps {
 
 const Blocks = ({ stepIndex }: BlocksProps) => {
   const { values, errors } = useFormikContext();
-  const { currentStep, onPrevious, onNext } = useFormUI();
+  const { currentStep /* onPrevious, onNext */ } = useFormUI();
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
 
   // Swipe action listener
   // @TODO: not yet sure if it works as expected, need to check
-  const swipeHandlers = useSwipeable({
+  /* const swipeHandlers = useSwipeable({
     onSwipedDown: () => onPrevious(),
     onSwipedUp: () => onNext?.({ forceValidation: false }),
     trackMouse: false,
     trackTouch: true,
     delta: 70,
-  });
+  }); */
 
   // Resolve block content by type
   const resolveBlockContent = React.useCallback(({ content }: Block) => {
@@ -138,7 +138,7 @@ const Blocks = ({ stepIndex }: BlocksProps) => {
 
   // Used only one grid in mobile view
   return (
-    <GridContainer className={classNames({ 'shake-horizontal': haveError })} container {...swipeHandlers} spacing={1}>
+    <GridContainer className={classNames({ 'shake-horizontal': haveError })} container spacing={1}>
       {isMobile && (
         <GridItem item xs={12}>
           <Transition animation={{ type: 'slide' }}>
