@@ -7,10 +7,15 @@ import { FormUIProvider } from './contexts/FormUIContext';
 import questionSteps from './questions';
 import { MintForm } from './types';
 
-const Typeform = () => {
+interface Props {
+  handle?: (values: MintForm) => Promise<{path: string}[]>
+}
+
+const Typeform = ({ handle }: Props) => {
   const [activeStepIndex, setStepIndex] = React.useState<number>(0);
-  const onSubmit = (values: MintForm) => {
-    console.log({ values });
+  const onSubmit = async (values: MintForm) => {
+    console.log('submitting', { values });
+    await handle(values);
   };
 
   const formValidator = React.useCallback((values: MintForm) => {
@@ -120,7 +125,7 @@ const Typeform = () => {
               onFinal={async () => {
                 form.setSubmitting(true);
                 await form.submitForm();
-                setTimeout(form.setSubmitting, 2000, false);
+                setTimeout(form.setSubmitting, 700, false);
               }}
             >
               <Form stepIndex={activeStepIndex} />

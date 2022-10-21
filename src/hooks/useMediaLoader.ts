@@ -1,10 +1,10 @@
 import {
   useMemo, useState, useEffect,
 } from 'react';
-import { CollectionOf } from '@elacity-js/lib';
+import { CollectionOf, INTERFACE_ERC721 } from '@elacity-js/lib';
 import { useWeb3React } from '@web3-react/core';
 import { BigNumberish } from '@ethersproject/bignumber';
-import mediaTokenArtifact from '../lib/scm/deployer/iface/MediaToken.json';
+// import mediaTokenArtifact from '../lib/scm/deployer/iface/MediaToken.json';
 import { Erc721ContractType } from '../lib/web3/contract';
 import { useAddresses } from '../lib/web3/hooks';
 import { MediaTokenAsset } from '../types';
@@ -19,7 +19,7 @@ class MediaToken extends Erc721ContractType<MediaTokenAsset> {
 }
 
 const mediaFormatter = async (item: MediaTokenAsset) => {
-  const rs = await fetch(item.tokenURI);
+  const rs = await fetch(`https://ipfs.ela.city/ipfs/${item.tokenURI}`);
   const metadata = await rs.json();
 
   return {
@@ -34,7 +34,7 @@ const mediaFormatter = async (item: MediaTokenAsset) => {
 
 export default (method: string, args: BigNumberish[]) => {
   const { chainId, library } = useWeb3React();
-  const { MEDIA_TOKEN } = useAddresses();
+  const { TEMP721 } = useAddresses();
   const [result, setResult] = useState<CollectionOf<MediaTokenAsset>>({
     total: 0,
     items: [],
@@ -45,12 +45,12 @@ export default (method: string, args: BigNumberish[]) => {
   const contract = useMemo(() => {
     const abiMap = {
       [chainId]: {
-        abi: mediaTokenArtifact.abi,
-        address: MEDIA_TOKEN,
+        abi: INTERFACE_ERC721,
+        address: TEMP721,
       },
     };
 
-    if (!MEDIA_TOKEN || !chainId || !library?.provider) {
+    if (!TEMP721 || !chainId || !library?.provider) {
       return null;
     }
 

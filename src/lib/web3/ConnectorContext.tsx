@@ -256,7 +256,7 @@ export function SelectDialog(props: SelectDialogProps) {
             .reverse()
             .map((c: INetworkConfig) => {
               const matchWithEnv =
-                c.chainID === (process.env.REACT_APP_CHAIN_ID ? parseInt(process.env.REACT_APP_CHAIN_ID, 10) : 3);
+                c.chainID === (process.env.REACT_APP_CHAIN_ID ? parseInt(process.env.REACT_APP_CHAIN_ID, 10) : 21);
               return (
                 <ListItem
                   button
