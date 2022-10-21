@@ -1,7 +1,9 @@
 /* eslint-disable max-len */
 import React from 'react';
+import { FormikContextType } from 'formik';
 import { Theme, alpha } from '@mui/material/styles';
 import InputAdornment from '@mui/material/InputAdornment';
+import CircularProgress from '@mui/material/CircularProgress';
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
 import CheckIcon from '@mui/icons-material/Check';
 
@@ -561,6 +563,12 @@ export default [
               type: 'submit',
               endIcon: <CheckIcon />,
             },
+            formikResolver: ({ isSubmitting }: FormikContextType<MintForm>) => ({
+              disabled: isSubmitting,
+              ...(isSubmitting && {
+                endIcon: <CircularProgress />,
+              }),
+            }),
           },
         },
       }],

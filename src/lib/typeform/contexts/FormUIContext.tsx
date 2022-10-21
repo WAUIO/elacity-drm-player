@@ -1,7 +1,7 @@
 /* eslint-disable no-fallthrough */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable max-len */
-import { useFormikContext } from 'formik';
+import { useFormikContext, FormikContextType } from 'formik';
 import { TransitionProps } from '@mui/material/transitions';
 import React, {
   FC, PropsWithChildren, createContext, useState, KeyboardEvent, useCallback,
@@ -61,7 +61,7 @@ export const FormUIContext = createContext<FormUIContextValue>({
 interface FormUIContextProps {
   steps: FormStep[],
   onStep?: (s: number) => void;
-  onFinal?: () => Promise<void>;
+  onComplete?: (form: FormikContextType<MintForm>) => Promise<void>;
 }
 
 /**
@@ -70,7 +70,7 @@ interface FormUIContextProps {
  * - current step
  * - animation direction
  */
-export const FormUIProvider: FC<PropsWithChildren<FormUIContextProps>> = ({ children, steps, onFinal, onStep }) => {
+export const FormUIProvider: FC<PropsWithChildren<FormUIContextProps>> = ({ children, steps, onComplete, onStep }) => {
   const form = useFormikContext<MintForm>();
   const { stepForward, stepBackward } = useStepFlow();
   const [currentStep, setCurrentStep] = useState<FormStep>(steps[0]);
@@ -94,7 +94,7 @@ export const FormUIProvider: FC<PropsWithChildren<FormUIContextProps>> = ({ chil
 
   const onNext = React.useCallback((o?: OnNextParams) => {
     if (currentStep?.isLastStep) {
-      onFinal?.();
+      onComplete?.(form);
       return;
     }
 

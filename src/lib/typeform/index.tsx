@@ -59,7 +59,7 @@ const Typeform = ({ handle }: Props) => {
             errors.royalties = 'Please fill in all beneficiaries address';
           } else {
             const totalPercentage = sumBy(values.royalties, ((r) => Number(r.royalty)));
-            if (totalPercentage <= 100) {
+            if (totalPercentage > 100) {
               errors.royalties = `Total royalties percentag exceeds 100%, actual value is ${totalPercentage}%`;
             }
           }
@@ -113,23 +113,20 @@ const Typeform = ({ handle }: Props) => {
         onSubmit={onSubmit}
         validate={formValidator}
       >
-        {
-          (form) => (
-            <FormUIProvider
-              steps={questionSteps}
-              onStep={(stepIndex: number) => {
-                setStepIndex(stepIndex);
-              }}
-              onFinal={async () => {
-                form.setSubmitting(true);
-                await form.submitForm();
-                setTimeout(form.setSubmitting, 700, false);
-              }}
-            >
-              <Form stepIndex={activeStepIndex} />
-            </FormUIProvider>
-          )
-        }
+        <FormUIProvider
+          steps={questionSteps}
+          onStep={(stepIndex: number) => {
+            setStepIndex(stepIndex);
+          }}
+          onComplete={async (form) => {
+            console.log('form state', [form.isSubmitting, form.isValid]);
+            await form.submitForm();
+            setTimeout(form.setSubmitting, 700, false);
+            form.resetForm();
+          }}
+        >
+          <Form stepIndex={activeStepIndex} />
+        </FormUIProvider>
       </Formik>
     </ThemeProvider>
   );

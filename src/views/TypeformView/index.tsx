@@ -17,7 +17,7 @@ const TypeformView = () => {
   });
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'block' }}>
       <Helmet>
         <title>Submission Form | Elacity Media</title>
       </Helmet>
