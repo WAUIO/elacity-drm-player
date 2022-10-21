@@ -41,7 +41,7 @@ export interface TextInputBlock extends InputForm {
 export interface SelectOptions {
   KeyPressId: string;
   value: string;
-  icon: SvgIconComponent;
+  icon?: SvgIconComponent;
 }
 
 export interface SelectForm extends InputForm {
@@ -73,15 +73,23 @@ export interface Block {
   animation?: Animation;
 }
 
-export interface FormStep {
+export interface FormStep<T = unknown> {
   id: number;
   blocks: Block[];
   isFirstStep?: boolean;
   isLastStep?: boolean;
   animation?: Animation;
+  stepForward?: (values: T) => FormStep<T>['id'];
 }
 
 export type FormBlock = StaticBlock | TextInputBlock | SelectCardBlock | UploaderBlock | SelectChoiceBlock;
+
+export interface RoyaltySet {
+  key?: string;
+  identifier: string;
+  address?: string;
+  royalty?: number;
+}
 
 export interface MintForm {
   // mint form data
@@ -89,7 +97,11 @@ export interface MintForm {
   contentType?: string; // Image | Video | Music | 3D Model | Document
   accessMethod?: string; // q3: Free | Buy once...
   pricePerSale?: number;
+
+  // @deprecated soon, use .royalties
   parties?: string[];
+  royalties?: RoyaltySet[];
+
   title?: string;
   description?: string;
   assetFile?: File;

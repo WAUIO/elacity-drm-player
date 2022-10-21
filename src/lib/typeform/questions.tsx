@@ -1,9 +1,6 @@
 /* eslint-disable max-len */
 import React from 'react';
-import { FormikProps } from 'formik';
-import { FileRejection } from 'react-dropzone';
 import { Theme, alpha } from '@mui/material/styles';
-import CircularProgress from '@mui/material/CircularProgress';
 import InputAdornment from '@mui/material/InputAdornment';
 import FormatQuoteIcon from '@mui/icons-material/FormatQuote';
 import CheckIcon from '@mui/icons-material/Check';
@@ -25,12 +22,12 @@ import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
 import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 
 import Title from 'src/lib/typeform/components/Title';
+import RoyaltySetup from 'src/lib/typeform/components/static/RoyaltySetup';
 import { images } from 'src/lib/typeform/constants';
 import { FormStep, MintForm } from './types';
 import { Img, CenterBox } from './components/Img';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars-experimental
-export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: FormikProps<MintForm>) => [
+export default [
   {
     id: 1,
     isFirstStep: true,
@@ -107,9 +104,6 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
               },
             ],
             fieldName: 'operator',
-            value: values.operator,
-            onChange: (e: React.ChangeEvent<HTMLInputElement>) => setFieldValue('operator', e.target.value),
-            error: errors.operator,
           },
           button: {
             text: 'OK',
@@ -162,9 +156,6 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
               },
             ],
             fieldName: 'contentType',
-            value: values.contentType,
-            onChange: (e: React.ChangeEvent<HTMLInputElement>) => setFieldValue('contentType', e.target.value),
-            error: errors.contentType,
           },
           button: {
             text: 'OK',
@@ -238,9 +229,6 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
               },
             ],
             fieldName: 'accessMethod',
-            value: values.accessMethod,
-            onChange: (e: React.ChangeEvent<HTMLInputElement>) => setFieldValue('accessMethod', e.target.value),
-            error: errors.accessMethod,
           },
           button: {
             text: 'OK',
@@ -287,11 +275,6 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
               <InputAdornment position="start" sx={{ '& .MuiTypography-root': { fontSize: 26 } }}>ELA</InputAdornment>
             ),
             fieldName: 'pricePerSale',
-            value: values.pricePerSale,
-            onChange: (
-              e: React.ChangeEvent<HTMLInputElement>
-            ) => setFieldValue('pricePerSale', e.target.value),
-            error: errors.pricePerSale,
           },
           button: {
             text: 'OK',
@@ -322,42 +305,30 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
           type: 'slide',
         },
         content: {
-          type: 'select-choice',
-          input: {
-            indicator: 5,
-            required: true,
-            multiple: true,
-            placeholder: 'Choose as many as you like',
-            title: 'Who do you need to distribute royalties to?',
-            options: [
-              {
-                KeyPressId: 'A',
-                value: 'Creator',
-              },
-              {
-                KeyPressId: 'B',
-                value: 'Publisher',
-              },
-              {
-                KeyPressId: 'C',
-                value: 'Distributor',
-              },
-              {
-                KeyPressId: 'D',
-                value: 'Investor',
-              },
-            ],
-            fieldName: 'parties',
-            value: values.parties,
-            onChange: (e: React.ChangeEvent<HTMLInputElement>) => setFieldValue('parties', e.target.value),
-            error: errors.parties,
-          },
-          button: {
-            text: 'OK',
-            props: {
-              endIcon: <CheckIcon />,
-            },
-          },
+          type: 'static',
+          input: (
+            <RoyaltySetup
+              fieldName="royalties"
+              options={[
+                {
+                  KeyPressId: 'A',
+                  value: 'Creator',
+                },
+                {
+                  KeyPressId: 'B',
+                  value: 'Publisher',
+                },
+                {
+                  KeyPressId: 'C',
+                  value: 'Distributor',
+                },
+                {
+                  KeyPressId: 'D',
+                  value: 'Investor',
+                },
+              ]}
+            />
+          ),
         },
       }],
   },
@@ -388,12 +359,6 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
               bgcolor: (t: Theme) => alpha(t.palette.primary.light, 0.1),
             },
             fieldName: 'assetFile',
-            initialValue: values.assetFile || null,
-            onDropped: (value: File) => setFieldValue('assetFile', value),
-            onRejected: (rejection: FileRejection[]) => {
-              setErrors({ assetFile: rejection.map((r) => r.errors[0].message).join(', ') });
-            },
-            error: errors.assetFile,
           },
           button: {
             text: 'Continue',
@@ -434,12 +399,6 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
               bgcolor: (t: Theme) => alpha(t.palette.primary.light, 0.1),
             },
             fieldName: 'assetThumbnail',
-            initialValue: values.assetThumbnail || null,
-            onDropped: (value: File) => setFieldValue('assetThumbnail', value),
-            onRejected: (rejection: FileRejection[]) => {
-              setErrors({ assetThumbnail: rejection.map((r) => r.errors[0].message).join(', ') });
-            },
-            error: errors.assetThumbnail,
           },
           button: {
             text: 'Continue',
@@ -472,9 +431,6 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
               },
             },
             fieldName: 'title',
-            value: values.title,
-            onChange: (e: React.ChangeEvent<HTMLInputElement>) => setFieldValue('title', e.target.value),
-            error: errors.title,
           },
           button: {
             text: 'OK',
@@ -512,9 +468,6 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
               },
             },
             fieldName: 'description',
-            value: values.description,
-            onChange: (e: React.ChangeEvent<HTMLInputElement>) => setFieldValue('description', e.target.value),
-            error: errors.description,
           },
           button: {
             text: 'OK',
@@ -560,11 +513,6 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
               },
             },
             fieldName: 'copiesNumber',
-            value: values.copiesNumber,
-            onChange: (
-              e: React.ChangeEvent<HTMLInputElement>
-            ) => setFieldValue('copiesNumber', parseInt(e.target.value, 10)),
-            error: errors.copiesNumber,
           },
           button: {
             text: 'OK',
@@ -612,13 +560,9 @@ export default ({ values, errors, setFieldValue, setErrors, isSubmitting }: Form
             props: {
               type: 'submit',
               endIcon: <CheckIcon />,
-              ...(isSubmitting && {
-                disabled: true,
-                startIcon: <CircularProgress sx={{ fontSize: '1rem' }} />,
-              }),
             },
           },
         },
       }],
   },
-] as FormStep[];
+] as FormStep<MintForm>[];

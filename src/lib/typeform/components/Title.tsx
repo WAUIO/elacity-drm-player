@@ -14,7 +14,7 @@ const TypoTitle = styled(Typography)<TypographyProps & {component?: string}>(({ 
   '& .flag-required': {
     color: theme.palette.error.main,
     fontWeight: 500,
-    marginLeft: theme.spacing(0.5),
+    marginLeft: theme.spacing(0),
   },
 }));
 

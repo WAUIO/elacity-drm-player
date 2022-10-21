@@ -1,7 +1,8 @@
+/* eslint-disable no-redeclare */
 /* eslint-disable no-case-declarations */
 /* eslint-disable max-len */
 import React from 'react';
-import { get } from 'lodash';
+import { get, merge } from 'lodash';
 import classNames from 'classnames';
 import { useFormikContext } from 'formik';
 import Grid from '@mui/material/Grid';
@@ -10,6 +11,7 @@ import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import { Theme, useMediaQuery } from '@mui/material';
 import useFormUI from '../hooks/useFormUI';
+import useBlockHelpers from '../hooks/useBlockHelpers';
 import {
   QuestionInputProps,
   Block,
@@ -45,6 +47,7 @@ const Blocks = ({ stepIndex }: BlocksProps) => {
   const { values, errors } = useFormikContext();
   const { currentStep /* onPrevious, onNext */ } = useFormUI();
   const isMobile = useMediaQuery((theme: Theme) => theme.breakpoints.down('sm'));
+  const { injectInputProps, injectUploaderProps } = useBlockHelpers();
 
   // Swipe action listener
   // @TODO: not yet sure if it works as expected, need to check
@@ -70,49 +73,53 @@ const Blocks = ({ stepIndex }: BlocksProps) => {
       break;
     case 'select-card':
       const scBlock = content as SelectCardBlock;
+      const { error: scError, ...scProps } = injectInputProps(scBlock.input?.fieldName);
       section = (
         <Question
           {...(scBlock.input as QuestionInputProps)}
-          error={errors[scBlock.input?.fieldName]}
+          error={scError}
           button={scBlock.button}
         >
-          <CardSelect {...scBlock as SelectCardBlock} />
+          <CardSelect {...merge(scBlock, { input: scProps }) as SelectCardBlock} />
         </Question>
       );
       break;
     case 'select-choice':
       const selectBlock = content as SelectChoiceBlock;
+      const { error: selectError, ...selectProps } = injectInputProps(selectBlock.input?.fieldName);
       section = (
         <Question
           {...(selectBlock.input as QuestionInputProps)}
-          error={errors[selectBlock.input?.fieldName]}
+          error={selectError}
           button={selectBlock.button}
         >
-          <SelectChoice {...selectBlock as SelectChoiceBlock} />
+          <SelectChoice {...({ input: selectBlock.input, ...selectProps }) as unknown as SelectChoiceBlock} />
         </Question>
       );
       break;
     case 'text':
       const textBlock = content as TextInputBlock;
+      const { error: textError, ...textProps } = injectInputProps(textBlock.input?.fieldName);
       section = (
         <Question
           {...(textBlock.input as QuestionInputProps)}
-          error={errors[textBlock.input?.fieldName]}
+          error={textError}
           button={textBlock.button}
         >
-          <TextInput {...textBlock as TextInputBlock} />
+          <TextInput {...merge(textBlock, { input: textProps }) as TextInputBlock} />
         </Question>
       );
       break;
     case 'uploader':
       const uploaderBlock = content as UploaderBlock;
+      const { error: uploaderError, ...uploaderProps } = injectUploaderProps(uploaderBlock.input?.fieldName);
       section = (
         <Question
           {...(uploaderBlock.input as QuestionInputProps)}
-          error={errors[uploaderBlock.input?.fieldName]}
+          error={uploaderError}
           button={uploaderBlock.button}
         >
-          <Uploader {...uploaderBlock as UploaderBlock} />
+          <Uploader {...merge(uploaderBlock, { input: uploaderProps }) as UploaderBlock} />
         </Question>
       );
       break;

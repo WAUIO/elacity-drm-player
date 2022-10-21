@@ -1,20 +1,53 @@
+/* eslint-disable no-fallthrough */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable max-len */
 import { useFormikContext } from 'formik';
 import { TransitionProps } from '@mui/material/transitions';
 import React, {
-  FC, PropsWithChildren, createContext, useState, KeyboardEvent,
+  FC, PropsWithChildren, createContext, useState, KeyboardEvent, useCallback,
 } from 'react';
 import {
   Block, FormStep, MintForm,
 } from '../types/index';
+
+/**
+ * This helper will handle how all the steps will flow
+ * according to actual step and values from the form
+ *
+ * @returns
+ */
+const useStepFlow = () => {
+  const { values } = useFormikContext<MintForm>();
+
+  const stepForward = useCallback((stepId: number) => {
+    console.log({ stepId, values });
+    if (stepId === 4 && values.accessMethod === 'A') {
+      return 7;
+    }
+
+    return stepId + 1;
+  }, [values]);
+
+  const stepBackward = useCallback((stepId: number) => {
+    if (stepId === 7 && values.accessMethod === 'A') {
+      return 4;
+    }
+
+    return stepId - 1;
+  }, [values]);
+
+  return {
+    stepForward,
+    stepBackward,
+  };
+};
 
 interface OnNextParams {
   forceValidation?: boolean;
 }
 
 interface FormUIContextValue {
-  currentStep: FormStep;
+  currentStep: FormStep<MintForm>;
   onNext: (p?: OnNextParams) => void;
   onPrevious: () => void;
 }
@@ -39,6 +72,7 @@ interface FormUIContextProps {
  */
 export const FormUIProvider: FC<PropsWithChildren<FormUIContextProps>> = ({ children, steps, onFinal, onStep }) => {
   const form = useFormikContext<MintForm>();
+  const { stepForward, stepBackward } = useStepFlow();
   const [currentStep, setCurrentStep] = useState<FormStep>(steps[0]);
 
   // Override step transaction direction on click on the bottom controller up or down
@@ -70,18 +104,18 @@ export const FormUIProvider: FC<PropsWithChildren<FormUIContextProps>> = ({ chil
     console.log('Exec onNext', o);
     if (!o?.forceValidation && currentStep?.id) {
       // go through wth any restriction about validation state
-      _setCurrentStep(currentStep?.id + 1, 'up');
+      _setCurrentStep(stepForward(currentStep?.id), 'up');
       return;
     }
 
     if (o?.forceValidation) {
-      form.validateForm(form.values).then(
+      form.validateForm().then(
         (errors) => {
           if (Object.entries(errors).length > 0) {
             console.error('Validator Error', errors);
           } else if (currentStep?.id) {
             // next step will show from the bottom -> top
-            _setCurrentStep(currentStep?.id + 1, 'up');
+            _setCurrentStep(stepForward(currentStep?.id), 'up');
           }
         }
       );
@@ -92,14 +126,14 @@ export const FormUIProvider: FC<PropsWithChildren<FormUIContextProps>> = ({ chil
       console.error('Validator Error', form.errors);
     } else if (currentStep?.id) {
       // next step will show from the bottom -> top
-      _setCurrentStep(currentStep?.id + 1, 'up');
+      _setCurrentStep(stepForward(currentStep?.id), 'up');
     }
   }, [currentStep?.id, form.values]);
 
   const onPrevious = () => {
     if (currentStep?.id) {
       // next step will show from the top -> bottom
-      _setCurrentStep(currentStep?.id - 1, 'down');
+      _setCurrentStep(stepBackward(currentStep?.id), 'down');
     }
   };
 
@@ -132,7 +166,6 @@ export const FormUIProvider: FC<PropsWithChildren<FormUIContextProps>> = ({ chil
     <FormUIContext.Provider
       value={{
         currentStep,
-        // setCurrentStep: _setCurrentStep,
         onNext,
         onPrevious,
       }}

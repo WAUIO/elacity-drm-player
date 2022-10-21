@@ -29,19 +29,16 @@ export const NETWORKS: INetworkCollection = {
     name: 'Elastos Smart Chain',
     symbol: 'ELA',
     chainID: 20,
-    // rpcUrl: 'https://escrpc.elaphant.app',
-    // rpcUrl: 'https://api.elastos.io/eth',
     rpcUrl: 'https://api.trinity-tech.io/esc',
     explorerUrl: 'https://eth.elastos.io',
     decimals: 18,
   },
-  3: {
-    name: 'Ropsten Test Network',
-    symbol: 'ETH',
-    chainID: 3,
-    // rpcUrl: `https://ropsten.infura.io/v3/${INFURA_ID}`,
-    rpcUrl: 'https://ropsten.infura.io/v3/44a8e00e1b7d41889719cc14a97df9ca',
-    explorerUrl: 'https://ropsten.etherscan.io',
+  21: {
+    name: 'ESC Testnet',
+    symbol: 'ELA',
+    chainID: 21,
+    rpcUrl: 'https://api-testnet.trinity-tech.io/esc',
+    explorerUrl: 'https://esc-testnet.elastos.io',
     decimals: 18,
   },
 };
@@ -55,32 +52,27 @@ export const getNetworkForChain = (chainId: number): INetworkConfig | null => {
 };
 
 const RPC_URLS: { [chainId: number]: string } = {
-  3: `https://ropsten.infura.io/v3/${INFURA_ID}`,
-  // 20: 'https://escrpc.elaphant.app',
-  // 20: 'https://api.elastos.io/eth',
-  // 20: 'http://34.142.19.27:20638',
   20: 'https://api.trinity-tech.io/esc',
   21: 'https://rpc.elaeth.io',
 };
 
 export const network = new NetworkConnector({
-  urls: { 3: RPC_URLS[3], 20: RPC_URLS[20] },
+  urls: { 20: RPC_URLS[20], 21: RPC_URLS[21] },
   defaultChainId: 1,
 });
 
 // Metamask needs this
 export const injected = new InjectedConnector({
-  supportedChainIds: [3, 20],
+  supportedChainIds: [20, 21],
 });
 
 // Wallet Connect
 export const walletconnect = new WalletConnectConnector({
-  supportedChainIds: [3, 20],
-  rpc: { 3: RPC_URLS[3], 20: RPC_URLS[20] },
+  supportedChainIds: [20, 21],
+  rpc: { 20: RPC_URLS[20], 21: RPC_URLS[21] },
   // bridge: 'https://c.bridge.walletconnect.org',
   bridge: 'https://walletconnect.elastos.net/v2',
   qrcode: true,
-  infuraId: INFURA_ID,
   qrcodeModalOptions: {
     mobileLinks: [
       'metamask',
@@ -94,9 +86,8 @@ export const walletconnect = new WalletConnectConnector({
 
 // Elastos DID connector, essentials@wallectconnect
 export const essentialConnect = new Web3WalletconnectConnector({
-  supportedChainIds: [3, 20],
-  rpc: { 3: RPC_URLS[3], 20: RPC_URLS[20] },
-  // bridge: 'https://c.bridge.walletconnect.org',
+  supportedChainIds: [20, 21],
+  rpc: { 20: RPC_URLS[20], 21: RPC_URLS[21] },
   bridge: 'https://walletconnect.elastos.net/v2',
   qrcode: true,
   infuraId: INFURA_ID,

@@ -1,4 +1,5 @@
 import React from 'react';
+import { sumBy } from 'lodash';
 import { Formik, FormikErrors } from 'formik';
 import { ThemeProvider } from './theme';
 import Form from './components/Form';
@@ -6,10 +7,15 @@ import { FormUIProvider } from './contexts/FormUIContext';
 import questionSteps from './questions';
 import { MintForm } from './types';
 
-const Typeform = () => {
+interface Props {
+  handle?: (values: MintForm) => Promise<{path: string}[]>
+}
+
+const Typeform = ({ handle }: Props) => {
   const [activeStepIndex, setStepIndex] = React.useState<number>(0);
-  const onSubmit = (values: MintForm) => {
-    console.log({ values });
+  const onSubmit = async (values: MintForm) => {
+    console.log('submitting', { values });
+    await handle(values);
   };
 
   const formValidator = React.useCallback((values: MintForm) => {
@@ -38,12 +44,27 @@ const Typeform = () => {
       },
       () => {
         if (!values.pricePerSale && values.accessMethod !== 'A') {
-          errors.pricePerSale = 'The price is required unless you set it as free content';
+          errors.pricePerSale = 'The price is required unless you set the asset as a free content';
         }
       },
       () => {
-        if (!values.parties?.length && values.accessMethod !== 'A') {
-          errors.parties = 'Please choose at least one of the options above';
+        if (values.accessMethod !== 'A') {
+          let royaltiesHasErr = false;
+          values.royalties.forEach((rset) => {
+            if (rset.address === '') {
+              royaltiesHasErr = true;
+            }
+          });
+          if (royaltiesHasErr) {
+            errors.royalties = 'Please fill in all beneficiaries address';
+          } else {
+            const totalPercentage = sumBy(values.royalties, ((r) => Number(r.royalty)));
+            if (totalPercentage !== 100) {
+              console.log({ totalPercentage });
+              // eslint-disable-next-line max-len
+              errors.royalties = `Please make sure total of all percentage is equal to 100%, actual value is ${totalPercentage}%`;
+            }
+          }
         }
       },
       () => {
@@ -87,21 +108,24 @@ const Typeform = () => {
   return (
     <ThemeProvider>
       <Formik
-        initialValues={{}}
+        initialValues={{
+          parties: [],
+          royalties: [],
+        }}
         onSubmit={onSubmit}
         validate={formValidator}
       >
         {
           (form) => (
             <FormUIProvider
-              steps={questionSteps(form)}
+              steps={questionSteps}
               onStep={(stepIndex: number) => {
                 setStepIndex(stepIndex);
               }}
               onFinal={async () => {
                 form.setSubmitting(true);
                 await form.submitForm();
-                setTimeout(form.setSubmitting, 2000, false);
+                setTimeout(form.setSubmitting, 700, false);
               }}
             >
               <Form stepIndex={activeStepIndex} />
