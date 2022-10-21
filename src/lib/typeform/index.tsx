@@ -59,10 +59,8 @@ const Typeform = ({ handle }: Props) => {
             errors.royalties = 'Please fill in all beneficiaries address';
           } else {
             const totalPercentage = sumBy(values.royalties, ((r) => Number(r.royalty)));
-            if (totalPercentage !== 100) {
-              console.log({ totalPercentage });
-              // eslint-disable-next-line max-len
-              errors.royalties = `Please make sure total of all percentage is equal to 100%, actual value is ${totalPercentage}%`;
+            if (totalPercentage <= 100) {
+              errors.royalties = `Total royalties percentag exceeds 100%, actual value is ${totalPercentage}%`;
             }
           }
         }
