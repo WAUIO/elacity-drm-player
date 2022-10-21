@@ -1119,10 +1119,10 @@
   dependencies:
     "@ethersproject/bignumber" "^5.6.2"
 
-"@elacity-js/uikit@^1.6.0-alpha.9":
-  version "1.6.0-alpha.9"
-  resolved "https://registry.yarnpkg.com/@elacity-js/uikit/-/uikit-1.6.0-alpha.9.tgz#81b5194720193560afe5984e2f39ebf1266e4771"
-  integrity sha512-evzI6uPxaW1d+eI8evR13tmuMATdxPsy9BFlzP41nwIJiZvXUwHlzvFYUJ9BJWQeMoRC/t0wQ/dT+9rh7qB7jg==
+"@elacity-js/uikit@^1.6.0-alpha.10":
+  version "1.6.0-alpha.10"
+  resolved "https://registry.yarnpkg.com/@elacity-js/uikit/-/uikit-1.6.0-alpha.10.tgz#fe2e0db9109e458f3f638a620589089b3428e1a1"
+  integrity sha512-a5mpOqzkxEOwCe+EkXLKeutyb4AdZPKP71/tNTuojHszQhlhIeTjedneWSkMTWL91CR8jHoP2JxAnDqyEysf/g==
   dependencies:
     react-intersection-observer "^9.4.0"
 

@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@elacity-js/lib": "^0.2.0",
-    "@elacity-js/uikit": "^1.6.0-alpha.9",
+    "@elacity-js/uikit": "^1.6.0-alpha.10",
     "@elastosfoundation/did-js-sdk": "^2.2.9",
     "@elastosfoundation/elastos-connectivity-sdk-js": "^1.1.4",
     "@elastosfoundation/essentials-connector-client-browser": "^1.0.41",

@@ -112,3 +112,9 @@ iframe {
     display: none;
   }
 }
+
+.Footer-root{
+  position: absolute;
+  width: calc(100% - 32px);
+  margin-bottom: 0!important;
+}
