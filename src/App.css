@@ -114,7 +114,7 @@ iframe {
 }
 
 .Footer-root{
-  position: absolute;
+  position: relative;
   width: calc(100% - 32px);
   margin-bottom: 0!important;
 }

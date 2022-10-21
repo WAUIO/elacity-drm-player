@@ -17,14 +17,14 @@ interface MediaItemProps {
 
 export default function MediaItemList({ id, image, title, description }: MediaItemProps) {
   return (
-    <Card sx={{ display: 'flex' }}>
+    <Card sx={{ display: 'flex', width: '100%' }}>
       <CardMedia
         component="img"
         sx={{ width: 151 }}
         image={image}
         alt="Live from space album cover"
       />
-      <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+      <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
         <CardContent sx={{ flex: '1 0 auto' }}>
           <Typography component="div" variant="h5" fontWeight={500}>
             {title}
@@ -35,7 +35,7 @@ export default function MediaItemList({ id, image, title, description }: MediaIt
           </Typography>
         </CardContent>
       </Box>
-      <Box sx={{ display: 'flex', alignItems: 'center', p: 1 }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', p: 1, float: 'right' }}>
         <IconButton aria-label="play/pause" component={RouterLink} to={`/view/${id}`}>
           <PlayArrowIcon sx={{ height: 90, width: 90 }} />
         </IconButton>

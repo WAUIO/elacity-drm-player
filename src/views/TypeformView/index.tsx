@@ -5,6 +5,7 @@ import { Box } from '@mui/material';
 import Typeform from 'src/lib/typeform';
 import { ClassicUploader } from 'src/lib/uploader';
 import useHandler from './handler';
+import './overrides.css';
 
 /**
  * Specify all steps used by the form
@@ -16,11 +17,13 @@ const TypeformView = () => {
   });
 
   return (
-    <Box sx={{ height: 'calc(100vh - 136px)' }}>
+    <Box sx={{ display: 'flex' }}>
       <Helmet>
         <title>Submission Form | Elacity Media</title>
       </Helmet>
-      <Typeform handle={handlePayload} />
+      <Box>
+        <Typeform handle={handlePayload} />
+      </Box>
     </Box>
   );
 };
