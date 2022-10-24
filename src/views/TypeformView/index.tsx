@@ -5,7 +5,6 @@ import { Box } from '@mui/material';
 import Typeform from 'src/lib/typeform';
 import { ClassicUploader } from 'src/lib/uploader';
 import useHandler from './handler';
-import './overrides.css';
 
 /**
  * Specify all steps used by the form

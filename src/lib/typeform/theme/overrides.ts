@@ -24,8 +24,8 @@ export default {
         boxShadow: 'none',
       },
       sizeLarge: {
-        height: 56,
-        fontSize: '1.4rem',
+        height: 48,
+        fontSize: '1.36rem',
       },
       containedPrimary: {
         boxShadow: 'none',

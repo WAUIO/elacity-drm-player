@@ -1,7 +1,7 @@
 import {
   useMemo, useState, useEffect,
 } from 'react';
-import { CollectionOf, INTERFACE_ERC721 } from '@elacity-js/lib';
+import { INTERFACE_ERC721, CollectionOf } from '@elacity-js/lib';
 import { useWeb3React } from '@web3-react/core';
 import { BigNumberish } from '@ethersproject/bignumber';
 // import mediaTokenArtifact from '../lib/scm/deployer/iface/MediaToken.json';
