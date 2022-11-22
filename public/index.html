@@ -57,6 +57,15 @@
         window.location.hostname.match(/^127(?:\.(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)){3}$/)
     );
 
+    // This code assumes your app has a promptForUpdate() method,
+    // which returns true if the user wants to update.
+    // Implementing this is app-specific; some examples are:
+    // https://open-ui.org/components/alert.research or
+    // https://open-ui.org/components/toast.researchs
+    const promptForUpdate = () => new Promise((resolve) => {
+      setTimeout(resolve, 2000, true)
+    })    
+
     if ('serviceWorker' in navigator && Workbox && !isLocalhost) {
       const wb = new Workbox('/service-worker.js');
 
@@ -69,20 +78,15 @@
           // tab is loaded under the control of the new service worker.
           // Depending on your web app, you may want to auto-save or
           // persist transient state before triggering the reload.
-          window.location.reload();
+          console.log('caught `controlling` event, waiting for reload...');
+          // window.location.reload();
         });
 
         // When `event.wasWaitingBeforeRegister` is true, a previously
         // updated service worker is still waiting.
         // You may want to customize the UI prompt accordingly.
 
-        // This code assumes your app has a promptForUpdate() method,
-        // which returns true if the user wants to update.
-        // Implementing this is app-specific; some examples are:
-        // https://open-ui.org/components/alert.research or
-        // https://open-ui.org/components/toast.research
-        // const updateAccepted = await promptForUpdate();
-        const updateAccepted = true;
+        const updateAccepted = await promptForUpdate();
 
         if (updateAccepted) {
           wb.messageSkipWaiting();

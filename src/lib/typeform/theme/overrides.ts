@@ -6,7 +6,7 @@ import { Theme, Components } from '@mui/material/styles';
 export default {
   MuiButtonBase: {
     defaultProps: {
-      disableElevation: true,
+      elevation: 0,
     },
     styleOverrides: {
       root: {
@@ -16,7 +16,6 @@ export default {
   },
   MuiButton: {
     defaultProps: {
-      disableElevation: true,
       elevation: 0,
     },
     styleOverrides: {
@@ -34,7 +33,6 @@ export default {
   },
   MuiButtonGroup: {
     defaultProps: {
-      disableElevation: true,
       disableRipple: true,
       elevation: 0,
     },

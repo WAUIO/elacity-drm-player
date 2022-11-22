@@ -5,7 +5,6 @@ import { BtnController } from './Buttons';
 import Blocks from './Blocks';
 
 const Wrapper = styled(Box)(() => ({
-  // position: 'absolute',
   width: '100%',
   height: '100%',
 }));

@@ -15,29 +15,60 @@ import ShareIcon from '@mui/icons-material/Share';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { MediaTokenAsset } from 'src/types';
 
+export const MediaCardFull = ({
+  name, description, image, mediaURL,
+}: MediaTokenAsset) => (
+  <Card sx={{ maxWidth: 345 }}>
+    <CardHeader
+      avatar={(
+        <Avatar
+          sx={{ bgcolor: red[500] }}
+          src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg"
+          aria-label="recipe"
+        >
+          R
+        </Avatar>
+      )}
+      action={(
+        <IconButton aria-label="settings">
+          <MoreVertIcon />
+        </IconButton>
+      )}
+      title="Duis reprehenderit"
+      subheader="June 14, 2022"
+    />
+    <CardActionArea component={RouterLink} to={`/view/ipfs:${mediaURL}`}>
+      <CardMedia
+        component="img"
+        height="194"
+        image={image}
+      />
+      <CardContent>
+        <Typography variant="subtitle1" fontWeight={500}>
+          {name}
+        </Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ minHeight: 60 }}>
+          {description?.substring(0, 130) || ' '}
+          {description?.length > 130 ? '...' : ''}
+        </Typography>
+      </CardContent>
+    </CardActionArea>
+    <CardActions disableSpacing sx={{ display: 'none' }}>
+      <IconButton aria-label="add to favorites">
+        <FavoriteIcon />
+      </IconButton>
+      <IconButton aria-label="share">
+        <ShareIcon />
+      </IconButton>
+    </CardActions>
+  </Card>
+);
+
 export default function MediaCard({
   name, description, image, mediaURL,
 }: MediaTokenAsset) {
   return (
-    <Card sx={{ maxWidth: 345 }}>
-      <CardHeader
-        avatar={(
-          <Avatar
-            sx={{ bgcolor: red[500] }}
-            src="https://pbs.twimg.com/profile_images/877631054525472768/Xp5FAPD5_reasonably_small.jpg"
-            aria-label="recipe"
-          >
-            R
-          </Avatar>
-        )}
-        action={(
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        )}
-        title="Duis reprehenderit"
-        subheader="June 14, 2022"
-      />
+    <Card sx={{ maxWidth: 320 }}>
       <CardActionArea component={RouterLink} to={`/view/ipfs:${mediaURL}`}>
         <CardMedia
           component="img"
@@ -48,7 +79,7 @@ export default function MediaCard({
           <Typography variant="subtitle1" fontWeight={500}>
             {name}
           </Typography>
-          <Typography variant="body2" color="text.secondary" sx={{ minHeight: 60 }}>
+          <Typography variant="body2" color="text.secondary" sx={{ minHeight: 40 }}>
             {description?.substring(0, 130) || ' '}
             {description?.length > 130 ? '...' : ''}
           </Typography>

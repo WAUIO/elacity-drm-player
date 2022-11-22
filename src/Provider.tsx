@@ -31,47 +31,47 @@ const AppProvider: FC<PropsWithChildren<AppProviderProps>> = ({
   children,
 }: PropsWithChildren<AppProviderProps>) => (
   <HelmetProvider>
-    <Web3Provider>
-      <ReduxProvider store={store}>
-        <AppSettingsProvider
-          appName="Elacity Media"
-          logo={{
-            primary: '/static/elacity/bella.png',
-            alt: '/static/elacity/full_logo_[theme].png',
-          }}
-          storage={
-            new JsonLocalStorage('__wbp_settings', {
-              defaultValue: {
-                theme: 'light',
-              },
-            })
-          }
-          links={{
-            documentation: 'https://docs.ela.city/drm',
-            socials: [
-              { provider: 'twitter', url: 'https://twitter.com/Elacityofficial' },
-              { provider: 'discord', url: 'https://discord.gg/bh2FKFhbZJ' },
-              { provider: 'telegram', url: 'https://t.me/elacity' },
-            ],
-          }}
-        >
-          <ThemeProvider
-            customization={{
-              light: themeCustomization,
-              dark: themeCustomization,
+    <BrowserRouter>
+      <Web3Provider>
+        <ReduxProvider store={store}>
+          <AppSettingsProvider
+            appName="Elacity Media"
+            logo={{
+              primary: '/static/elacity/bella.png',
+              alt: '/static/elacity/full_logo_[theme].png',
+            }}
+            storage={
+              new JsonLocalStorage('__wbp_settings', {
+                defaultValue: {
+                  theme: 'light',
+                },
+              })
+            }
+            links={{
+              documentation: 'https://docs.ela.city/drm',
+              socials: [
+                { provider: 'twitter', url: 'https://twitter.com/Elacityofficial' },
+                { provider: 'discord', url: 'https://discord.gg/bh2FKFhbZJ' },
+                { provider: 'telegram', url: 'https://t.me/elacity' },
+              ],
             }}
           >
-            <SnackbarProvider anchorOrigin={{ horizontal: 'center', vertical: 'top' }} autoHideDuration={5000}>
-              <ConnectorProvider redirectTo="/create">
-                <BrowserRouter>
+            <ThemeProvider
+              customization={{
+                light: themeCustomization,
+                dark: themeCustomization,
+              }}
+            >
+              <SnackbarProvider anchorOrigin={{ horizontal: 'center', vertical: 'top' }} autoHideDuration={5000}>
+                <ConnectorProvider redirectTo="/create">
                   {children}
-                </BrowserRouter>
-              </ConnectorProvider>
-            </SnackbarProvider>
-          </ThemeProvider>
-        </AppSettingsProvider>
-      </ReduxProvider>
-    </Web3Provider>
+                </ConnectorProvider>
+              </SnackbarProvider>
+            </ThemeProvider>
+          </AppSettingsProvider>
+        </ReduxProvider>
+      </Web3Provider>
+    </BrowserRouter>
   </HelmetProvider>
 );
 
