@@ -151,7 +151,7 @@ const Summary = () => {
           <Card>
             <Title>7. Royalty Ratio</Title>
             <Box>
-              <Chart />
+              <Chart width={215} />
             </Box>
           </Card>
         </Grid>
