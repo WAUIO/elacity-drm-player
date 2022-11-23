@@ -13,6 +13,7 @@ import { MintForm } from 'src/lib/typeform/types';
 import {
   accessMethods, contentTypes, operators,
 } from 'src/lib/typeform/questions';
+import Address from 'src/components/Address';
 import Chart from './DoughnutChart';
 
 const Title = styled(Typography)(({ theme }) => ({
@@ -191,7 +192,9 @@ const Summary = () => {
                 {
                   values.royalties.map(
                     (r) => (
-                      <li key={r.identifier}>{r.address}</li>
+                      <li key={r.identifier}>
+                        <Address address={r.address} />
+                      </li>
                     )
                   )
                 }
