@@ -35,7 +35,7 @@ const Container = styled('div')(({ theme }) => ({
   },
   '& .MuiTypography-root': {
     color: theme.palette.primary.main,
-    fontWeight: 500,
+    fontWeight: 600,
   },
 }));
 
@@ -55,6 +55,7 @@ export const Address = ({ address, length, width }: AddressProps) => {
       <Typography component="div" fontFamily="monospace" fontSize="0.9rem">
         {truncateText(address, length)}
       </Typography>
+      <div style={{ flex: 1 }} />
       <CopyToClipboard text={address} onCopy={handleCopy}>
         <IconButton>
           {

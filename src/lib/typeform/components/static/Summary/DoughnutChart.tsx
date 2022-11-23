@@ -7,6 +7,18 @@ interface DatasetItem {
   value: number;
 }
 
+const Container = styled('div', {
+  name: 'ChartDonut',
+})(({ theme }) => ({
+  display: 'block',
+  fontFamily: theme.typography.fontFamily,
+  margin: theme.spacing(1, 'auto'),
+  '& .donutchart-innertext-label, & .donutchart-innertext-value': {
+    fill: theme.palette.text.primary,
+    fontWeight: 500,
+  },
+}));
+
 const Legend = styled('div')(({ theme }) => ({
   marginTop: theme.spacing(2),
   display: 'flex',
@@ -58,7 +70,7 @@ const DonutChart = ({ width, height, dataset }: ChartProps) => {
   ), [dataset]);
 
   return (
-    <div>
+    <Container>
       <DonutChartBase
         // @ts-ignore
         height={height || width}
@@ -90,7 +102,7 @@ const DonutChart = ({ width, height, dataset }: ChartProps) => {
           )
         }
       </Legend>
-    </div>
+    </Container>
   );
 };
 

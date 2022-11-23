@@ -41,8 +41,14 @@ const CardStyled = styled(Card)(({ theme }) => ({
     borderColor: darken(theme.palette.primary.main, 0.2),
     animation: `${blink} 0.2s linear`,
   },
-  [theme.breakpoints.down('md')]: {
-    // width: '100%',
+  '& .icon': {
+    fontSize: 125,
+  },
+  [theme.breakpoints.down('sm')]: {
+    width: '45%',
+    '& .icon': {
+      fontSize: 75,
+    },
   },
 }));
 
@@ -102,7 +108,7 @@ export const CustomCard = ({ icon: Icon, KeyPressId, value, isSelected, onSelect
     {isSelected ? <CardChecked><CheckedIconStyled fontSize="small" /></CardChecked> : <HideBox /> }
     {Icon && (
       <CardContentStyled>
-        <Icon sx={{ fontSize: 125 }} />
+        <Icon className="icon" sx={{ fontSize: 125 }} />
       </CardContentStyled>
     )}
     <CardActions>

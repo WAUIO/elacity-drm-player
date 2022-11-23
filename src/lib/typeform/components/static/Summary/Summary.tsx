@@ -2,9 +2,11 @@
 import React from 'react';
 import { useFormikContext } from 'formik';
 import {
-  Box, Grid, Typography, Button, CircularProgress,
+  Box, Grid, Typography, Button, CircularProgress, useMediaQuery,
 } from '@mui/material';
-import { styled, alpha } from '@mui/material/styles';
+import {
+  styled, alpha, Theme,
+} from '@mui/material/styles';
 import { BoxProps } from '@mui/material/Box';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import CropOriginalIcon from '@mui/icons-material/CropOriginal';
@@ -14,6 +16,7 @@ import {
   accessMethods, contentTypes, operators,
 } from 'src/lib/typeform/questions';
 import Address from 'src/components/Address';
+import useFormUI from '../../../hooks/useFormUI';
 import Chart from './DoughnutChart';
 
 const Title = styled(Typography)(({ theme }) => ({
@@ -67,27 +70,81 @@ const Icon = styled(Box)(({ theme }) => ({
   marginLeft: 'auto',
 }));
 
+const SummaryContainer = styled(Box)(({ theme }) => ({
+  margin: theme.spacing(1.5, 'auto', 0),
+  width: '98%',
+  '& > * > .MuiGrid-item': {
+    padding: theme.spacing(1, 0),
+  },
+  '& > .MuiGrid-container': {
+    marginBottom: theme.spacing(2.5),
+    '& > .MuiGrid-item': {
+      paddingLeft: theme.spacing(2),
+    },
+  },
+  [theme.breakpoints.down('md')]: {
+    marginBottom: theme.spacing(12),
+    '& .MuiGrid-item': {
+      width: '100%',
+    },
+  },
+  [theme.breakpoints.down('sm')]: {
+    marginBottom: theme.spacing(5),
+    '& .MuiGrid-item': {
+      width: '100%',
+    },
+    '& .MuiGrid-container.MuiGrid-item': {
+      '& .MuiGrid-item': {
+        margin: theme.spacing(0, 'auto'),
+        paddingLeft: theme.spacing(2),
+        width: '100%',
+      },
+    },
+  },
+}));
+
+const NestedWrapper = ({ children }) => {
+  const isSmall = useMediaQuery((t: Theme) => t.breakpoints.down('sm'));
+
+  if (isSmall) {
+    return (
+      <>
+        {children}
+      </>
+    );
+  }
+
+  return (
+    <Grid item container spacing={2} md={3} sm={6}>
+      {children}
+    </Grid>
+  );
+};
+
 const Summary = () => {
-  const { values, submitForm, resetForm, isSubmitting } = useFormikContext<MintForm>();
+  const { onNext } = useFormUI();
+  const { values, resetForm, isSubmitting } = useFormikContext<MintForm>();
 
   const handleCancel = () => {
-    resetForm();
+    resetForm({});
     window.location.reload();
   };
 
   const handleSubmit = () => {
-    submitForm();
+    onNext();
   };
 
   return (
-    <Box sx={{ width: '100%', '& > * > .MuiGrid-item': { py: 1 } }} maxWidth="xl">
-      <Grid container>
-        <Grid item md={8}>
+    <SummaryContainer>
+      <Grid container spacing={2}>
+        <Grid item md={8} sm={6} xs={6}>
           <Typography variant="h4" fontWeight={500}>Summary</Typography>
         </Grid>
         <Grid
           item
           md={4}
+          sm={6}
+          xs={6}
           sx={{
             display: 'flex',
             alignItems: 'center',
@@ -118,8 +175,8 @@ const Summary = () => {
           </Button>
         </Grid>
       </Grid>
-      <Grid container>
-        <Grid item md={3}>
+      <Grid container spacing={2}>
+        <Grid item md={3} sm={6}>
           <Card inline>
             <div className="inner">
               <Title>1. User</Title>
@@ -131,7 +188,7 @@ const Summary = () => {
           </Card>
         </Grid>
 
-        <Grid item md={3}>
+        <Grid item md={3} sm={6}>
           <Card inline>
             <div className="inner">
               <Title>2. Publish Content</Title>
@@ -143,7 +200,7 @@ const Summary = () => {
           </Card>
         </Grid>
 
-        <Grid item md={3}>
+        <Grid item md={3} sm={6}>
           <Card inline>
             <div className="inner">
               <Title>3. Content Access To</Title>
@@ -155,7 +212,7 @@ const Summary = () => {
           </Card>
         </Grid>
 
-        <Grid item md={3}>
+        <Grid item md={3} sm={6}>
           <Card inline>
             <div className="inner">
               <Title>4. Cost Per Sale</Title>
@@ -168,8 +225,8 @@ const Summary = () => {
         </Grid>
       </Grid>
 
-      <Grid container>
-        <Grid item md={3} container>
+      <Grid container spacing={2}>
+        <NestedWrapper>
           <Grid item md={12} sx={{ mb: 1 }}>
             <Card>
               <Title>5. Royalties Distribution</Title>
@@ -201,9 +258,9 @@ const Summary = () => {
               </ul>
             </Card>
           </Grid>
-        </Grid>
+        </NestedWrapper>
 
-        <Grid item md={3}>
+        <Grid item md={3} sm={6}>
           <Card>
             <Title>7. Royalty Ratio</Title>
             <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -222,7 +279,7 @@ const Summary = () => {
           </Card>
         </Grid>
 
-        <Grid item md={3}>
+        <Grid item md={3} sm={6}>
           <Card>
             <Title>8. Asset Uploaded</Title>
             <MediaViewer>
@@ -231,7 +288,7 @@ const Summary = () => {
           </Card>
         </Grid>
 
-        <Grid item md={3}>
+        <Grid item md={3} sm={6}>
           <Card>
             <Title>9. Thumbnail Image</Title>
             <MediaViewer>
@@ -241,29 +298,29 @@ const Summary = () => {
         </Grid>
       </Grid>
 
-      <Grid container>
-        <Grid item md={3}>
+      <Grid container spacing={2}>
+        <Grid item md={3} sm={4}>
           <Card>
             <Title>10. Asset Title</Title>
             <Typography>{values.title}</Typography>
           </Card>
         </Grid>
 
-        <Grid item md={6}>
+        <Grid item md={6} sm={4}>
           <Card>
             <Title>11. Asset Description</Title>
             <Typography>{values.description}</Typography>
           </Card>
         </Grid>
 
-        <Grid item md={3}>
+        <Grid item md={3} sm={4}>
           <Card>
             <Title>12. Number of Copies</Title>
             <Typography>{values.copiesNumber}</Typography>
           </Card>
         </Grid>
       </Grid>
-    </Box>
+    </SummaryContainer>
   );
 };
 
