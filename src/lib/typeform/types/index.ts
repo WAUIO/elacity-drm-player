@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, CSSProperties } from 'react';
 import { FormikContextType } from 'formik';
 import { ButtonProps, InputBaseProps } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
@@ -44,6 +44,7 @@ export type InputForm = QuestionInputProps & InputBaseProps & {button?: ButtonFo
 export interface StaticBlock extends Omit<InputForm, 'input'> {
   type: 'static';
   input: ReactNode;
+  maxWidth?: CSSProperties['maxWidth'];
 }
 
 export interface TextInputBlock extends InputForm {

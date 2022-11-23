@@ -2,7 +2,7 @@
 import React from 'react';
 import { useFormikContext } from 'formik';
 import {
-  Box, Grid, Typography, Container,
+  Box, Grid, Typography, Button, CircularProgress,
 } from '@mui/material';
 import { styled, alpha } from '@mui/material/styles';
 import { BoxProps } from '@mui/material/Box';
@@ -34,10 +34,12 @@ const Card = styled(Box, {
       width: 'calc(100% - 50px)',
     },
     display: 'flex',
+    alignItems: 'center',
   }),
 }));
 
 const MediaViewer = styled(Box)(({ theme }) => ({
+  marginTop: theme.spacing(1),
   maxWidth: '100%',
   maxHeight: '100%',
   '& img': {
@@ -65,10 +67,56 @@ const Icon = styled(Box)(({ theme }) => ({
 }));
 
 const Summary = () => {
-  const { values } = useFormikContext<MintForm>();
+  const { values, submitForm, resetForm, isSubmitting } = useFormikContext<MintForm>();
+
+  const handleCancel = () => {
+    resetForm();
+    window.location.reload();
+  };
+
+  const handleSubmit = () => {
+    submitForm();
+  };
 
   return (
-    <Container sx={{ width: '100%', '& > * > .MuiGrid-item': { py: 1 } }} maxWidth="xl">
+    <Box sx={{ width: '100%', '& > * > .MuiGrid-item': { py: 1 } }} maxWidth="xl">
+      <Grid container>
+        <Grid item md={8}>
+          <Typography variant="h4" fontWeight={500}>Summary</Typography>
+        </Grid>
+        <Grid
+          item
+          md={4}
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'end',
+            pr: 0.5,
+            '& .MuiButton-root': {
+              ml: 2,
+            },
+          }}
+        >
+          <Button
+            onClick={handleCancel}
+            disabled={isSubmitting}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            onClick={handleSubmit}
+            disabled={isSubmitting}
+            startIcon={
+              isSubmitting && (
+                <CircularProgress size="1rem" />
+              )
+            }
+          >
+            Submit
+          </Button>
+        </Grid>
+      </Grid>
       <Grid container>
         <Grid item md={3}>
           <Card inline>
@@ -125,10 +173,13 @@ const Summary = () => {
             <Card>
               <Title>5. Royalties Distribution</Title>
               <ul>
-                <li>Creator</li>
-                <li>Publisher</li>
-                <li>Distributor</li>
-                <li>Investor</li>
+                {
+                  values.royalties.map(
+                    (r) => (
+                      <li key={r.identifier}>{r.identifier}</li>
+                    )
+                  )
+                }
               </ul>
             </Card>
           </Grid>
@@ -137,21 +188,33 @@ const Summary = () => {
             <Card>
               <Title>6. Royalties To</Title>
               <ul>
-                <li>0x0000</li>
-                <li>0x0000</li>
-                <li>0x0000</li>
-                <li>0x0000</li>
+                {
+                  values.royalties.map(
+                    (r) => (
+                      <li key={r.identifier}>{r.address}</li>
+                    )
+                  )
+                }
               </ul>
             </Card>
           </Grid>
-
         </Grid>
 
         <Grid item md={3}>
           <Card>
             <Title>7. Royalty Ratio</Title>
-            <Box>
-              <Chart width={215} />
+            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+              <Chart
+                width={215}
+                dataset={
+                  values.royalties.map(
+                    ({ identifier, royalty }) => ({
+                      label: identifier,
+                      value: Number(royalty),
+                    })
+                  )
+                }
+              />
             </Box>
           </Card>
         </Grid>
@@ -197,7 +260,7 @@ const Summary = () => {
           </Card>
         </Grid>
       </Grid>
-    </Container>
+    </Box>
   );
 };
 

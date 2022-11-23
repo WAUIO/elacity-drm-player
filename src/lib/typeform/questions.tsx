@@ -556,7 +556,9 @@ export default [
         content: {
           type: 'static',
           input: <Summary />,
+          maxWidth: '100%',
         },
+        justifyContent: 'space-evenly',
       }],
   },
 ] as FormStep<MintForm>[];

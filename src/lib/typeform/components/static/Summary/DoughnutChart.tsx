@@ -1,28 +1,31 @@
 import React from 'react';
+import { styled } from '@mui/material/styles';
 import DonutChartBase from 'react-donut-chart';
 
-const reactDonutChartdata = [
-  {
-    label: 'NDC',
-    value: 25,
-    // color: '#00E396',
+interface DatasetItem {
+  label: string;
+  value: number;
+}
+
+const Legend = styled('div')(({ theme }) => ({
+  marginTop: theme.spacing(2),
+  display: 'flex',
+  flexWrap: 'wrap',
+  justifyContent: 'center',
+  '& .lengend-item': {
+    margin: 2,
+    display: 'flex',
+    '& > div': {
+      width: 22,
+      height: 16,
+    },
+    '& > span': {
+      fontSize: 12,
+      marginLeft: 4,
+    },
   },
-  {
-    label: 'RDC',
-    value: 65,
-    // color: '#FEB019',
-  },
-  {
-    label: 'STOCKIST',
-    value: 100,
-    // color: '#FF4560',
-  },
-  {
-    label: 'HOSPITAL',
-    value: 15,
-    // color: '#775DD0',
-  },
-];
+}));
+
 const reactDonutChartBackgroundColor = [
   '#77A6FF',
   '#77FFFF',
@@ -46,25 +49,54 @@ const reactDonutChartOnMouseEnter = (item) => {
 interface ChartProps {
   width?: number;
   height?: number;
+  dataset?: DatasetItem[];
 }
 
-const DonutChart = ({ width, height }: ChartProps) => (
-  <DonutChartBase
-    // @ts-ignore
-    height={height || width}
-    width={width}
-    onMouseEnter={(item) => reactDonutChartOnMouseEnter(item)}
-    strokeColor={reactDonutChartStrokeColor}
-    data={reactDonutChartdata}
-    colors={reactDonutChartBackgroundColor}
-    innerRadius={reactDonutChartInnerRadius}
-    selectedOffset={reactDonutChartSelectedOffset}
-    legend={false}
-  />
-);
+const DonutChart = ({ width, height, dataset }: ChartProps) => {
+  const sum = React.useMemo(() => (dataset || []).reduce(
+    (total, r) => total + Number(r.value), 0
+  ), [dataset]);
+
+  return (
+    <div>
+      <DonutChartBase
+        // @ts-ignore
+        height={height || width}
+        width={width}
+        onMouseEnter={(item) => reactDonutChartOnMouseEnter(item)}
+        strokeColor={reactDonutChartStrokeColor}
+        data={[
+          ...dataset,
+          ...(sum < 100 ? [{
+            label: '',
+            value: 100 - sum,
+            isEmpty: true,
+          }] : []),
+        ]}
+        colors={reactDonutChartBackgroundColor}
+        innerRadius={reactDonutChartInnerRadius}
+        selectedOffset={reactDonutChartSelectedOffset}
+        legend={false}
+      />
+      <Legend>
+        {
+          dataset.map(
+            ({ label }, i) => (
+              <div className="lengend-item">
+                <div style={{ background: reactDonutChartBackgroundColor[i] }}>&nbsp;</div>
+                <span>{label}</span>
+              </div>
+            )
+          )
+        }
+      </Legend>
+    </div>
+  );
+};
 
 DonutChart.defaultProps = {
   width: 500,
+  dataset: [],
 };
 
 export default DonutChart;

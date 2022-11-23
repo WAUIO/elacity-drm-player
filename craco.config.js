@@ -30,6 +30,7 @@ module.exports = {
           process: 'process/browser.js',
         }),
       ],
+      ignoreWarnings: [/Failed to parse source map/],
     },
   },
 };
