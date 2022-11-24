@@ -98,7 +98,7 @@ const DonutChart = ({ width, height, dataset }: ChartProps) => {
         {
           dataset.map(
             ({ label }, i) => (
-              <div className="lengend-item">
+              <div className="lengend-item" key={`$legend.${i + 1}`}>
                 <div style={{ background: reactDonutChartBackgroundColor[i] }}>&nbsp;</div>
                 <span>{label}</span>
               </div>

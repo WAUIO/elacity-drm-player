@@ -8,7 +8,7 @@ export default ({ input: { helpText, fieldName, ...input } }: TextInputBlock) =>
   const inputRef = useAutofocus();
   return (
     <Box
-      component="div"
+      component="span"
       sx={{
         '& > :not(style)': { m: 1 },
       }}

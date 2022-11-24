@@ -123,7 +123,7 @@ const NestedWrapper = ({ children }) => {
 
 const Summary = () => {
   const { onNext } = useFormUI();
-  const { values, resetForm, isSubmitting } = useFormikContext<MintForm>();
+  const { values, resetForm, isSubmitting, dirty } = useFormikContext<MintForm>();
 
   const handleCancel = () => {
     resetForm({});
@@ -133,6 +133,10 @@ const Summary = () => {
   const handleSubmit = () => {
     onNext();
   };
+
+  if (!dirty) {
+    return null;
+  }
 
   return (
     <SummaryContainer>
@@ -230,7 +234,7 @@ const Summary = () => {
           <Grid item md={12} sx={{ mb: 1 }}>
             <Card>
               <Title>5. Royalties Distribution</Title>
-              <ul>
+              <ol>
                 {
                   values.royalties.map(
                     (r) => (
@@ -238,14 +242,14 @@ const Summary = () => {
                     )
                   )
                 }
-              </ul>
+              </ol>
             </Card>
           </Grid>
 
           <Grid item md={12}>
             <Card>
               <Title>6. Royalties To</Title>
-              <ul>
+              <ol>
                 {
                   values.royalties.map(
                     (r) => (
@@ -255,7 +259,7 @@ const Summary = () => {
                     )
                   )
                 }
-              </ul>
+              </ol>
             </Card>
           </Grid>
         </NestedWrapper>
@@ -283,7 +287,11 @@ const Summary = () => {
           <Card>
             <Title>8. Asset Uploaded</Title>
             <MediaViewer>
-              <video controls={false} src={URL.createObjectURL(values.assetFile)} />
+              {
+                Boolean(values.assetFile) && (
+                  <video controls={false} autoPlay src={URL.createObjectURL(values.assetFile)} />
+                )
+              }
             </MediaViewer>
           </Card>
         </Grid>
@@ -292,7 +300,9 @@ const Summary = () => {
           <Card>
             <Title>9. Thumbnail Image</Title>
             <MediaViewer>
-              <img alt="thumbnail" src={URL.createObjectURL(values.assetThumbnail)} />
+              {Boolean(values.assetThumbnail) && (
+                <img alt="thumbnail" src={URL.createObjectURL(values.assetThumbnail)} />
+              )}
             </MediaViewer>
           </Card>
         </Grid>
@@ -309,7 +319,7 @@ const Summary = () => {
         <Grid item md={6} sm={4}>
           <Card>
             <Title>11. Asset Description</Title>
-            <Typography>{values.description}</Typography>
+            <Typography component="p" sx={{ whiteSpace: 'break-spaces' }}>{values.description}</Typography>
           </Card>
         </Grid>
 

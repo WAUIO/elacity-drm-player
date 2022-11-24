@@ -1,5 +1,6 @@
 import React from 'react';
 import { sumBy } from 'lodash';
+import { useNavigate } from 'react-router-dom';
 import { Formik, FormikErrors } from 'formik';
 import { ThemeProvider } from './theme';
 import Form from './components/Form';
@@ -12,10 +13,14 @@ interface Props {
 }
 
 const Typeform = ({ handle }: Props) => {
+  const navigate = useNavigate();
   const [activeStepIndex, setStepIndex] = React.useState<number>(0);
   const onSubmit = async (values: MintForm) => {
     console.log('submitting', { values });
-    await handle(values);
+    const [{ path }] = await handle(values);
+    if (path) {
+      navigate(`/view/ipfs:${path}`);
+    }
   };
 
   const formValidator = React.useCallback((values: MintForm) => {
@@ -122,7 +127,7 @@ const Typeform = ({ handle }: Props) => {
             console.log('form state', [form.isSubmitting, form.isValid]);
             await form.submitForm();
             setTimeout(form.setSubmitting, 700, false);
-            form.resetForm();
+            form.resetForm({});
           }}
         >
           <Form stepIndex={activeStepIndex} />

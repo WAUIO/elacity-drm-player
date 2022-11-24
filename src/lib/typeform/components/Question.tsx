@@ -31,7 +31,7 @@ const Question = ({
     </Title>
     {
       caption && (
-        <Caption variant="body2">
+        <Caption variant="body2" component="div">
           {caption}
         </Caption>
       )

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Contract } from '@ethersproject/contracts';
+import { AddressZero } from '@ethersproject/constants';
 import { INTERFACE_ERC721 } from '@elacity-js/lib';
 import { useWeb3React } from '@web3-react/core';
 import useErrorHandler from 'src/hooks/useErrorHandler';
@@ -51,8 +52,10 @@ const mediaTransformer: IFormTransformer<Omit<MintForm, 'assetThumbnail'> & {thu
     formData.append('title', payload.title);
     formData.append('description', payload.description);
     formData.append('author', payload.author);
-    formData.append('price', payload.pricePerSale.toString());
-    formData.append('payToken', '0x0');
+    if (Number(payload.pricePerSale || 0) > 0) {
+      formData.append('price', payload.pricePerSale.toString());
+    }
+    formData.append('payToken', AddressZero);
     return formData;
   },
 };
