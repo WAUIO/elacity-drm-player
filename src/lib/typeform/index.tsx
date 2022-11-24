@@ -21,7 +21,7 @@ const Typeform = ({ handle }: Props) => {
   const formValidator = React.useCallback((values: MintForm) => {
     const errors: FormikErrors<MintForm> = {};
 
-    console.log('validation...', activeStepIndex, { values });
+    // console.log('validation...', activeStepIndex, { values });
 
     // validators here are arranged by step index
     // on step index 0, there is no form, will be null

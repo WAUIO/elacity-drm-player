@@ -16,8 +16,8 @@ import {
  *
  * @returns
  */
-const useStepFlow = () => {
-  const { values } = useFormikContext<MintForm>();
+const useStepFlow = (form: FormikContextType<MintForm>) => {
+  const { values } = form;
 
   const stepForward = useCallback((stepId: number) => {
     console.log({ stepId, values });
@@ -26,7 +26,7 @@ const useStepFlow = () => {
     }
 
     return stepId + 1;
-  }, [values]);
+  }, [form]);
 
   const stepBackward = useCallback((stepId: number) => {
     if (stepId === 7 && values.accessMethod === 'A') {
@@ -34,7 +34,7 @@ const useStepFlow = () => {
     }
 
     return stepId - 1;
-  }, [values]);
+  }, [form]);
 
   return {
     stepForward,
@@ -64,6 +64,20 @@ interface FormUIContextProps {
   onComplete?: (form: FormikContextType<MintForm>) => Promise<void>;
 }
 
+// Override step transaction direction on click on the bottom controller up or down
+const setDirection = (
+  blocks: Block[],
+  animationDirection?: string
+) => blocks.map((b) => ({
+  ...b,
+  animation: b.animation ? {
+    ...b.animation,
+    props: {
+      direction: animationDirection || 'up',
+    } as TransitionProps,
+  } : null,
+}));
+
 /**
  * This context is responsible about the UI/UX
  * - steps
@@ -72,11 +86,8 @@ interface FormUIContextProps {
  */
 export const FormUIProvider: FC<PropsWithChildren<FormUIContextProps>> = ({ children, steps, onComplete, onStep }) => {
   const form = useFormikContext<MintForm>();
-  const { stepForward, stepBackward } = useStepFlow();
+  const { stepForward, stepBackward } = useStepFlow(form);
   const [currentStep, setCurrentStep] = useState<FormStep>(steps[0]);
-
-  // Override step transaction direction on click on the bottom controller up or down
-  const setDirection = (blocks: Block[], animationDirection?: string) => blocks.map((b) => ({ ...b, animation: b.animation ? { ...b.animation, props: { direction: animationDirection || 'up' } as TransitionProps } : null }));
 
   // Set what should be the current step with direction if specified
   const _setCurrentStep = (stepId: number, animationDirection?: string) => {
@@ -87,7 +98,10 @@ export const FormUIProvider: FC<PropsWithChildren<FormUIContextProps>> = ({ chil
       const step = steps[index];
       if (step) {
         // update current step
-        setCurrentStep({ ...step, blocks: setDirection(step.blocks, animationDirection) });
+        setCurrentStep({
+          ...step,
+          blocks: setDirection(step.blocks, animationDirection),
+        });
       }
     }
   };
@@ -101,9 +115,9 @@ export const FormUIProvider: FC<PropsWithChildren<FormUIContextProps>> = ({ chil
     // @todo: the state below generate a double validation triggering
     // as a workakound we just removed it (and used form.errors instead)
     // but it seems whole the form is not dispacthing over children of the context
-    console.log('Exec onNext', o);
+    // console.log('Exec onNext', o, currentStep?.id);
     if (!o?.forceValidation && currentStep?.id) {
-      // go through wth any restriction about validation state
+      // go through without any restriction about validation state
       _setCurrentStep(stepForward(currentStep?.id), 'up');
       return;
     }
@@ -128,17 +142,17 @@ export const FormUIProvider: FC<PropsWithChildren<FormUIContextProps>> = ({ chil
       // next step will show from the bottom -> top
       _setCurrentStep(stepForward(currentStep?.id), 'up');
     }
-  }, [currentStep?.id, form.values]);
+  }, [currentStep?.id, form]);
 
-  const onPrevious = () => {
+  const onPrevious = React.useCallback(() => {
     if (currentStep?.id) {
       // next step will show from the top -> bottom
       _setCurrentStep(stepBackward(currentStep?.id), 'down');
     }
-  };
+  }, [currentStep?.id]);
 
   // On clicked on arrow down button
-  React.useEffect(() => {
+  React.useLayoutEffect(() => {
     const handleEnterKeyUp = (e: KeyboardEvent) => {
       if (e.key === 'Enter' && !e.shiftKey) {
         const validateOnEnter = (currentStep.blocks || []).map(

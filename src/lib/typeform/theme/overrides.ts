@@ -37,4 +37,11 @@ export default {
       elevation: 0,
     },
   },
+  MuiInputBase: {
+    styleOverrides: {
+      inputMultiline: {
+        lineHeight: 1.25,
+      },
+    },
+  },
 } as Components;

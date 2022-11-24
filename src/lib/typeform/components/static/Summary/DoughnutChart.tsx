@@ -69,6 +69,10 @@ const DonutChart = ({ width, height, dataset }: ChartProps) => {
     (total, r) => total + Number(r.value), 0
   ), [dataset]);
 
+  if (dataset?.length === 0) {
+    return null;
+  }
+
   return (
     <Container>
       <DonutChartBase

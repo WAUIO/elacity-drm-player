@@ -6,14 +6,20 @@ import { SelectForm } from '../types';
 import useFormUI from './useFormUI';
 
 const useSelectFn = (input: SelectForm) => {
-  const [selected, setSelected] = useState<string | string[]>(input.value as string | string[]);
+  const { value, onChange, multiple: isMultiple, options } = input;
+  const [selected, setSelected] = useState<string | string[]>(value as string | string[]);
   const ref = useRef<HTMLInputElement>();
-
-  const validOptions = input.options.map((opt) => opt.KeyPressId);
-
   const { onNext } = useFormUI();
 
-  const isMultiple = input.multiple;
+  const [shouldNext, setShouldNext] = useState<boolean>(false);
+
+  const validOptions = options.map((opt) => opt.KeyPressId);
+
+  React.useLayoutEffect(() => {
+    if (shouldNext) {
+      setTimeout(onNext, 700);
+    }
+  }, [shouldNext]);
 
   // Handle multiple or single choice
   const handleChoice = (key: string) => {
@@ -28,11 +34,17 @@ const useSelectFn = (input: SelectForm) => {
     if (!isMultiple) {
       setSelected(keyPressed);
 
-      input.onChange?.({ target: { value: keyPressed } } as React.ChangeEvent<HTMLInputElement>);
+      onChange?.({ target: { value: keyPressed } } as React.ChangeEvent<HTMLInputElement>);
 
       // Move to next step on single select choice
       if (keyPressed) {
-        setTimeout(onNext, 1000);
+        // we need to handle this as a side-effect to enforce
+        // to have new form values (after onChange above) instead
+        // of getting a lagged values
+        setShouldNext(true);
+        requestAnimationFrame(() => {
+          setTimeout(setShouldNext, 100, false);
+        });
       }
       return;
     }
@@ -51,7 +63,7 @@ const useSelectFn = (input: SelectForm) => {
     setSelected(values);
 
     // @ts-ignore
-    input.onChange?.({ target: { value: values } });
+    onChange?.({ target: { value: values } });
   };
 
   useEffect(() => {

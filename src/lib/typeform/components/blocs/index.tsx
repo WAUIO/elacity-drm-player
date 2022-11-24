@@ -19,7 +19,7 @@ export default {
 const Empty = React.forwardRef<HTMLDivElement, any>((props, ref) => (<div ref={ref} {...props} />));
 
 export const BlocGuessable = (props: BlockComponentProps<FormBlock>) => {
-  console.log('BlocGuessable', props);
+  // console.log('BlocGuessable', props);
   switch (props?.content.type) {
   case 'static':
     return (
