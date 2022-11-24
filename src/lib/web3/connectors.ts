@@ -38,7 +38,7 @@ export const NETWORKS: INetworkCollection = {
     symbol: 'ELA',
     chainID: 21,
     rpcUrl: 'https://api-testnet.trinity-tech.io/esc',
-    explorerUrl: 'https://esc-testnet.elastos.io',
+    explorerUrl: 'https://api-testnet.elastos.io/eth',
     decimals: 18,
   },
 };
@@ -53,7 +53,7 @@ export const getNetworkForChain = (chainId: number): INetworkConfig | null => {
 
 const RPC_URLS: { [chainId: number]: string } = {
   20: 'https://api.trinity-tech.io/esc',
-  21: 'https://rpc.elaeth.io',
+  21: 'https://api-testnet.elastos.io/eth',
 };
 
 export const network = new NetworkConnector({
