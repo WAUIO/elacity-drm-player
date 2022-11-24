@@ -57,7 +57,6 @@ export default [
       },
     ],
   },
-  // other layouts
   {
     path: '*',
     element: <ErrorPage code="404" message="Page not found" />,

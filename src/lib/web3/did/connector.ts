@@ -87,16 +87,15 @@ export const ensureDIDConnectionWith = async (
     });
 
     if (presentation) {
-      const credentials: Record<string, VerifiableCredential> = presentation.getCredentials().reduce(
-        (result: Record<string, VerifiableCredential>, credential: VerifiableCredential) => ({
+      const credentials = presentation.getCredentials().reduce(
+        (result, credential) => ({
           ...result,
           [credential.getId().getFragment()]: credential,
         }), {}
       );
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const jsonCredentials: Record<string, any> = presentation.getCredentials().reduce(
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        (result: Record<string, any>, credential: VerifiableCredential) => ({
+
+      const jsonCredentials = presentation.getCredentials().reduce(
+        (result, credential) => ({
           ...result,
           [credential.getId().getFragment()]: credential.getSubject().getProperty(
             credential.getId().getFragment()

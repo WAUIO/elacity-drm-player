@@ -16,11 +16,13 @@ const TypeformView = () => {
   });
 
   return (
-    <Box sx={{ height: 'calc(100vh - 136px)' }}>
+    <Box sx={{ display: 'block' }}>
       <Helmet>
         <title>Submission Form | Elacity Media</title>
       </Helmet>
-      <Typeform handle={handlePayload} />
+      <Box>
+        <Typeform handle={handlePayload} />
+      </Box>
     </Box>
   );
 };

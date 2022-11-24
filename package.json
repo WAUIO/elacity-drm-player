@@ -3,12 +3,12 @@
   "version": "0.2.0",
   "private": true,
   "dependencies": {
-    "@elacity-js/lib": "^0.2.0",
-    "@elacity-js/uikit": "^1.6.0-alpha.9",
-    "@elastosfoundation/did-js-sdk": "^2.2.9",
-    "@elastosfoundation/elastos-connectivity-sdk-js": "^1.1.4",
+    "@elacity-js/lib": "^0.2.5",
+    "@elacity-js/uikit": "^1.6.0-alpha.12",
+    "@elastosfoundation/did-js-sdk": "^2.2.12",
+    "@elastosfoundation/elastos-connectivity-sdk-js": "^1.1.10",
     "@elastosfoundation/essentials-connector-client-browser": "^1.0.41",
-    "@elastosfoundation/hive-js-sdk": "^2.8.1",
+    "@elastosfoundation/hive-js-sdk": "^2.9.5",
     "@emotion/react": "^11.10.0",
     "@emotion/styled": "^11.10.0",
     "@ethersproject/abi": "^5.6.4",
@@ -71,19 +71,19 @@
     "react": "^18.2.0",
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.2.0",
+    "react-donut-chart": "^1.3.3",
     "react-dropzone": "^14.2.2",
     "react-helmet-async": "^1.3.0",
     "react-i18next": "^11.12.0",
     "react-redux": "^8.0.2",
     "react-router": "^6.3.0",
     "react-router-dom": "^6.3.0",
-    "react-scripts": "4.0.3",
+    "react-scripts": "^5.0.1",
     "react-swipeable": "^7.0.0",
     "redux-devtools-extension": "^2.13.9",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.4.1",
     "simplebar-react": "^2.3.6",
-    "typescript": "~4.1.5",
     "workbox-core": "^6.3.0",
     "workbox-expiration": "^6.3.0",
     "workbox-precaching": "^6.3.0",
@@ -91,9 +91,9 @@
     "workbox-strategies": "^6.3.0"
   },
   "scripts": {
-    "start": "REACT_APP_VERSION=$npm_package_version react-scripts start",
-    "build": "REACT_APP_VERSION=$npm_package_version react-scripts build",
-    "test": "react-scripts test",
+    "start": "REACT_APP_VERSION=$npm_package_version craco start",
+    "build": "REACT_APP_VERSION=$npm_package_version craco build",
+    "test": "craco test",
     "eject": "react-scripts eject",
     "lint": "eslint --quiet \"src/**/*\""
   },
@@ -106,25 +106,22 @@
       "jsx-a11y"
     ]
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ],
   "engine": {
-    "node": "16.x"
+    "node": ">=16.18.x"
   },
   "overrides": {
     "core-js": "3.21.1"
   },
+  "resolutions": {
+    "svelte-i18n": "3.3.6"
+  },
   "devDependencies": {
+    "@craco/craco": "^7.0.0",
     "@types/axios": "^0.14.0",
     "@types/date-fns": "^2.6.0",
     "@types/lodash": "^4.14.174",
@@ -133,12 +130,20 @@
     "@types/redux-logger": "^3.0.9",
     "@typescript-eslint/eslint-plugin": "^4.31.2",
     "@typescript-eslint/parser": "^4.31.2",
+    "crypto-browserify": "^3.12.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-import-resolver-typescript": "^2.5.0",
     "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.26.0",
-    "eslint-plugin-react-hooks": "^4.2.0"
+    "eslint-plugin-react-hooks": "^5.0.0-next-2655c9354-20221121",
+    "https-browserify": "^1.0.0",
+    "jose-browser-runtime": "^4.11.1",
+    "os-browserify": "^0.3.0",
+    "path-browserify": "^1.0.1",
+    "stream-browserify": "^3.0.0",
+    "stream-http": "^3.2.0",
+    "typescript": "~4.1.5"
   }
 }

@@ -18,6 +18,10 @@ const BottomBox = styled(Box)(({ theme }) => ({
     bottom: theme.spacing(1),
     right: theme.spacing(1),
   },
+  opacity: 0.6,
+  '&:hover': {
+    opacity: 1,
+  },
 }));
 
 /**

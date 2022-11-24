@@ -6,7 +6,7 @@ import { Theme, Components } from '@mui/material/styles';
 export default {
   MuiButtonBase: {
     defaultProps: {
-      disableElevation: true,
+      elevation: 0,
     },
     styleOverrides: {
       root: {
@@ -16,7 +16,6 @@ export default {
   },
   MuiButton: {
     defaultProps: {
-      disableElevation: true,
       elevation: 0,
     },
     styleOverrides: {
@@ -24,8 +23,8 @@ export default {
         boxShadow: 'none',
       },
       sizeLarge: {
-        height: 56,
-        fontSize: '1.4rem',
+        height: 48,
+        fontSize: '1.36rem',
       },
       containedPrimary: {
         boxShadow: 'none',
@@ -34,9 +33,15 @@ export default {
   },
   MuiButtonGroup: {
     defaultProps: {
-      disableElevation: true,
       disableRipple: true,
       elevation: 0,
+    },
+  },
+  MuiInputBase: {
+    styleOverrides: {
+      inputMultiline: {
+        lineHeight: 1.25,
+      },
     },
   },
 } as Components;

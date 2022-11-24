@@ -23,9 +23,103 @@ import AccessTimeOutlinedIcon from '@mui/icons-material/AccessTimeOutlined';
 
 import Title from 'src/lib/typeform/components/Title';
 import RoyaltySetup from 'src/lib/typeform/components/static/RoyaltySetup';
+import Summary from 'src/lib/typeform/components/static/Summary';
 import { images } from 'src/lib/typeform/constants';
 import { FormStep, MintForm } from './types';
 import { Img, CenterBox } from './components/Img';
+
+export const operators = [
+  {
+    KeyPressId: 'A',
+    icon: PersonOutlineOutlinedIcon,
+    value: 'Independent Creator',
+  },
+  {
+    icon: PeopleOutlineIcon,
+    KeyPressId: 'B',
+    value: 'Content Creator Group',
+  },
+  {
+    icon: PodcastsIcon,
+    KeyPressId: 'C',
+    value: 'Content Distributor',
+  },
+];
+
+export const contentTypes = [
+  {
+    KeyPressId: 'A',
+    icon: ImageOutlinedIcon,
+    value: 'Image',
+  },
+  {
+    icon: VideoCameraBackOutlinedIcon,
+    KeyPressId: 'B',
+    value: 'Video',
+  },
+  {
+    icon: MusicVideoOutlinedIcon,
+    KeyPressId: 'C',
+    value: 'Music',
+  },
+  {
+    icon: ViewInArOutlinedIcon,
+    KeyPressId: 'D',
+    value: '3D Model',
+  },
+  {
+    icon: ArticleOutlinedIcon,
+    KeyPressId: 'E',
+    value: 'Document',
+  },
+];
+
+export const accessMethods = [
+  {
+    KeyPressId: 'A',
+    icon: MoneyOffOutlinedIcon,
+    value: 'Free',
+  },
+  {
+    icon: AttachMoneyOutlinedIcon,
+    KeyPressId: 'B',
+    value: 'Buy once, play always',
+  },
+  {
+    icon: CurrencyExchangeOutlinedIcon,
+    KeyPressId: 'C',
+    value: 'Buy once, play always, resell',
+  },
+  {
+    icon: PaidOutlinedIcon,
+    KeyPressId: 'D',
+    value: 'Pay Per View (PPV)',
+  },
+  {
+    icon: AccessTimeOutlinedIcon,
+    KeyPressId: 'E',
+    value: 'Rental',
+  },
+];
+
+export const stakeholders = [
+  {
+    KeyPressId: 'A',
+    value: 'Creator',
+  },
+  {
+    KeyPressId: 'B',
+    value: 'Publisher',
+  },
+  {
+    KeyPressId: 'C',
+    value: 'Distributor',
+  },
+  {
+    KeyPressId: 'D',
+    value: 'Investor',
+  },
+];
 
 export default [
   {
@@ -86,23 +180,7 @@ export default [
             indicator: 1,
             required: true,
             title: 'Which one below describes you best?',
-            options: [
-              {
-                KeyPressId: 'A',
-                icon: PersonOutlineOutlinedIcon,
-                value: 'Independent Creator',
-              },
-              {
-                icon: PeopleOutlineIcon,
-                KeyPressId: 'B',
-                value: 'Content Creator Group',
-              },
-              {
-                icon: PodcastsIcon,
-                KeyPressId: 'C',
-                value: 'Content Distributor',
-              },
-            ],
+            options: operators,
             fieldName: 'operator',
           },
           button: {
@@ -128,33 +206,7 @@ export default [
             indicator: 2,
             required: true,
             title: 'Amazing! What kind of Content would you like to publish?',
-            options: [
-              {
-                KeyPressId: 'A',
-                icon: ImageOutlinedIcon,
-                value: 'Image',
-              },
-              {
-                icon: VideoCameraBackOutlinedIcon,
-                KeyPressId: 'B',
-                value: 'Video',
-              },
-              {
-                icon: MusicVideoOutlinedIcon,
-                KeyPressId: 'C',
-                value: 'Music',
-              },
-              {
-                icon: ViewInArOutlinedIcon,
-                KeyPressId: 'D',
-                value: '3D Model',
-              },
-              {
-                icon: ArticleOutlinedIcon,
-                KeyPressId: 'E',
-                value: 'Document',
-              },
-            ],
+            options: contentTypes,
             fieldName: 'contentType',
           },
           button: {
@@ -201,33 +253,7 @@ export default [
             indicator: 3,
             required: true,
             title: 'How would you like those to access your content?',
-            options: [
-              {
-                KeyPressId: 'A',
-                icon: MoneyOffOutlinedIcon,
-                value: 'Free',
-              },
-              {
-                icon: AttachMoneyOutlinedIcon,
-                KeyPressId: 'B',
-                value: 'Buy once, play always',
-              },
-              {
-                icon: CurrencyExchangeOutlinedIcon,
-                KeyPressId: 'C',
-                value: 'Buy once, play always, resell',
-              },
-              {
-                icon: PaidOutlinedIcon,
-                KeyPressId: 'D',
-                value: 'Pay Per View (PPV)',
-              },
-              {
-                icon: AccessTimeOutlinedIcon,
-                KeyPressId: 'E',
-                value: 'Rental',
-              },
-            ],
+            options: accessMethods,
             fieldName: 'accessMethod',
           },
           button: {
@@ -309,24 +335,7 @@ export default [
           input: (
             <RoyaltySetup
               fieldName="royalties"
-              options={[
-                {
-                  KeyPressId: 'A',
-                  value: 'Creator',
-                },
-                {
-                  KeyPressId: 'B',
-                  value: 'Publisher',
-                },
-                {
-                  KeyPressId: 'C',
-                  value: 'Distributor',
-                },
-                {
-                  KeyPressId: 'D',
-                  value: 'Investor',
-                },
-              ]}
+              options={stakeholders}
             />
           ),
         },
@@ -545,24 +554,11 @@ export default [
           type: 'slide',
         },
         content: {
-          type: 'text',
-          input: {
-            sx: {
-              display: 'none',
-            },
-            fullWidth: true,
-            caption: <CenterBox><Img className="img12" alt="ela" src={images[1]} /></CenterBox>,
-            title: 'Great, please overview and click Mint to release your DRM-protected assets into Web3!',
-          },
-          button: {
-            text: 'Submit',
-            withIndicator: 'press <span>Ctrl + Enter ↵ </span>',
-            props: {
-              type: 'submit',
-              endIcon: <CheckIcon />,
-            },
-          },
+          type: 'static',
+          input: <Summary />,
+          maxWidth: '100%',
         },
+        justifyContent: 'space-evenly',
       }],
   },
 ] as FormStep<MintForm>[];

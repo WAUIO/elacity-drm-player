@@ -1,8 +1,16 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, CSSProperties } from 'react';
+import { FormikContextType } from 'formik';
 import { ButtonProps, InputBaseProps } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
 import { SvgIconComponent } from '@mui/icons-material';
 import { InlineUploaderProps } from '@elacity-js/uikit';
+
+export type FormikResolver<T, R> = (form: FormikContextType<T>) => R
+
+export interface BlockComponentProps<T> {
+  padding?: number;
+  content: T;
+}
 
 export interface Animation {
   type: 'slide' | 'fade' | 'grow';
@@ -13,6 +21,9 @@ export interface ButtonForm {
   text: string;
   props?: ButtonProps;
   withIndicator?: boolean | string;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  formikResolver?: FormikResolver<any, InputForm>;
 }
 
 export interface QuestionInputProps {
@@ -25,11 +36,15 @@ export interface QuestionInputProps {
   required?: boolean;
 }
 
-export type InputForm = QuestionInputProps & InputBaseProps & {button?: ButtonForm};
+export type InputForm = QuestionInputProps & InputBaseProps & {button?: ButtonForm} & {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  formikResolver?: FormikResolver<any, InputForm>;
+};
 
 export interface StaticBlock extends Omit<InputForm, 'input'> {
   type: 'static';
   input: ReactNode;
+  maxWidth?: CSSProperties['maxWidth'];
 }
 
 export interface TextInputBlock extends InputForm {
