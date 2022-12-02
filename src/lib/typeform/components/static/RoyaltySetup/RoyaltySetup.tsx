@@ -22,7 +22,7 @@ interface RoyaltySetupProps {
 }
 
 const RoyaltySetup = ({ options, fieldName }: RoyaltySetupProps) => {
-  const { errors, values, setFieldValue } = useFormikContext<MintForm>();
+  const { errors, values, setFieldValue, setErrors } = useFormikContext<MintForm>();
   const { onNext } = useFormUI();
 
   const {
@@ -81,7 +81,10 @@ const RoyaltySetup = ({ options, fieldName }: RoyaltySetupProps) => {
                   title: '',
                   fieldName,
                   value: parties,
-                  onChange: handleSelectChange,
+                  onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                    setErrors({ royalties: null });
+                    handleSelectChange(e);
+                  },
                   options,
                 }}
               />
@@ -91,7 +94,15 @@ const RoyaltySetup = ({ options, fieldName }: RoyaltySetupProps) => {
                 variant="contained"
                 sx={{ boxShadow: 0, my: 2 }}
                 endIcon={<ArrowForwardIcon />}
-                onClick={handleNext}
+                onClick={
+                  () => {
+                    if (parties.length === 0) {
+                      setErrors({ royalties: 'Please choose at least one of the options above' });
+                    } else {
+                      handleNext();
+                    }
+                  }
+                }
               >
                 Setup
                 {
