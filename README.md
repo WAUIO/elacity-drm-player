@@ -31,7 +31,8 @@ Generally, a media is read folling this flow in a playback context
 ### Web3 DRM implementation on EVM-based network ###
 - [Digital rights management in the open seas of blockchain systems](https://cointelegraph.com/news/digital-rights-management-in-the-open-seas-of-blockchain-systems)
 - [Example of ERC1155](https://polygonscan.com/address/0x2bc3a12f56b62b90421b29c39b3a17455c2c1b9b#code)
-
+- [ERC1400 - Security token](https://github.com/ndaxio/ERC1400)
+- [ERC5553 IP and royalties structure](https://eips.ethereum.org/EIPS/eip-5553)
 
 ### See also ###
 - [https://medium.com/swlh/how-to-play](https://medium.com/swlh/how-to-play-mpeg-dash-encrypted-protected-content-using-encrypted-media-extensions-eme-in-browser-234f49fdc706)
